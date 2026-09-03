@@ -163,3 +163,8 @@
 - [x] Save and auto-publish the verified 2010–3 September 2026 historical integration without URL indexing or sitemap submission.
 - [x] Verify the active Agent 1 schedule uses the user-supplied prior-day IST research, source-verification, durable Markdown, and authenticated callback contract at exactly 12:01 AM IST.
 - [x] Confirm the Agent 1 contract review does not alter Agents 2–3 and does not activate Agent 4 indexing or sitemap submission.
+- [x] Audit Agent 3’s scheduled 2:30 AM IST execution history, callback timing, latest database URL manifest, and page actions for the 4 September 2026 run.
+- [x] Determine whether the latest Agent 3 callback completed, skipped, failed, or produced no new pages, and identify the exact reason rather than inferring success from schedule state.
+- [x] If the expected dated URL manifest or page actions are missing, repair the Agent 3 schedule or callback safely and execute one authenticated recovery run without indexing submission. No recovery run was required because the durable manifest was completed successfully.
+- [x] Verify the resulting dated URL manifest, every created or updated internal URL, sitemap data, and the next exact 2:30 AM IST schedule.
+- [x] Document and report the precise Agent 3 run time and outcome without claiming success that is not supported by durable evidence.
