@@ -90,3 +90,48 @@
 - [x] Save a new checkpoint containing all refinement changes and confirm auto-publication succeeds.
 - [x] Verify the live published site serves refined SSR HTML, distinct imagery/content, and consent-gated analytics before final delivery.
 - [x] Send the user-facing refined CasinoVerse delivery update with the final post-verification checkpoint and live-site confirmation.
+- [x] Map both supplied text briefs against the existing CasinoVerse routes and document the exact expanded sitemap and content gaps.
+- [x] Research authoritative sources for casino history, individual game guides, casino culture, destination context, factual statistics, architecture, and responsible entertainment.
+- [x] Define and generate distinct non-repeating visual assets for every new page family and individual game guide.
+- [x] Expand the global desktop and mobile navigation for Articles, History, Culture, Destinations, Vlogs, Facts, Gallery, About, and Search.
+- [x] Build and verify the dedicated Articles listing page with featured content, category filters, search entry points, editor-selected/latest sections, and crawlable SSR HTML.
+- [x] Build and verify individual Poker, Blackjack, Roulette, Baccarat, and Slot Machines guide pages with history, concepts, terminology, facts, related stories, and responsible-play context.
+- [x] Build and verify the visual History page with an evidence-led timeline and alternating editorial sections.
+- [x] Build and verify the Casino Culture page covering architecture, entertainment, etiquette, design, media, and famous locations without promotional claims.
+- [x] Build and verify the Destinations page with researched place context, architecture, entertainment, culture, and related stories.
+- [x] Build and verify the Vlogs page as a transparent editorial video desk without fabricating published episodes or engagement data.
+- [x] Build the Interesting Facts page with sourced fact cards, categories, context, and responsible interpretation of statistics.
+- [x] Build the immersive Gallery page with unique images, category filtering, captions, keyboard access, and a lightbox.
+- [x] Build Privacy Policy, Disclaimer, and Terms pages that reflect consent-gated analytics and CasinoVerse’s informational-only scope.
+- [x] Add a functional newsletter subscription data model, API, consent language, validation, duplicate handling, and accessible homepage form.
+- [x] Add and verify route-specific titles, descriptions, canonicals, social metadata, structured data where appropriate, and dynamic sitemap entries for all new pages.
+- [x] Add comprehensive tests for every new route, page data flow, newsletter behavior, legal links, unique images, source references, gallery interaction, and agent regression safety.
+- [x] Verify every expanded route returns populated SSR HTML and preserves cookie-consent behavior without unconditional analytics.
+- [x] Visually verify every new page on desktop and mobile, one page at a time, for unique design, imagery, readability, and responsive behavior.
+- [x] Run the complete test suite, TypeScript check, production builds, and live expanded-route smoke tests.
+- [x] Save, auto-publish, and deliver the complete expanded CasinoVerse multi-page checkpoint while Agent 4 remains paused.
+- [x] Ensure and verify every new page uses an informative article hierarchy with headline, standfirst, publication context, explanatory sections, visible references, related reading, and responsible-entertainment framing where relevant.
+- [x] Keep imagery subordinate to editorial content so the expanded site reads as a research magazine rather than a promotional casino showcase.
+- [x] Replace placeholder contact addresses with a functional, consent-aware editorial contact form and durable inquiry storage.
+- [x] Add validated contact submission handling, spam safeguards, privacy language, tests, and an About-page contact section.
+- [x] Add route-by-route SSR smoke coverage for Articles, History, Culture, Destinations, Vlogs, Facts, Gallery, and all five individual game pages.
+- [x] Add targeted route assertions for titles, descriptions, canonical URLs, social metadata, and dynamic sitemap coverage across every new route.
+- [x] Add focused composition checks for Articles filters/sections, all game-guide sections and related reading, History timeline layout, Culture topic coverage, Destinations profiles, and Vlogs transparency.
+- [x] Add Gallery interaction verification for category filtering, lightbox opening/closing, keyboard behavior, captions, and editorial-illustration labels.
+- [x] Redesign the Articles, History, Culture, Destinations, Vlogs, Facts, Gallery, and five game-guide visuals as evidence-led editorial compositions rather than glossy casino imagery.
+- [x] Replace every expanded image URL and alt description with a redesigned one-to-one asset while preserving non-repetition.
+- [x] Redesign the homepage structure around a publication front page: lead Blog story, latest desk, research sections, dated editions, and clear Blog/Vlog format labels.
+- [x] Redesign each new page with a distinct article-first structure rather than one repeated hero-and-card template.
+- [x] Add reusable Blog/Vlog format labels, publication context, source trails, sidebars, timelines, related reading, and responsible-entertainment notes where relevant.
+- [x] Keep images visually secondary to headlines, summaries, explanatory sections, and references across desktop and mobile layouts.
+- [x] Review the redesigned homepage first, then validate each expanded page structure individually before final publication.
+- [x] Redesign the Articles, History, Culture, Destinations, Vlogs, Facts, and Gallery heroes as evidence-led editorial compositions rather than glossy casino imagery.
+- [x] Redesign all five game-guide heroes around archival rules, probability diagrams, mechanics, and educational context.
+- [x] Redesign all eight gallery images as distinct museum-style research illustrations with no repeated compositions or promotional cues.
+- [x] Replace every expanded image URL and alt description with the redesigned asset while preserving one-to-one uniqueness.
+- [x] Visually review each redesigned page and gallery image on desktop and mobile before final publication.
+- [x] Keep Agents 1, 2, and 3 active at 12:01 AM, 2:00 AM, and 2:30 AM IST respectively while preserving their existing research, analysis, page-creation, and dated URL-manifest responsibilities.
+- [x] Keep Agent 4 paused and perform no URL indexing, Search Console action, or sitemap submission until the custom domain is live and the user explicitly authorizes resumption.
+- [x] Run and document mobile screenshot review for `/games`, `/games/poker`, `/games/blackjack`, `/games/baccarat`, `/games/slots`, `/gallery`, `/about`, `/archive`, `/guides`, `/privacy`, `/disclaimer`, and `/terms`.
+- [x] Perform browser-level Gallery QA for filter switching, lightbox opening and closing, Escape-key behavior, captions, and visible Editorial illustration labels.
+- [x] Complete the final page-by-page desktop/mobile visual audit record before publication.

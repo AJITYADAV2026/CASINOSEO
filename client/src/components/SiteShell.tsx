@@ -4,13 +4,15 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 import { CookieConsent, openCookieSettings } from "@/components/CookieConsent";
 
 const navigation = [
-  ["Latest", "/"],
-  ["Markets", "/category/market-intelligence"],
-  ["Regulation", "/category/regulation"],
-  ["Culture & Travel", "/category/culture-travel"],
+  ["Blog", "/articles"],
   ["Games", "/games"],
-  ["Guides", "/guides"],
-  ["Archive", "/archive"],
+  ["History", "/history"],
+  ["Culture", "/culture"],
+  ["Destinations", "/destinations"],
+  ["Vlogs", "/vlogs"],
+  ["Facts", "/facts"],
+  ["Gallery", "/gallery"],
+  ["About", "/about"],
 ] as const;
 
 export function SiteShell({ children }: { children: React.ReactNode }) {
@@ -34,12 +36,12 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
             </span>
           </Link>
 
-          <nav className="hidden items-center gap-6 xl:flex" aria-label="Primary navigation">
+          <nav className="hidden items-center gap-4 xl:flex" aria-label="Primary navigation">
             {navigation.map(([label, href]) => (
               <Link
                 key={href}
                 href={href}
-                className={`nav-link ${location === href ? "is-active" : ""}`}
+                className={`nav-link text-xs ${location === href || location.startsWith(`${href}/`) ? "is-active" : ""}`}
               >
                 {label}
               </Link>
@@ -66,7 +68,8 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                       {label}
                     </Link>
                   ))}
-                  <Link href="/about" className="border-b border-white/10 py-4 text-xl text-ivory/85">About</Link>
+                  <Link href="/guides" className="border-b border-white/10 py-4 text-xl text-ivory/85">Guides</Link>
+                  <Link href="/archive" className="border-b border-white/10 py-4 text-xl text-ivory/85">Research archive</Link>
                   <Link href="/responsible-entertainment" className="py-4 text-xl text-gold">Responsible entertainment</Link>
                 </nav>
               </SheetContent>
@@ -78,15 +81,16 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       <main id="main-content">{children}</main>
 
       <footer className="border-t border-gold/15 bg-[#0a0908]">
-        <div className="container grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-4">
+        <div className="container grid gap-12 py-16 md:grid-cols-2 xl:grid-cols-5">
           <div>
             <div className="font-display text-3xl">Casino<span className="text-gold">Verse</span></div>
             <p className="mt-4 max-w-xs text-sm leading-6 text-ivory/55">
               Independent reporting and education on the business, culture, regulation, and social impact of casino entertainment.
             </p>
           </div>
-          <FooterGroup title="Explore" links={[["Latest stories", "/"], ["Games", "/games"], ["Guides", "/guides"], ["Research archive", "/archive"]]} />
-          <FooterGroup title="Publication" links={[["About CasinoVerse", "/about"], ["Editorial standards", "/about#standards"], ["Search", "/search"], ["Contact", "mailto:editorial@casinoverse.example"]]} />
+          <FooterGroup title="Editorial" links={[["Blog", "/articles"], ["Daily research", "/archive"], ["Vlogs", "/vlogs"], ["Interesting facts", "/facts"]]} />
+          <FooterGroup title="Explore" links={[["Game guides", "/games"], ["History", "/history"], ["Culture", "/culture"], ["Destinations", "/destinations"], ["Gallery", "/gallery"]]} />
+          <FooterGroup title="Publication" links={[["About CasinoVerse", "/about"], ["Editorial standards", "/about#standards"], ["Guides", "/guides"], ["Privacy", "/privacy"], ["Disclaimer", "/disclaimer"], ["Terms", "/terms"], ["Contact", "/about#contact"]]} />
           <div>
             <h2 className="eyebrow">Responsible entertainment</h2>
             <p className="mt-4 text-sm leading-6 text-ivory/55">Gambling is not a way to make money. Set time and spending limits, never chase losses, and seek local support if play causes harm.</p>

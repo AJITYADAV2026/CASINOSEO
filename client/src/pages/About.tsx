@@ -1,8 +1,10 @@
-import { ArrowRight, CheckCircle2, ExternalLink, FileSearch, Scale, ShieldCheck } from "lucide-react";
+import { useState } from "react";
+import { ArrowRight, CheckCircle2, FileSearch, Mail, Scale, Send, ShieldCheck } from "lucide-react";
 import { Link } from "wouter";
 import { Seo } from "@/components/Seo";
 import { ABOUT_HERO_IMAGE } from "@/lib/site";
 import { ResearchReferences } from "@/components/ResearchReferences";
+import { trpc } from "@/lib/trpc";
 
 const standards = [
   ["Trace the claim", "Research stories retain original publisher names, headlines, URLs, publication dates when visible, and the date CasinoVerse accessed the source."],
@@ -12,6 +14,8 @@ const standards = [
 ];
 
 export default function About() {
+  const [form, setForm] = useState({ name: "", email: "", topic: "general" as "correction" | "privacy" | "newsletter" | "general", message: "", consent: false, website: "" });
+  const contact = trpc.editorial.contact.useMutation();
   return (
     <>
       <Seo title="About CasinoVerse" description="Learn how CasinoVerse researches casino-industry news, attributes sources, handles developing stories, and maintains an informational-only editorial standard." path="/about" image={ABOUT_HERO_IMAGE} />
@@ -46,7 +50,24 @@ export default function About() {
       </section>
 
       <section className="pb-24">
-        <div className="container"><div className="digest-banner rounded-[28px] border border-gold/20 p-8 md:p-11"><p className="eyebrow text-gold">Read the work</p><h2 className="mt-3 max-w-3xl font-display text-4xl text-ivory md:text-5xl">Begin with the latest dated research edition.</h2><div className="mt-7 flex flex-wrap gap-4"><Link href="/archive" className="button-gold">Open the archive <ArrowRight className="h-4 w-4" /></Link><a href="mailto:editorial@casinoverse.example" className="button-ghost">Contact the editorial desk <ExternalLink className="h-4 w-4" /></a></div></div></div>
+        <div className="container"><div className="digest-banner rounded-[28px] border border-gold/20 p-8 md:p-11"><p className="eyebrow text-gold">Read the work</p><h2 className="mt-3 max-w-3xl font-display text-4xl text-ivory md:text-5xl">Begin with the latest dated research edition.</h2><div className="mt-7 flex flex-wrap gap-4"><Link href="/archive" className="button-gold">Open the archive <ArrowRight className="h-4 w-4" /></Link><a href="#contact" className="button-ghost">Contact the editorial desk <Mail className="h-4 w-4" /></a></div></div></div>
+      </section>
+
+      <section id="contact" className="scroll-mt-28 border-y border-white/8 bg-white/[.02] py-20">
+        <div className="container grid gap-12 lg:grid-cols-[.8fr_1.2fr]">
+          <div><p className="eyebrow text-gold">Contact the desk</p><h2 className="mt-4 font-display text-5xl leading-[.95] text-ivory">Corrections, privacy, newsletter, and general questions.</h2><p className="mt-6 max-w-xl leading-8 text-ivory/58">Use this form instead of sending sensitive personal records. The message, contact address, topic, and consent time are stored for editorial follow-up. CasinoVerse does not provide emergency, legal, financial, or treatment advice.</p></div>
+          <div className="rounded-[26px] border border-white/10 bg-black/20 p-7 md:p-9">
+            {contact.isSuccess ? <div className="flex min-h-[360px] flex-col justify-center" role="status"><CheckCircle2 className="h-8 w-8 text-gold" /><h3 className="mt-5 font-display text-4xl text-ivory">Message recorded.</h3><p className="mt-4 max-w-lg leading-8 text-ivory/60">{contact.data.alreadySubmitted ? "An identical message was already received, so no duplicate was created." : "The editorial desk has received your inquiry."}</p></div> : <form className="grid gap-5 sm:grid-cols-2" onSubmit={event => { event.preventDefault(); contact.mutate({ ...form, consent: true }); }}>
+              <div><label htmlFor="contact-name" className="text-sm font-semibold text-ivory">Name</label><input id="contact-name" required minLength={2} maxLength={120} value={form.name} onChange={event => setForm(current => ({ ...current, name: event.target.value }))} className="mt-2 h-13 w-full rounded-2xl border border-white/12 bg-black/30 px-4 text-ivory focus:border-gold" /></div>
+              <div><label htmlFor="contact-email" className="text-sm font-semibold text-ivory">Email</label><input id="contact-email" type="email" required maxLength={320} value={form.email} onChange={event => setForm(current => ({ ...current, email: event.target.value }))} className="mt-2 h-13 w-full rounded-2xl border border-white/12 bg-black/30 px-4 text-ivory focus:border-gold" /></div>
+              <div className="sm:col-span-2"><label htmlFor="contact-topic" className="text-sm font-semibold text-ivory">Topic</label><select id="contact-topic" value={form.topic} onChange={event => setForm(current => ({ ...current, topic: event.target.value as typeof current.topic }))} className="mt-2 h-13 w-full rounded-2xl border border-white/12 bg-[#11100f] px-4 text-ivory focus:border-gold"><option value="general">General question</option><option value="correction">Correction or source note</option><option value="privacy">Privacy request</option><option value="newsletter">Newsletter request</option></select></div>
+              <div className="sr-only" aria-hidden="true"><label htmlFor="contact-website">Website</label><input id="contact-website" tabIndex={-1} autoComplete="off" value={form.website} onChange={event => setForm(current => ({ ...current, website: event.target.value }))} /></div>
+              <div className="sm:col-span-2"><label htmlFor="contact-message" className="text-sm font-semibold text-ivory">Message</label><textarea id="contact-message" required minLength={30} maxLength={4000} rows={7} value={form.message} onChange={event => setForm(current => ({ ...current, message: event.target.value }))} className="mt-2 w-full resize-y rounded-2xl border border-white/12 bg-black/30 p-4 text-ivory focus:border-gold" /></div>
+              <label className="flex cursor-pointer items-start gap-3 text-sm leading-6 text-ivory/58 sm:col-span-2"><input type="checkbox" required checked={form.consent} onChange={event => setForm(current => ({ ...current, consent: event.target.checked }))} className="mt-1 h-4 w-4 accent-[#c9a45c]" /><span>I consent to CasinoVerse storing this inquiry and contact address for editorial follow-up. See the <Link href="/privacy" className="text-gold-light underline underline-offset-4">Privacy Policy</Link>.</span></label>
+              <div className="sm:col-span-2"><button type="submit" className="button-gold" disabled={!form.consent || contact.isPending}>{contact.isPending ? "Recording message…" : "Send to the editorial desk"}<Send className="h-4 w-4" /></button>{contact.isError && <p className="mt-4 text-sm text-[#e3aaa0]" role="alert">The message could not be saved. Check the fields and try again.</p>}</div>
+            </form>}
+          </div>
+        </div>
       </section>
 
       <div className="container pb-24">

@@ -1,10 +1,13 @@
+import { createHash } from "node:crypto";
 import { and, desc, eq, inArray, like, or } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import {
   categories,
   dailyDigests,
   digestStories,
+  editorialInquiries,
   InsertUser,
+  newsletterSubscribers,
   siteFindReports,
   stories,
   storySources,
@@ -215,6 +218,55 @@ export async function searchStories(query: string) {
     )
     .orderBy(desc(stories.publishedAt))
     .limit(24);
+}
+
+export async function subscribeToEditorialBriefing(email: string) {
+  const db = await getDb();
+  if (!db) throw new Error("Newsletter database is unavailable");
+
+  const normalizedEmail = email.trim().toLowerCase();
+  const existing = await db
+    .select({ id: newsletterSubscribers.id, status: newsletterSubscribers.status })
+    .from(newsletterSubscribers)
+    .where(eq(newsletterSubscribers.email, normalizedEmail))
+    .limit(1);
+
+  if (existing[0]?.status === "active") {
+    return { success: true as const, alreadySubscribed: true as const };
+  }
+
+  const now = new Date();
+  await db
+    .insert(newsletterSubscribers)
+    .values({
+      email: normalizedEmail,
+      status: "active",
+      consentAt: now,
+      source: "homepage-editorial-briefing",
+    })
+    .onDuplicateKeyUpdate({
+      set: { status: "active", consentAt: now, source: "homepage-editorial-briefing" },
+    });
+
+  return { success: true as const, alreadySubscribed: false as const };
+}
+
+export async function submitEditorialInquiry(input: {
+  name: string;
+  email: string;
+  topic: "correction" | "privacy" | "newsletter" | "general";
+  message: string;
+}) {
+  const db = await getDb();
+  if (!db) throw new Error("Editorial contact database is unavailable");
+  const email = input.email.trim().toLowerCase();
+  const name = input.name.trim().replace(/\s+/g, " ");
+  const message = input.message.trim().replace(/\s+/g, " ");
+  const dedupeKey = createHash("sha256").update(`${email}\n${input.topic}\n${message.toLowerCase()}`).digest("hex");
+  const existing = await db.select({ id: editorialInquiries.id }).from(editorialInquiries).where(eq(editorialInquiries.dedupeKey, dedupeKey)).limit(1);
+  if (existing.length) return { success: true as const, alreadySubmitted: true as const };
+  await db.insert(editorialInquiries).values({ name, email, topic: input.topic, message, dedupeKey, status: "new", consentAt: new Date() });
+  return { success: true as const, alreadySubmitted: false as const };
 }
 
 export function selectLatestAnalyzableDigest<T extends { digestDate: string; status: string; markdownArtifact: string | null; updatedAt: Date }>(rows: T[], includeDeveloping = false) {

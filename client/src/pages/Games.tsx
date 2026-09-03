@@ -5,11 +5,11 @@ import { GAMES_HERO_IMAGE } from "@/lib/site";
 import { ResearchReferences } from "@/components/ResearchReferences";
 
 const games = [
-  { name: "Poker", icon: Spade, history: "A family of comparing-card games shaped by riverboats, saloons, clubs, televised tournaments, and online play.", principle: "Players compete against one another rather than a fixed house hand. Skill affects long-term decisions, but chance remains material.", terms: ["Blinds", "Position", "Pot odds", "Showdown"] },
-  { name: "Blackjack", icon: Club, history: "A casino banking game descended from European twenty-one games and refined through modern table rules.", principle: "Players compare a hand against the dealer. Published basic strategy reduces avoidable errors but cannot remove the house edge.", terms: ["Hit", "Stand", "Double", "Split"] },
-  { name: "Roulette", icon: CircleDot, history: "An eighteenth-century French wheel game whose single-zero and double-zero formats create different mathematical edges.", principle: "Every spin is independent. Staking systems change bet size, not the underlying probability of the next outcome.", terms: ["Inside bet", "Outside bet", "Single zero", "House edge"] },
-  { name: "Baccarat", icon: Diamond, history: "A comparing-card game with European court origins that later became prominent in Asian VIP and mass-premium rooms.", principle: "The table resolves player, banker, or tie outcomes under fixed drawing rules. Side bets usually carry materially different edges.", terms: ["Player", "Banker", "Tie", "Commission"] },
-  { name: "Slots", icon: Layers3, history: "Mechanical reels evolved into electronic cabinets and digital games governed by certified random-number systems.", principle: "Return-to-player and volatility describe long-run game design, not what a short session will return to an individual player.", terms: ["RTP", "Volatility", "Paytable", "Random number generator"] },
+  { slug: "poker", name: "Poker", icon: Spade, history: "A family of comparing-card games shaped by riverboats, saloons, clubs, televised tournaments, and online play.", principle: "Players compete against one another rather than a fixed house hand. Skill affects long-term decisions, but chance remains material.", terms: ["Blinds", "Position", "Pot odds", "Showdown"] },
+  { slug: "blackjack", name: "Blackjack", icon: Club, history: "A casino banking game descended from European twenty-one games and refined through modern table rules.", principle: "Players compare a hand against the dealer. Published basic strategy reduces avoidable errors but cannot remove the house edge.", terms: ["Hit", "Stand", "Double", "Split"] },
+  { slug: "roulette", name: "Roulette", icon: CircleDot, history: "An eighteenth-century French wheel game whose single-zero and double-zero formats create different mathematical edges.", principle: "Every spin is independent. Staking systems change bet size, not the underlying probability of the next outcome.", terms: ["Inside bet", "Outside bet", "Single zero", "House edge"] },
+  { slug: "baccarat", name: "Baccarat", icon: Diamond, history: "A comparing-card game with European court origins that later became prominent in Asian VIP and mass-premium rooms.", principle: "The table resolves player, banker, or tie outcomes under fixed drawing rules. Side bets usually carry materially different edges.", terms: ["Player", "Banker", "Tie", "Commission"] },
+  { slug: "slots", name: "Slot Machines", icon: Layers3, history: "Mechanical reels evolved into electronic cabinets and digital games governed by certified random-number systems.", principle: "Return-to-player and volatility describe long-run game design, not what a short session will return to an individual player.", terms: ["RTP", "Volatility", "Paytable", "Random number generator"] },
 ];
 
 export default function Games() {
@@ -41,7 +41,7 @@ export default function Games() {
                   <div><p className="eyebrow text-ivory/35">Core principle</p><p className="mt-3 leading-7 text-ivory/58">{game.principle}</p></div>
                 </div>
                 <ul className="mt-8 flex flex-wrap gap-2" aria-label={`${game.name} key terms`}>{game.terms.map(term => <li key={term} className="term-chip">{term}</li>)}</ul>
-                {game.name === "Roulette" && <Link href="/articles/roulette-a-measured-introduction" className="mt-8 inline-flex items-center gap-2 text-sm text-gold hover:text-gold-light">Read the complete roulette introduction <ArrowRight className="h-4 w-4" /></Link>}
+                <Link href={`/games/${game.slug}`} className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-gold hover:text-gold-light">Read the complete {game.name.toLowerCase()} guide <ArrowRight className="h-4 w-4" /></Link>
               </article>;
             })}
           </div>

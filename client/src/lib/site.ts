@@ -2,18 +2,18 @@ export const SITE_NAME = "CasinoVerse";
 export const SITE_DESCRIPTION =
   "Independent casino-industry research, culture, regulation, destinations, and responsible-entertainment guides.";
 
-export const HERO_IMAGE = "/manus-storage/cv-home-world-map_9f30c48e.jpg";
+export const HERO_IMAGE = "/manus-storage/cv-redesign-home-v3_48878d22.jpg";
 export const MARKET_IMAGE = "/manus-storage/casinoverse-market-v2_5bad0fa2.jpg";
 export const GUIDES_IMAGE = "/manus-storage/casinoverse-guides-v2_1a5f287d.jpg";
 export const CULTURE_IMAGE = "/manus-storage/casinoverse-culture-v2_7edae603.jpg";
 export const RESPONSIBLE_IMAGE = "/manus-storage/casinoverse-responsible-v2_6891c69c.jpg";
-export const GAMES_HERO_IMAGE = "/manus-storage/cv-games-study-table-v2_4a39a025.jpg";
-export const GUIDES_HERO_IMAGE = "/manus-storage/cv-guides-library-v2_58df9d26.jpg";
-export const RESPONSIBLE_HERO_IMAGE = "/manus-storage/cv-responsible-boundaries-v2_a251cb58.jpg";
-export const ABOUT_HERO_IMAGE = "/manus-storage/cv-about-newsroom-v2_50d2fa6e.jpg";
-export const ARCHIVE_HERO_IMAGE = "/manus-storage/cv-archive-dossiers-v2_2a191777.jpg";
-export const SEARCH_HERO_IMAGE = "/manus-storage/cv-search-index-v2_77cfe990.jpg";
-export const STORY_FALLBACK_IMAGE = "/manus-storage/casinoverse-hero_ae0f73ca.jpg";
+export const GAMES_HERO_IMAGE = "/manus-storage/cv-redesign-games-overview-v3_079b4a45.jpg";
+export const GUIDES_HERO_IMAGE = "/manus-storage/cv-redesign-guides-overview-v3_1faf2fba.jpg";
+export const RESPONSIBLE_HERO_IMAGE = "/manus-storage/cv-redesign-responsible-v3_34765965.jpg";
+export const ABOUT_HERO_IMAGE = "/manus-storage/cv-redesign-about-v3_702d69f5.jpg";
+export const ARCHIVE_HERO_IMAGE = "/manus-storage/cv-redesign-archive-v3_e67c56b4.jpg";
+export const SEARCH_HERO_IMAGE = "/manus-storage/cv-redesign-search-v3_c1e83335.jpg";
+export const STORY_FALLBACK_IMAGE = "/manus-storage/cv-redesign-story-fallback-v3_b668b02c.jpg";
 
 export function formatDate(value?: Date | string | null, withTime = false) {
   if (!value) return "Date pending";

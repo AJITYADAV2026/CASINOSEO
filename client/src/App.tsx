@@ -15,6 +15,15 @@ import Guides from "./pages/Guides";
 import ResponsibleEntertainment from "./pages/ResponsibleEntertainment";
 import About from "./pages/About";
 import Search from "./pages/Search";
+import Articles from "./pages/Articles";
+import GameDetail from "./pages/GameDetail";
+import History from "./pages/History";
+import Culture from "./pages/Culture";
+import Destinations from "./pages/Destinations";
+import Vlogs from "./pages/Vlogs";
+import Facts from "./pages/Facts";
+import Gallery from "./pages/Gallery";
+import { Disclaimer, Privacy, Terms } from "./pages/LegalPages";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -22,11 +31,22 @@ function Router() {
     <SiteShell>
       <Switch>
         <Route path={"/"} component={Home} />
+        <Route path={"/articles"} component={Articles} />
         <Route path={"/articles/:slug"} component={Article} />
         <Route path={"/category/:slug"} component={Category} />
         <Route path={"/archive"} component={Archive} />
         <Route path={"/archive/:date"} component={Digest} />
         <Route path={"/games"} component={Games} />
+        <Route path={"/games/:slug"} component={GameDetail} />
+        <Route path={"/history"} component={History} />
+        <Route path={"/culture"} component={Culture} />
+        <Route path={"/destinations"} component={Destinations} />
+        <Route path={"/vlogs"} component={Vlogs} />
+        <Route path={"/facts"} component={Facts} />
+        <Route path={"/gallery"} component={Gallery} />
+        <Route path={"/privacy"} component={Privacy} />
+        <Route path={"/disclaimer"} component={Disclaimer} />
+        <Route path={"/terms"} component={Terms} />
         <Route path={"/guides"} component={Guides} />
         <Route path={"/responsible-entertainment"} component={ResponsibleEntertainment} />
         <Route path={"/about"} component={About} />

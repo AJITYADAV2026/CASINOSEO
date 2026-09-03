@@ -30,7 +30,29 @@ export function buildSitemapDocument(origin: string, data: {
   stories: Array<{ story: { slug: string; status: string; modifiedAt: Date | null; publishedAt: Date | null } }>;
   digests: Array<{ digestDate: string; status: string; modifiedAt: Date | null; publishedAt: Date | null }>;
 }) {
-  const staticPaths = ["/", "/archive", "/games", "/guides", "/responsible-entertainment", "/about"];
+  const staticPaths = [
+    "/",
+    "/articles",
+    "/archive",
+    "/games",
+    "/games/poker",
+    "/games/blackjack",
+    "/games/roulette",
+    "/games/baccarat",
+    "/games/slots",
+    "/guides",
+    "/history",
+    "/culture",
+    "/destinations",
+    "/vlogs",
+    "/facts",
+    "/gallery",
+    "/responsible-entertainment",
+    "/about",
+    "/privacy",
+    "/disclaimer",
+    "/terms",
+  ];
   const urls = [
     ...staticPaths.map(path => ({ path, modified: undefined as Date | undefined })),
     ...data.categories.map(category => ({ path: `/category/${category.slug}`, modified: category.updatedAt })),

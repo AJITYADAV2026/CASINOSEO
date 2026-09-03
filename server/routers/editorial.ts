@@ -6,6 +6,8 @@ import {
   getHomepageContent,
   getStoryBySlug,
   searchStories,
+  submitEditorialInquiry,
+  subscribeToEditorialBriefing,
 } from "../db";
 import { publicProcedure, router } from "../_core/trpc";
 
@@ -24,4 +26,20 @@ export const editorialRouter = router({
   search: publicProcedure
     .input(z.object({ query: z.string().trim().min(2).max(120) }))
     .query(({ input }) => searchStories(input.query)),
+  subscribe: publicProcedure
+    .input(z.object({
+      email: z.string().trim().email().max(320),
+      consent: z.literal(true),
+    }))
+    .mutation(({ input }) => subscribeToEditorialBriefing(input.email)),
+  contact: publicProcedure
+    .input(z.object({
+      name: z.string().trim().min(2).max(120),
+      email: z.string().trim().email().max(320),
+      topic: z.enum(["correction", "privacy", "newsletter", "general"]),
+      message: z.string().trim().min(30).max(4000),
+      consent: z.literal(true),
+      website: z.string().max(0).optional().default(""),
+    }))
+    .mutation(({ input }) => submitEditorialInquiry(input)),
 });

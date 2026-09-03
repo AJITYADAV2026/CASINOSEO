@@ -1,5 +1,5 @@
-import { ArrowUpRight, Clock3 } from "lucide-react";
 import { Link } from "wouter";
+import { ArrowUpRight, Clapperboard, Clock3, FileText } from "lucide-react";
 import { formatDate, STORY_FALLBACK_IMAGE } from "@/lib/site";
 
 export type StoryCardData = {
@@ -15,18 +15,23 @@ export type StoryCardData = {
     status: "draft" | "developing" | "published" | "archived";
     isLead: boolean;
     isFeatured: boolean;
+    contentType?: "news" | "analysis" | "guide" | "culture" | "video";
   };
   category: { slug: string; name: string; accent: string };
 };
 
 export function StoryCard({ item, variant = "standard" }: { item: StoryCardData; variant?: "standard" | "compact" | "horizontal" }) {
   const { story, category } = item;
+  const isVlog = story.contentType === "video";
+  const FormatIcon = isVlog ? Clapperboard : FileText;
+  const format = isVlog ? "Vlog" : "Blog";
   if (variant === "compact") {
     return (
       <article className="group border-t border-white/12 py-5 first:border-t-0">
         <Link href={`/articles/${story.slug}`} className="grid grid-cols-[1fr_auto] gap-5">
           <div>
             <div className="flex items-center gap-2">
+              <span className="format-label"><FormatIcon className="h-3 w-3" />{format}</span>
               <span className="eyebrow" style={{ color: category.accent }}>{category.name}</span>
               {story.status === "developing" && <span className="status-dot">Developing</span>}
             </div>
@@ -46,7 +51,7 @@ export function StoryCard({ item, variant = "standard" }: { item: StoryCardData;
           <img src={story.featuredImageUrl || STORY_FALLBACK_IMAGE} alt={story.featuredImageAlt || "CasinoVerse editorial research image"} />
         </Link>
         <div className="p-5">
-          <span className="eyebrow" style={{ color: category.accent }}>{category.name}</span>
+          <div className="flex flex-wrap items-center gap-2"><span className="format-label"><FormatIcon className="h-3 w-3" />{format}</span><span className="eyebrow" style={{ color: category.accent }}>{category.name}</span></div>
           <Link href={`/articles/${story.slug}`}><h3 className="mt-2 font-display text-2xl leading-tight text-ivory group-hover:text-gold-light">{story.title}</h3></Link>
           <p className="mt-3 line-clamp-2 text-sm leading-6 text-ivory/55">{story.dek}</p>
           <p className="mt-4 flex items-center gap-2 text-xs text-ivory/40"><Clock3 className="h-3.5 w-3.5" />{story.readingMinutes} min · {formatDate(story.publishedAt)}</p>
@@ -62,7 +67,7 @@ export function StoryCard({ item, variant = "standard" }: { item: StoryCardData;
       </Link>
       <div className="p-6">
         <div className="flex items-center justify-between gap-4">
-          <span className="eyebrow" style={{ color: category.accent }}>{category.name}</span>
+          <div className="flex flex-wrap items-center gap-2"><span className="format-label"><FormatIcon className="h-3 w-3" />{format}</span><span className="eyebrow" style={{ color: category.accent }}>{category.name}</span></div>
           {story.status === "developing" && <span className="status-dot">Developing</span>}
         </div>
         <Link href={`/articles/${story.slug}`}><h3 className="mt-3 font-display text-2xl leading-[1.08] text-ivory transition-colors group-hover:text-gold-light">{story.title}</h3></Link>

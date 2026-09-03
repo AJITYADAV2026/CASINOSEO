@@ -81,4 +81,32 @@ describe("CasinoVerse SSR prefetch", () => {
     expect(p.search).toHaveBeenCalledWith("Macau");
     expect(qc.getQueryData(getQueryKey(trpc.editorial.search, { query: "Macau" }, "query"))).toEqual([]);
   });
+
+  it("returns complete canonical and social metadata for every expanded editorial route", async () => {
+    const routes = [
+      "/articles", "/history", "/culture", "/destinations", "/vlogs", "/facts", "/gallery",
+      "/games/poker", "/games/blackjack", "/games/roulette", "/games/baccarat", "/games/slots",
+      "/privacy", "/disclaimer", "/terms",
+    ];
+    for (const route of routes) {
+      const head = await prefetchForPath(route, new QueryClient(), mockPrefetch());
+      expect(head.canonicalPath, route).toBe(route);
+      expect(head.title.length, route).toBeGreaterThan(12);
+      expect(head.description.length, route).toBeGreaterThan(60);
+      expect(head.ogImage, route).toMatch(/^\/manus-storage\//);
+      expect(head.notFound, route).not.toBe(true);
+    }
+  });
+
+  it("emits Article structured data for all five individual game guides", async () => {
+    for (const slug of ["poker", "blackjack", "roulette", "baccarat", "slots"]) {
+      const head = await prefetchForPath(`/games/${slug}`, new QueryClient(), mockPrefetch());
+      expect(head.jsonLd?.["@type"]).toBe("Article");
+      expect(head.jsonLd?.headline).toContain(GAME_TITLE[slug]);
+    }
+    const missing = await prefetchForPath("/games/craps", new QueryClient(), mockPrefetch());
+    expect(missing.notFound).toBe(true);
+  });
 });
+
+const GAME_TITLE: Record<string, string> = { poker: "Poker", blackjack: "Blackjack", roulette: "Roulette", baccarat: "Baccarat", slots: "Slot Machines" };

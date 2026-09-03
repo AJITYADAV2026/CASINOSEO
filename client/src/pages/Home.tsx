@@ -1,4 +1,5 @@
-import { ArrowRight, BookOpen, CalendarDays, Globe2, Landmark, Scale, ShieldCheck } from "lucide-react";
+import { useState } from "react";
+import { ArrowRight, BookOpen, Building2, CalendarDays, CheckCircle2, Clapperboard, FileText, Globe2, Images, Landmark, Lightbulb, Mail, MapPinned, Scale, ScrollText, ShieldCheck } from "lucide-react";
 import { Link } from "wouter";
 import { Skeleton } from "@/components/ui/skeleton";
 import { SectionHeading } from "@/components/SectionHeading";
@@ -6,170 +7,72 @@ import { ResearchReferences } from "@/components/ResearchReferences";
 import { Seo } from "@/components/Seo";
 import { StoryCard, type StoryCardData } from "@/components/StoryCard";
 import { trpc } from "@/lib/trpc";
-import { CULTURE_IMAGE, GUIDES_IMAGE, HERO_IMAGE, RESPONSIBLE_IMAGE, formatDate } from "@/lib/site";
+import { HERO_IMAGE, formatDate } from "@/lib/site";
 
 const topicIcons = { "market-intelligence": Globe2, regulation: Scale, "casino-operations": Landmark, "culture-travel": Globe2, "game-guides": BookOpen, "responsible-entertainment": ShieldCheck };
+const publicationSections = [
+  { title: "History", href: "/history", icon: ScrollText, label: "Blog desk", text: "A documented chronology from European gaming houses to regulated destination resorts." },
+  { title: "Culture", href: "/culture", icon: Building2, label: "Blog desk", text: "Architecture, performance, etiquette, design, art, and the casino image in popular media." },
+  { title: "Destinations", href: "/destinations", icon: MapPinned, label: "Blog desk", text: "Place-led reporting on Las Vegas, Macau, Monte Carlo, Singapore, and Atlantic City." },
+  { title: "Vlogs", href: "/vlogs", icon: Clapperboard, label: "Video desk", text: "A transparent documentary desk. Video appears only when a genuine CasinoVerse production exists." },
+  { title: "Facts", href: "/facts", icon: Lightbulb, label: "Evidence desk", text: "Dated statistics and historical claims with sources, caveats, and interpretation notes." },
+  { title: "Gallery", href: "/gallery", icon: Images, label: "Visual desk", text: "Publication-owned editorial illustrations with explicit labels and explanatory captions." },
+] as const;
 
 export default function Home() {
   const { data, isLoading, error } = trpc.editorial.homepage.useQuery();
+  const [email, setEmail] = useState("");
+  const [newsletterConsent, setNewsletterConsent] = useState(false);
+  const subscribe = trpc.editorial.subscribe.useMutation();
   const items = (data?.stories || []) as StoryCardData[];
   const lead = items.find(item => item.story.isLead) || items[0];
   const secondary = items.filter(item => item.story.id !== lead?.story.id).slice(0, 4);
   const featured = items.filter(item => item.story.isFeatured).slice(0, 6);
-  const guides = items.filter(item => item.category.slug === "game-guides");
-  const culture = items.filter(item => item.category.slug === "culture-travel").slice(0, 3);
   const latestDigest = data?.digests[0];
 
-  return (
-    <>
-      <Seo image={HERO_IMAGE} />
-      <section className="hero" style={{ backgroundImage: `linear-gradient(90deg, rgba(8,7,6,.96) 0%, rgba(8,7,6,.78) 42%, rgba(8,7,6,.18) 78%), linear-gradient(0deg, #0d0c0b 0%, transparent 34%), url(${HERO_IMAGE})` }}>
-        <div className="container flex min-h-[760px] items-end pb-20 pt-32 lg:min-h-[820px] lg:items-center lg:pb-10">
-          <div className="max-w-3xl">
-            <p className="eyebrow text-gold">Independent research · Culture · Responsibility</p>
-            <h1 className="mt-5 font-display text-[clamp(3.7rem,8vw,7.7rem)] leading-[.84] tracking-[-.045em] text-ivory">
-              The world<br />behind <em className="font-normal text-gold-light">the games.</em>
-            </h1>
-            <p className="mt-7 max-w-xl text-lg leading-8 text-ivory/65 md:text-xl">
-              CasinoVerse examines the business, design, regulation, history, and human impact of casino entertainment—without the hype.
-            </p>
-            <div className="mt-9 flex flex-wrap gap-4">
-              {latestDigest && <Link href={`/archive/${latestDigest.digestDate}`} className="button-gold">Read today’s digest <ArrowRight className="h-4 w-4" /></Link>}
-              <Link href="/games" className="button-ghost">Explore game guides</Link>
-            </div>
-            <div className="mt-14 flex flex-wrap gap-x-8 gap-y-3 border-t border-white/15 pt-5 text-xs uppercase tracking-[.16em] text-ivory/40">
-              <span>No wagering</span><span>Primary-source links</span><span>Daily dated research</span>
-            </div>
-          </div>
-        </div>
-      </section>
+  return <>
+    <Seo image={HERO_IMAGE} />
 
-      <section className="border-y border-gold/15 bg-[#11100f]" aria-label="Trending topics">
-        <div className="container flex items-center gap-7 overflow-x-auto py-4 text-sm whitespace-nowrap">
-          <span className="eyebrow text-gold">Trending</span>
-          {data?.categories.map(category => <Link key={category.id} href={`/category/${category.slug}`} className="text-ivory/55 hover:text-ivory">{category.name}</Link>)}
+    <header className="border-b border-gold/15 bg-[#0d0c0b] pt-28">
+      <div className="container grid gap-10 py-12 lg:grid-cols-[1.08fr_.92fr] lg:items-center lg:py-16">
+        <div className="max-w-4xl">
+          <div className="flex flex-wrap items-center gap-3"><span className="format-label"><FileText className="h-3.5 w-3.5" />Blog publication</span><span className="eyebrow">Independent research · Daily editions</span></div>
+          <h1 className="mt-7 font-display text-[clamp(3.6rem,7.4vw,7rem)] leading-[.88] tracking-[-.045em] text-ivory">Reporting the world <em className="font-normal text-gold-light">behind the games.</em></h1>
+          <p className="mt-7 max-w-2xl text-lg leading-8 text-ivory/66 md:text-xl">CasinoVerse publishes source-led Blogs on business, regulation, history, design, destinations, game literacy, and gambling harm—without betting promotion.</p>
+          <div className="mt-9 flex flex-wrap gap-4"><Link href="/articles" className="button-gold">Read the Blog <ArrowRight className="h-4 w-4" /></Link>{latestDigest && <Link href={`/archive/${latestDigest.digestDate}`} className="button-ghost">Open latest edition</Link>}</div>
+          <dl className="mt-12 grid max-w-2xl grid-cols-3 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 text-center"><div className="bg-[#12100e] p-4"><dt className="eyebrow">Format</dt><dd className="mt-2 font-display text-2xl text-ivory">Blog</dd></div><div className="bg-[#12100e] p-4"><dt className="eyebrow">Evidence</dt><dd className="mt-2 font-display text-2xl text-ivory">Linked</dd></div><div className="bg-[#12100e] p-4"><dt className="eyebrow">Wagering</dt><dd className="mt-2 font-display text-2xl text-ivory">None</dd></div></dl>
         </div>
-      </section>
+        <figure className="relative overflow-hidden rounded-[28px] border border-white/10 bg-black"><img src={HERO_IMAGE} alt="Editorial research desk with a world map, source dossiers, architectural models, and historical game diagrams" className="aspect-[4/3] h-full w-full object-cover" /><figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black via-black/75 to-transparent px-6 pb-6 pt-16 text-xs leading-5 text-white/58">Editorial illustration · CasinoVerse evidence desk · Images support reporting and are not documentary proof.</figcaption></figure>
+      </div>
+    </header>
 
-      <section className="section-space">
-        <div className="container">
-          <SectionHeading eyebrow="The daily edition" title="What matters now" description="Verified developments, placed in context and linked to their original sources." href="/archive" />
-          {isLoading ? <HomeSkeleton /> : error ? <ErrorState /> : lead ? (
-            <div className="grid gap-8 lg:grid-cols-[minmax(0,1.62fr)_minmax(320px,.78fr)]">
-              <article className="lead-story group relative min-h-[560px] overflow-hidden rounded-[28px] border border-gold/15">
-                <img src={lead.story.featuredImageUrl || HERO_IMAGE} alt={lead.story.featuredImageAlt || "CasinoVerse lead story"} className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.025]" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/45 to-transparent" />
-                <div className="absolute inset-x-0 bottom-0 p-7 md:p-11">
-                  <span className="eyebrow text-gold">Lead story · {lead.category.name}</span>
-                  <Link href={`/articles/${lead.story.slug}`}><h2 className="mt-4 max-w-3xl font-display text-4xl leading-[.98] text-white md:text-6xl">{lead.story.title}</h2></Link>
-                  <p className="mt-5 max-w-2xl text-base leading-7 text-white/65">{lead.story.dek}</p>
-                  <p className="mt-5 text-xs text-white/45">{formatDate(lead.story.publishedAt)} · {lead.story.readingMinutes} min read</p>
-                </div>
-              </article>
-              <aside className="rounded-[28px] border border-white/10 bg-card px-6 py-2" aria-label="Latest headlines">
-                {secondary.map(item => <StoryCard key={item.story.id} item={item} variant="compact" />)}
-              </aside>
-            </div>
-          ) : <EmptyState />}
-        </div>
-      </section>
+    <section className="border-b border-gold/15 bg-[#11100f]" aria-label="Trending topics"><div className="container flex items-center gap-7 overflow-x-auto py-4 text-sm whitespace-nowrap"><span className="eyebrow text-gold">Topics</span>{data?.categories.map(category => <Link key={category.id} href={`/category/${category.slug}`} className="text-ivory/55 hover:text-ivory">{category.name}</Link>)}</div></section>
 
-      {latestDigest && (
-        <section className="pb-8">
-          <div className="container">
-            <div className="digest-banner grid gap-8 rounded-[28px] border border-gold/20 p-7 md:p-10 lg:grid-cols-[auto_1fr_auto] lg:items-center">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full border border-gold/30 bg-gold/10 text-gold"><CalendarDays className="h-7 w-7" /></div>
-              <div>
-                <div className="flex flex-wrap items-center gap-3"><span className="eyebrow text-gold">Daily research digest</span>{latestDigest.status === "developing" && <span className="status-dot">Developing</span>}</div>
-                <h2 className="mt-3 font-display text-3xl text-ivory md:text-4xl">{latestDigest.title}</h2>
-                <p className="mt-3 max-w-3xl leading-7 text-ivory/55">{latestDigest.summary}</p>
-              </div>
-              <Link href={`/archive/${latestDigest.digestDate}`} className="button-gold justify-center">Open edition <ArrowRight className="h-4 w-4" /></Link>
-            </div>
-          </div>
-        </section>
-      )}
+    <main>
+      <section className="section-space"><div className="container"><div className="mb-10 grid gap-6 border-b border-white/10 pb-8 lg:grid-cols-[1fr_auto] lg:items-end"><div><p className="eyebrow">The Blog front page</p><h2 className="mt-3 font-display text-5xl text-ivory md:text-7xl">What matters now</h2><p className="mt-4 max-w-2xl leading-8 text-ivory/58">Verified developments, published as explanatory Blogs and linked to the original record.</p></div><Link href="/articles" className="inline-flex items-center gap-2 text-sm font-semibold text-gold-light">Browse every article <ArrowRight className="h-4 w-4" /></Link></div>
+        {isLoading ? <HomeSkeleton /> : error ? <ErrorState /> : lead ? <div className="grid gap-8 xl:grid-cols-[minmax(0,1.35fr)_minmax(320px,.65fr)]">
+          <article className="grid overflow-hidden rounded-[28px] border border-gold/15 bg-[#11100f] md:grid-cols-[1fr_1.05fr]"><div className="flex flex-col justify-between p-7 md:p-10"><div><div className="flex flex-wrap items-center gap-3"><span className="format-label"><FileText className="h-3.5 w-3.5" />Blog</span><span className="eyebrow">Lead · {lead.category.name}</span></div><Link href={`/articles/${lead.story.slug}`}><h2 className="mt-6 font-display text-4xl leading-[.96] text-ivory md:text-6xl">{lead.story.title}</h2></Link><p className="mt-6 text-base leading-8 text-ivory/60">{lead.story.dek}</p></div><div className="mt-10 border-t border-white/10 pt-5 text-xs text-ivory/42">Published {formatDate(lead.story.publishedAt)} · {lead.story.readingMinutes} min read · Sources visible</div></div><Link href={`/articles/${lead.story.slug}`} className="group relative min-h-[380px] overflow-hidden"><img src={lead.story.featuredImageUrl || HERO_IMAGE} alt={lead.story.featuredImageAlt || "CasinoVerse lead Blog illustration"} className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]" /><span className="absolute bottom-5 right-5 flex h-11 w-11 items-center justify-center rounded-full border border-white/25 bg-black/60 text-gold"><ArrowRight className="h-4 w-4" /></span></Link></article>
+          <aside className="rounded-[28px] border border-white/10 bg-card p-6" aria-label="Latest Blog headlines"><div className="flex items-center justify-between border-b border-white/10 pb-5"><span className="eyebrow">Latest desk</span><span className="format-label"><FileText className="h-3.5 w-3.5" />Blog</span></div>{secondary.map(item => <StoryCard key={item.story.id} item={item} variant="compact" />)}</aside>
+        </div> : <EmptyState />}
+      </div></section>
 
-      <section className="section-space bg-[#11100f]">
-        <div className="container">
-          <SectionHeading eyebrow="Across the industry" title="Research by topic" description="Follow the numbers, rules, operating decisions, and destination trends shaping casino entertainment." />
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {data?.categories.map(category => {
-              const Icon = topicIcons[category.slug as keyof typeof topicIcons] || Globe2;
-              const count = items.filter(item => item.category.slug === category.slug).length;
-              return <Link key={category.id} href={`/category/${category.slug}`} className="topic-card group">
-                <Icon className="h-6 w-6" style={{ color: category.accent }} />
-                <div><h3 className="font-display text-2xl text-ivory group-hover:text-gold-light">{category.name}</h3><p className="mt-2 line-clamp-2 text-sm leading-6 text-ivory/50">{category.description}</p></div>
-                <span className="text-xs text-ivory/35">{count} {count === 1 ? "story" : "stories"}</span>
-              </Link>;
-            })}
-          </div>
-        </div>
-      </section>
+      {latestDigest && <section className="pb-8"><div className="container"><div className="grid gap-7 rounded-[26px] border border-gold/20 bg-white/[.025] p-7 md:p-9 lg:grid-cols-[auto_1fr_auto] lg:items-center"><div className="flex h-14 w-14 items-center justify-center rounded-full border border-gold/30 bg-gold/10 text-gold"><CalendarDays className="h-6 w-6" /></div><div><div className="flex flex-wrap items-center gap-3"><span className="eyebrow">Dated research edition</span>{latestDigest.status === "developing" && <span className="status-dot">Developing</span>}</div><h2 className="mt-3 font-display text-3xl text-ivory md:text-4xl">{latestDigest.title}</h2><p className="mt-3 max-w-3xl leading-7 text-ivory/55">{latestDigest.summary}</p></div><Link href={`/archive/${latestDigest.digestDate}`} className="button-gold justify-center">Open edition <ArrowRight className="h-4 w-4" /></Link></div></div></section>}
 
-      <section className="section-space">
-        <div className="container">
-          <SectionHeading eyebrow="Editor’s selection" title="Research worth your time" href="/archive" />
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {featured.map(item => <StoryCard key={item.story.id} item={item} />)}
-          </div>
-        </div>
-      </section>
+      <section className="section-space border-y border-white/8 bg-[#11100f]"><div className="container"><SectionHeading eyebrow="Publication desks" title="Follow the research, not the spectacle" description="Every desk has a defined editorial purpose and a source trail." /><div className="grid gap-px overflow-hidden rounded-[28px] border border-white/10 bg-white/10 md:grid-cols-2 xl:grid-cols-3">{publicationSections.map(section => { const Icon = section.icon; return <Link key={section.href} href={section.href} className="group bg-[#0f0e0d] p-7 transition-colors hover:bg-[#171410] md:p-9"><div className="flex items-center justify-between"><Icon className="h-6 w-6 text-gold" /><span className="eyebrow">{section.label}</span></div><h2 className="mt-9 font-display text-4xl text-ivory group-hover:text-gold-light">{section.title}</h2><p className="mt-4 leading-7 text-ivory/52">{section.text}</p><span className="mt-7 inline-flex items-center gap-2 text-sm text-gold-light">Open desk <ArrowRight className="h-4 w-4" /></span></Link>; })}</div></div></section>
 
-      <section className="section-space border-y border-gold/15 bg-[#151310]">
-        <div className="container grid items-center gap-10 lg:grid-cols-2">
-          <div className="image-frame aspect-[4/3] rounded-[28px]"><img src={CULTURE_IMAGE} alt="Integrated-resort atrium focused on architecture, art, dining, and entertainment" /></div>
-          <div>
-            <p className="eyebrow text-gold">Casino culture & travel</p>
-            <h2 className="mt-4 font-display text-5xl leading-[.95] text-ivory md:text-6xl">Beyond the gaming floor.</h2>
-            <p className="mt-6 max-w-xl text-lg leading-8 text-ivory/58">Architecture, performance, food, regional history, and destination strategy are central to the modern integrated-resort story.</p>
-            <div className="mt-8 space-y-1">{culture.map(item => <StoryCard key={item.story.id} item={item} variant="compact" />)}</div>
-          </div>
-        </div>
-      </section>
+      <section className="section-space"><div className="container"><SectionHeading eyebrow="Research by topic" title="A structured reading map" description="Move between market evidence, public rules, operating decisions, destination context, game literacy, and harm prevention." /><div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{data?.categories.map(category => { const Icon = topicIcons[category.slug as keyof typeof topicIcons] || Globe2; const count = items.filter(item => item.category.slug === category.slug).length; return <Link key={category.id} href={`/category/${category.slug}`} className="topic-card group"><Icon className="h-6 w-6" style={{ color: category.accent }} /><div><h3 className="font-display text-2xl text-ivory group-hover:text-gold-light">{category.name}</h3><p className="mt-2 line-clamp-2 text-sm leading-6 text-ivory/50">{category.description}</p></div><span className="text-xs text-ivory/35">{count} {count === 1 ? "Blog" : "Blogs"}</span></Link>; })}</div></div></section>
 
-      <section className="section-space">
-        <div className="container">
-          <SectionHeading eyebrow="Learn the fundamentals" title="Games, explained without the hype" description="History, terminology, probability, etiquette, and risk—written for curious readers and beginners." href="/guides" />
-          <div className="grid gap-6 lg:grid-cols-[1.1fr_.9fr]">
-            <Link href="/games" className="image-panel group" style={{ backgroundImage: `linear-gradient(to top, rgba(0,0,0,.92), rgba(0,0,0,.1)), url(${GUIDES_IMAGE})` }}><span className="eyebrow text-gold">Explore by game</span><h3 className="mt-3 max-w-xl font-display text-4xl text-white md:text-5xl">From the first rule to the house edge.</h3><span className="mt-5 inline-flex items-center gap-2 text-sm text-gold-light">Browse all games <ArrowRight className="h-4 w-4" /></span></Link>
-            <div className="grid gap-5">{guides.map(item => <StoryCard key={item.story.id} item={item} variant="horizontal" />)}{guides.length === 0 && <div className="story-card p-8 text-ivory/55">New learning guides are being prepared.</div>}</div>
-          </div>
-        </div>
-      </section>
+      <section className="section-space border-y border-white/8 bg-black/20"><div className="container"><SectionHeading eyebrow="Editor’s selection" title="Research worth your time" description="Long-form Blogs chosen for evidence, context, and continued relevance." href="/articles" /><div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">{featured.map(item => <StoryCard key={item.story.id} item={item} />)}</div></div></section>
 
-      <section className="pb-24">
-        <div className="container">
-          <ResearchReferences
-            eyebrow="The evidence desk"
-            title="Research before recommendation"
-            intro="CasinoVerse combines primary regulator material, original trade reporting, public-health evidence, and visible source links. We label uncertainty and keep information separate from gambling promotion."
-            sources={[
-              { name: "Nevada Gaming Control Board", detail: "Primary monthly revenue, quarterly statistics, licensing, and regulatory publications.", href: "https://www.gaming.nv.gov/about-us/statistics-and-publications/" },
-              { name: "World Health Organization", detail: "Global public-health evidence on gambling exposure, harm, prevention, and support.", href: "https://www.who.int/news-room/fact-sheets/detail/gambling" },
-              { name: "Society of Professional Journalists", detail: "Verification, context, source attribution, independence, and correction principles.", href: "https://www.spj.org/spj-code-of-ethics/" },
-            ]}
-          />
-        </div>
-      </section>
+      <section className="section-space"><div className="container"><ResearchReferences eyebrow="The evidence desk" title="Research before recommendation" intro="CasinoVerse combines primary regulator material, original trade reporting, public-health evidence, and visible source links. We label uncertainty and keep information separate from gambling promotion." sources={[{ name: "Nevada Gaming Control Board", detail: "Primary monthly revenue, quarterly statistics, licensing, and regulatory publications.", href: "https://www.gaming.nv.gov/about-us/statistics-and-publications/" }, { name: "World Health Organization", detail: "Global public-health evidence on gambling exposure, harm, prevention, and support.", href: "https://www.who.int/news-room/fact-sheets/detail/gambling" }, { name: "Society of Professional Journalists", detail: "Verification, context, source attribution, independence, and correction principles.", href: "https://www.spj.org/spj-code-of-ethics/" }]} /></div></section>
 
-      <section className="pb-24">
-        <div className="container">
-          <div className="responsible-panel grid overflow-hidden rounded-[30px] border border-[#7893A6]/30 lg:grid-cols-[1fr_1.1fr]">
-            <div className="p-8 md:p-12">
-              <p className="eyebrow text-[#9fb8c9]">Responsible entertainment</p>
-              <h2 className="mt-4 font-display text-4xl leading-none text-ivory md:text-5xl">Know the limits before the game begins.</h2>
-              <p className="mt-6 max-w-xl text-base leading-7 text-ivory/60">Gambling is a paid form of entertainment with a built-in risk of loss. Set firm time and spending limits, never borrow to gamble, and step away when play is no longer enjoyable.</p>
-              <Link href="/responsible-entertainment" className="button-ghost mt-8">Read the complete guide <ArrowRight className="h-4 w-4" /></Link>
-            </div>
-            <div className="image-frame min-h-[340px]"><img src={RESPONSIBLE_IMAGE} alt="Calm responsible-entertainment still life with a clock, notebook, water, and one chip" /></div>
-          </div>
-        </div>
-      </section>
-    </>
-  );
+      <section className="pb-24"><div className="container"><div className="grid overflow-hidden rounded-[30px] border border-gold/20 bg-white/[.025] lg:grid-cols-[1fr_1.1fr]"><div className="border-b border-white/10 p-8 md:p-12 lg:border-b-0 lg:border-r"><Mail className="h-6 w-6 text-gold" aria-hidden="true" /><p className="eyebrow mt-6">Editorial briefing</p><h2 className="mt-4 font-display text-5xl leading-[.96] text-ivory">The Blog in your inbox, without casino promotion.</h2><p className="mt-6 max-w-xl leading-8 text-ivory/60">Subscribe for research digests, history essays, game-literacy guides, and publication updates. No bonuses, betting offers, or affiliate promotions.</p></div><div className="p-8 md:p-12">{subscribe.isSuccess ? <div className="flex min-h-[260px] flex-col justify-center" role="status"><CheckCircle2 className="h-8 w-8 text-gold" /><h3 className="mt-5 font-display text-4xl text-ivory">You’re on the editorial list.</h3><p className="mt-4 max-w-lg leading-8 text-ivory/60">{subscribe.data.alreadySubscribed ? "This email was already subscribed, so no duplicate record was created." : "Your consented subscription has been saved."} Delivery begins only when the CasinoVerse email service is formally launched.</p></div> : <form className="space-y-6" onSubmit={event => { event.preventDefault(); subscribe.mutate({ email, consent: true }); }}><div><label htmlFor="newsletter-email" className="text-sm font-semibold text-ivory">Email address</label><input id="newsletter-email" name="email" type="email" autoComplete="email" required maxLength={320} value={email} onChange={event => setEmail(event.target.value)} placeholder="reader@example.com" className="mt-3 h-14 w-full rounded-2xl border border-white/12 bg-black/30 px-5 text-ivory outline-none placeholder:text-ivory/28 focus:border-gold" /></div><label className="flex cursor-pointer items-start gap-3 text-sm leading-6 text-ivory/58"><input type="checkbox" checked={newsletterConsent} onChange={event => setNewsletterConsent(event.target.checked)} required className="mt-1 h-4 w-4 accent-[#c9a45c]" /><span>I agree to receive the CasinoVerse editorial briefing and understand that my email and consent time will be stored. I can request removal through the <Link href="/privacy" className="text-gold-light underline underline-offset-4">Privacy Policy</Link>.</span></label><button type="submit" className="button-gold justify-center" disabled={!newsletterConsent || subscribe.isPending}>{subscribe.isPending ? "Saving subscription…" : "Subscribe to the briefing"}</button>{subscribe.isError && <p className="text-sm leading-6 text-[#e3aaa0]" role="alert">The subscription could not be saved. Check the email and try again.</p>}<p className="text-xs leading-5 text-ivory/35">Submitting this form does not create a casino account and does not authorize advertising cookies.</p></form>}</div></div></div></section>
+
+      <section className="pb-24"><div className="container"><div className="grid gap-8 rounded-[30px] border border-[#7893A6]/30 bg-[#101419] p-8 md:p-12 lg:grid-cols-[1fr_auto] lg:items-end"><div><p className="eyebrow text-[#9fb8c9]">Responsible entertainment</p><h2 className="mt-4 max-w-3xl font-display text-4xl leading-none text-ivory md:text-5xl">Research includes the limits and harms—not only the industry.</h2><p className="mt-6 max-w-3xl text-base leading-7 text-ivory/60">Gambling is a paid activity with a built-in risk of loss. Our Blog covers product mechanics, public-health evidence, safeguards, and support resources alongside business and culture.</p></div><Link href="/responsible-entertainment" className="button-ghost">Read the complete guide <ArrowRight className="h-4 w-4" /></Link></div></div></section>
+    </main>
+  </>;
 }
 
 function HomeSkeleton() { return <div className="grid gap-8 lg:grid-cols-[1.6fr_.8fr]"><Skeleton className="h-[560px] rounded-[28px] bg-white/5" /><Skeleton className="h-[560px] rounded-[28px] bg-white/5" /></div>; }
 function ErrorState() { return <div className="story-card p-10 text-center"><h2 className="font-display text-3xl text-ivory">The newsroom could not be reached.</h2><p className="mt-3 text-ivory/50">Please refresh the page in a moment.</p></div>; }
-function EmptyState() { return <div className="story-card p-10 text-center"><h2 className="font-display text-3xl text-ivory">The first edition is being prepared.</h2><p className="mt-3 text-ivory/50">Verified research will appear here shortly.</p></div>; }
+function EmptyState() { return <div className="story-card p-10 text-center"><h2 className="font-display text-3xl text-ivory">The first Blog edition is being prepared.</h2><p className="mt-3 text-ivory/50">Verified research will appear here shortly.</p></div>; }

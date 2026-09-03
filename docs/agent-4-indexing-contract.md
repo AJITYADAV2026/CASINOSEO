@@ -2,7 +2,9 @@
 
 ## Role in the Agent Sequence
 
-Agent 4 runs at **5:00 AM IST** after Agent 3’s 2:30 AM page-creation run. It reads the latest completed durable URL manifest, selects newly published canonical pages, submits CasinoVerse’s XML sitemaps to the verified Google Search Console property, records per-URL discovery and inspection state, and writes a dated indexing report.
+> **Current status — paused by user instruction on 3 September 2026.** Agents 1–3 continue at 12:01 AM, 2:00 AM, and 2:30 AM IST. Agent 4 must not perform URL indexing, Search Console operations, URL inspection, or sitemap submission until the user’s custom domain is live and the user explicitly authorizes Agent 4 to resume. The existing public sitemap endpoints may remain available as ordinary site infrastructure, but they are not to be submitted to Search Console during this hold.
+
+When explicitly resumed, Agent 4 will run at **5:00 AM IST** after Agent 3’s 2:30 AM page-creation run. It will read the latest completed durable URL manifest, select newly published canonical pages, submit CasinoVerse’s XML sitemaps to the verified Google Search Console property, record per-URL discovery and inspection state, and write a dated indexing report.
 
 Agent 4 does not research stories, analyze editorial content, create pages, rewrite article content, assign slugs, or change page publication status. Those responsibilities belong to Agents 1–3.
 

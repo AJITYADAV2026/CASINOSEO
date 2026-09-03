@@ -241,3 +241,43 @@ export const urlManifests = mysqlTable(
 
 export type UrlManifest = typeof urlManifests.$inferSelect;
 export type InsertUrlManifest = typeof urlManifests.$inferInsert;
+
+export const newsletterSubscribers = mysqlTable(
+  "newsletter_subscribers",
+  {
+    id: int("id").autoincrement().primaryKey(),
+    email: varchar("email", { length: 320 }).notNull(),
+    status: mysqlEnum("status", ["active", "unsubscribed"]).default("active").notNull(),
+    consentAt: timestamp("consentAt").defaultNow().notNull(),
+    source: varchar("source", { length: 96 }).default("homepage-editorial-briefing").notNull(),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+    updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  },
+  table => [uniqueIndex("newsletter_subscribers_email_idx").on(table.email)],
+);
+
+export type NewsletterSubscriber = typeof newsletterSubscribers.$inferSelect;
+export type InsertNewsletterSubscriber = typeof newsletterSubscribers.$inferInsert;
+
+export const editorialInquiries = mysqlTable(
+  "editorial_inquiries",
+  {
+    id: int("id").autoincrement().primaryKey(),
+    name: varchar("name", { length: 120 }).notNull(),
+    email: varchar("email", { length: 320 }).notNull(),
+    topic: mysqlEnum("topic", ["correction", "privacy", "newsletter", "general"]).default("general").notNull(),
+    message: text("message").notNull(),
+    dedupeKey: varchar("dedupeKey", { length: 64 }).notNull(),
+    consentAt: timestamp("consentAt").defaultNow().notNull(),
+    status: mysqlEnum("status", ["new", "reviewed", "resolved", "spam"]).default("new").notNull(),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+    updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  },
+  table => [
+    uniqueIndex("editorial_inquiries_dedupe_idx").on(table.dedupeKey),
+    index("editorial_inquiries_status_idx").on(table.status, table.createdAt),
+  ],
+);
+
+export type EditorialInquiry = typeof editorialInquiries.$inferSelect;
+export type InsertEditorialInquiry = typeof editorialInquiries.$inferInsert;
