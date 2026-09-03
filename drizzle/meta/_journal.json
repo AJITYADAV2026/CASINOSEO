@@ -29,6 +29,27 @@
       "when": 1788441570200,
       "tag": "0003_powerful_hellcat",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1788443338676,
+      "tag": "0004_cute_namor",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1788443439721,
+      "tag": "0005_brainy_blur",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1788443560091,
+      "tag": "0006_silent_king_bedlam",
+      "breakpoints": true
     }
   ]
 }

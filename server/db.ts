@@ -5,6 +5,7 @@ import {
   dailyDigests,
   digestStories,
   InsertUser,
+  siteFindReports,
   stories,
   storySources,
   users,
@@ -213,4 +214,59 @@ export async function searchStories(query: string) {
     )
     .orderBy(desc(stories.publishedAt))
     .limit(24);
+}
+
+export function selectLatestAnalyzableDigest<T extends { digestDate: string; status: string; markdownArtifact: string | null; updatedAt: Date }>(rows: T[], includeDeveloping = false) {
+  const allowed = includeDeveloping ? new Set(["published", "developing"]) : new Set(["published"]);
+  return [...rows]
+    .filter(row => allowed.has(row.status) && Boolean(row.markdownArtifact?.trim()))
+    .sort((left, right) => right.digestDate.localeCompare(left.digestDate) || right.updatedAt.getTime() - left.updatedAt.getTime())[0];
+}
+
+export async function getLatestDigestForAnalysis(includeDeveloping = false) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const allowedStatuses = includeDeveloping ? ["published", "developing"] as const : ["published"] as const;
+  const rows = await db
+    .select()
+    .from(dailyDigests)
+    .where(inArray(dailyDigests.status, allowedStatuses))
+    .orderBy(desc(dailyDigests.digestDate), desc(dailyDigests.updatedAt))
+    .limit(20);
+  return selectLatestAnalyzableDigest(rows, includeDeveloping);
+}
+
+export async function getStoryCatalogForAnalysis() {
+  const db = await getDb();
+  if (!db) return [];
+  return db
+    .select({
+      id: stories.id,
+      slug: stories.slug,
+      title: stories.title,
+      dek: stories.dek,
+      status: stories.status,
+      contentType: stories.contentType,
+      categorySlug: categories.slug,
+      categoryName: categories.name,
+      publishedAt: stories.publishedAt,
+      modifiedAt: stories.modifiedAt,
+    })
+    .from(stories)
+    .innerJoin(categories, eq(stories.categoryId, categories.id))
+    .orderBy(desc(stories.publishedAt));
+}
+
+export async function getSiteFindReportByDate(reportDate: string) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const rows = await db.select().from(siteFindReports).where(eq(siteFindReports.reportDate, reportDate)).limit(1);
+  return rows[0];
+}
+
+export async function getLatestSiteFindReport() {
+  const db = await getDb();
+  if (!db) return undefined;
+  const rows = await db.select().from(siteFindReports).orderBy(desc(siteFindReports.reportDate)).limit(1);
+  return rows[0];
 }

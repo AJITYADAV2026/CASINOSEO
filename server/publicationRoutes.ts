@@ -11,6 +11,7 @@ import {
 } from "../drizzle/schema";
 import { getArchive, getDb, getDigestByDate, getHomepageContent } from "./db";
 import { sdk } from "./_core/sdk";
+import { runContentAnalysis } from "./contentAnalysis";
 
 const xml = (value: string) => value
   .replace(/&/g, "&amp;")
@@ -179,6 +180,56 @@ async function scheduledDailyDigest(req: Request, res: Response) {
   }
 }
 
+async function scheduledContentAnalysis(req: Request, res: Response) {
+  let taskUid: string | undefined;
+  try {
+    let user;
+    try {
+      user = await sdk.authenticateRequest(req);
+    } catch {
+      return res.status(403).json({ error: "cron-only" });
+    }
+    taskUid = user.taskUid;
+    if (!user.isCron || !taskUid) return res.status(403).json({ error: "cron-only" });
+
+    const db = await getDb();
+    if (!db) return res.status(503).json({ error: "database-unavailable" });
+    const [job] = await db.select().from(publicationJobs).where(eq(publicationJobs.scheduleCronTaskUid, taskUid)).limit(1);
+    if (!job || job.jobKey !== "casinoverse-content-analysis") return res.json({ ok: true, skipped: "orphan" });
+
+    const result = await runContentAnalysis({ taskUid, db });
+    if ("report" in result && result.report) {
+      await db.update(publicationJobs).set({
+        status: "active",
+        lastCompletedDigestDate: result.report.sourceDigestDate,
+        lastRunAt: new Date(),
+      }).where(eq(publicationJobs.id, job.id));
+      return res.json({
+        ok: true,
+        reportDate: result.report.reportDate,
+        sourceDigestDate: result.report.sourceDigestDate,
+        status: result.report.status,
+        decisionCounts: {
+          add: result.report.addCount,
+          update: result.report.updateCount,
+          retain: result.report.retainCount,
+          archive: result.report.archiveCount,
+          remove: result.report.removeCount,
+        },
+      });
+    }
+    return res.json({ ok: true, skipped: result.skipped });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Unknown Agent 2 content-analysis error";
+    return res.status(500).json({
+      error: message,
+      stack: error instanceof Error ? error.stack : undefined,
+      context: { url: req.originalUrl, taskUid },
+      timestamp: new Date().toISOString(),
+    });
+  }
+}
+
 export function registerPublicationRoutes(app: Express) {
   app.get("/robots.txt", (_req, res) => {
     const origin = publicationOrigin();
@@ -232,4 +283,5 @@ export function registerPublicationRoutes(app: Express) {
   });
 
   app.post("/api/scheduled/daily-digest", scheduledDailyDigest);
+  app.post("/api/scheduled/content-analysis", scheduledContentAnalysis);
 }

@@ -31,3 +31,13 @@
 - [x] Rebuild, republish, and verify the live callback contract and durable Markdown archive end to end.
 - [x] Re-verify the republished live callback returns 403 without scheduled credentials and the active schedule detail requires `markdownArtifact`.
 - [x] Complete a safe authenticated scheduled-ingestion validation, or an equivalent authenticated transaction test, and verify the resulting durable Markdown output.
+- [x] Review Agent 1’s latest durable Markdown artifact and current daily schedule configuration before defining Agent 2.
+- [x] Define Agent 2 rules for additions, updates, removals, source retention, duplication control, and responsible-gambling safeguards.
+- [x] Add durable database storage for dated Site Find Markdown reports and structured content-change recommendations.
+- [x] Add an authenticated Agent 2 callback that reads the latest Agent 1 digest from website storage rather than an isolated task filesystem.
+- [x] Superseded by the user’s agent-layer clarification: Agent 2 will only recommend additions, updates, retention, archival, or removal; it will not apply page or URL changes.
+- [x] Superseded by the user’s agent-layer clarification: persist the dated Site Find artifact without creating a public route; Agent 3 owns URL creation.
+- [ ] Create and activate Agent 2 at 2:00 AM in the confirmed timezone, after Agent 1’s 12:01 AM run.
+- [x] Add tests for Agent 2 analysis payload validation, latest-digest selection, durable Site Find persistence, and analysis-only boundary behavior.
+- [ ] Rebuild, republish, verify the live Agent 2 workflow, and deliver the updated CasinoVerse checkpoint.
+- [x] Verify Agent 2 does not create pages or URLs and does not modify indexing or sitemap behavior reserved for Agents 3 and 4.

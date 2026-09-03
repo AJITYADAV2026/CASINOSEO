@@ -1,0 +1,2 @@
+ALTER TABLE `site_find_reports` MODIFY COLUMN `status` enum('draft','completed','failed') NOT NULL DEFAULT 'completed';--> statement-breakpoint
+ALTER TABLE `site_find_reports` ADD `sourceDigestUpdatedAt` timestamp NOT NULL;

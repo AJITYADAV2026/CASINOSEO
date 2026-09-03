@@ -173,3 +173,38 @@ export const publicationJobs = mysqlTable(
 
 export type PublicationJob = typeof publicationJobs.$inferSelect;
 export type InsertPublicationJob = typeof publicationJobs.$inferInsert;
+
+export const siteFindReports = mysqlTable(
+  "site_find_reports",
+  {
+    id: int("id").autoincrement().primaryKey(),
+    reportDate: date("reportDate", { mode: "string" }).notNull(),
+    sourceDigestId: int("sourceDigestId").notNull(),
+    sourceDigestDate: date("sourceDigestDate", { mode: "string" }).notNull(),
+    sourceDigestUpdatedAt: timestamp("sourceDigestUpdatedAt").notNull(),
+    status: mysqlEnum("status", ["draft", "completed", "failed"]).default("completed").notNull(),
+    modelId: varchar("modelId", { length: 96 }).notNull(),
+    executiveSummary: text("executiveSummary").notNull(),
+    decisionsJson: mediumtext("decisionsJson").notNull(),
+    markdownArtifact: mediumtext("markdownArtifact").notNull(),
+    addCount: int("addCount").default(0).notNull(),
+    updateCount: int("updateCount").default(0).notNull(),
+    retainCount: int("retainCount").default(0).notNull(),
+    archiveCount: int("archiveCount").default(0).notNull(),
+    removeCount: int("removeCount").default(0).notNull(),
+    scheduleCronTaskUid: varchar("schedule_cron_task_uid", { length: 65 }),
+    analyzedAt: timestamp("analyzedAt").defaultNow().notNull(),
+    errorMessage: text("errorMessage"),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+    updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  },
+  table => [
+    uniqueIndex("site_find_report_date_idx").on(table.reportDate),
+    index("site_find_source_digest_idx").on(table.sourceDigestId),
+    index("site_find_source_date_idx").on(table.sourceDigestDate),
+    index("site_find_cron_uid_idx").on(table.scheduleCronTaskUid),
+  ],
+);
+
+export type SiteFindReport = typeof siteFindReports.$inferSelect;
+export type InsertSiteFindReport = typeof siteFindReports.$inferInsert;
