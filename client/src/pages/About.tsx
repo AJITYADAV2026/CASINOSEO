@@ -1,0 +1,52 @@
+import { ArrowRight, CheckCircle2, ExternalLink, FileSearch, Scale, ShieldCheck } from "lucide-react";
+import { Link } from "wouter";
+import { Seo } from "@/components/Seo";
+import { HERO_IMAGE } from "@/lib/site";
+
+const standards = [
+  ["Trace the claim", "Research stories retain original publisher names, headlines, URLs, publication dates when visible, and the date CasinoVerse accessed the source."],
+  ["Label uncertainty", "Forecasts, company statements, proposals, tenders, and unresolved litigation are identified instead of being presented as completed outcomes."],
+  ["Add context", "We compare operators, markets, time periods, and regulatory scope so a single headline is not mistaken for an industry-wide conclusion."],
+  ["Separate information from promotion", "CasinoVerse does not publish bonus rankings, winning systems, betting picks, deposit links, or encouragement to chase profit."],
+];
+
+export default function About() {
+  return (
+    <>
+      <Seo title="About CasinoVerse" description="Learn how CasinoVerse researches casino-industry news, attributes sources, handles developing stories, and maintains an informational-only editorial standard." path="/about" image={HERO_IMAGE} />
+      <header className="about-hero relative overflow-hidden border-b border-gold/15">
+        <img src={HERO_IMAGE} alt="Contemporary integrated-resort architecture in a restrained editorial style" className="absolute inset-0 h-full w-full object-cover opacity-25" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/85 to-black/40" />
+        <div className="container relative flex min-h-[620px] items-end py-16 md:items-center md:py-24">
+          <div className="max-w-4xl"><p className="eyebrow text-gold">About the publication</p><h1 className="mt-5 font-display text-[clamp(4rem,9vw,8rem)] leading-[.84] tracking-[-.045em] text-ivory">Context before<br /><em className="font-normal text-gold-light">conclusion.</em></h1><p className="mt-7 max-w-2xl text-xl leading-8 text-ivory/62">CasinoVerse is an independent informational publication about casino business, design, regulation, games, destinations, and responsible entertainment.</p></div>
+        </div>
+      </header>
+
+      <section className="section-space">
+        <div className="container grid gap-12 lg:grid-cols-[.6fr_1.4fr]">
+          <div><FileSearch className="h-10 w-10 text-gold" /><p className="eyebrow mt-7 text-gold">Our mission</p></div>
+          <div><h2 className="font-display text-5xl leading-none text-ivory md:text-6xl">Make a complex global industry easier to understand.</h2><p className="mt-7 max-w-3xl text-xl leading-9 text-ivory/58">Casino coverage often sits between finance, law, tourism, technology, entertainment, and public health. CasinoVerse brings those threads together, keeps original sources visible, and writes for readers who want explanation rather than promotion.</p></div>
+        </div>
+      </section>
+
+      <section id="standards" className="scroll-mt-28 border-y border-gold/15 bg-[#11100f] py-20">
+        <div className="container">
+          <div className="max-w-3xl"><p className="eyebrow text-gold">Editorial standards</p><h2 className="mt-3 font-display text-5xl leading-none text-ivory">How a CasinoVerse story is built.</h2></div>
+          <div className="mt-12 grid gap-5 md:grid-cols-2">{standards.map(([title, text], index) => <article key={title} className="standards-card"><div className="flex items-center justify-between"><span className="text-xs tracking-[.16em] text-ivory/25">0{index + 1}</span><CheckCircle2 className="h-5 w-5 text-gold" /></div><h3 className="mt-10 font-display text-3xl text-ivory">{title}</h3><p className="mt-4 text-base leading-7 text-ivory/52">{text}</p></article>)}</div>
+        </div>
+      </section>
+
+      <section className="section-space">
+        <div className="container grid gap-10 lg:grid-cols-3">
+          <article><Scale className="h-7 w-7 text-gold" /><h2 className="mt-5 font-display text-3xl text-ivory">Research window</h2><p className="mt-4 leading-7 text-ivory/52">Daily editions are organized by the date on which source publishers visibly released their coverage. A current-day page remains Developing until the research window closes.</p></article>
+          <article><FileSearch className="h-7 w-7 text-gold" /><h2 className="mt-5 font-display text-3xl text-ivory">Corrections and updates</h2><p className="mt-4 leading-7 text-ivory/52">Material changes should update the displayed modification date. Developing labels are removed only when the edition is complete. Minor style edits do not create artificial freshness.</p></article>
+          <article><ShieldCheck className="h-7 w-7 text-gold" /><h2 className="mt-5 font-display text-3xl text-ivory">Responsible scope</h2><p className="mt-4 leading-7 text-ivory/52">We cover gambling as an industry and cultural subject. We do not offer real-money play, bonuses, odds, wallets, deposits, or systems that claim to guarantee profit.</p></article>
+        </div>
+      </section>
+
+      <section className="pb-24">
+        <div className="container"><div className="digest-banner rounded-[28px] border border-gold/20 p-8 md:p-11"><p className="eyebrow text-gold">Read the work</p><h2 className="mt-3 max-w-3xl font-display text-4xl text-ivory md:text-5xl">Begin with the latest dated research edition.</h2><div className="mt-7 flex flex-wrap gap-4"><Link href="/archive" className="button-gold">Open the archive <ArrowRight className="h-4 w-4" /></Link><a href="mailto:editorial@casinoverse.example" className="button-ghost">Contact the editorial desk <ExternalLink className="h-4 w-4" /></a></div></div></div>
+      </section>
+    </>
+  );
+}

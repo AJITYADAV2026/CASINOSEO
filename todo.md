@@ -1,0 +1,28 @@
+# Project TODO
+
+- [x] Review both supplied CasinoVerse design and structure PDFs and extract their visual, layout, content, and responsive requirements.
+- [x] Review the initialized full-stack project scaffold and relevant scheduling, publisher SEO, accessibility, and web-development guidance.
+- [x] Define the daily research window and sourcing standard for dated casino-industry digests beginning 2 September 2026.
+- [x] Research casino-industry developments for 2 September 2026 and save a source-attributed dated Markdown digest.
+- [x] Research casino-industry developments for 3 September 2026 and save a source-attributed dated Markdown digest.
+- [ ] Refresh and finalize the 3 September 2026 digest after the full calendar-day research window closes.
+- [x] Define the public sitemap, navigation, editorial taxonomy, article structure, category model, and date-archive model.
+- [x] Define database tables for editorial stories, source references, categories, daily digests, and story-to-digest relationships.
+- [x] Apply the database schema through a reviewed migration and expose typed data access through tRPC.
+- [x] Build the responsive CasinoVerse global header, navigation, footer, and disclosure system.
+- [x] Build the responsive homepage with a lead story, curated headlines, topic sections, and daily-digest entry point.
+- [x] Build the article detail page with publication metadata, source attribution, outbound references, and related coverage.
+- [x] Build category landing pages with current and archived editorial stories.
+- [x] Build date-based research archive and daily-digest views.
+- [x] Add prominent responsible-gambling messaging and informational-only disclosure language throughout appropriate public views.
+- [x] Implement publisher-focused metadata, canonical URLs, Open Graph/Twitter tags, NewsArticle/Article structured data, robots.txt, and sitemap support.
+- [x] Implement accessible keyboard navigation, semantic landmarks, visible focus states, readable contrast, and reduced-motion behavior.
+- [ ] Implement the recurring daily research and digest-update workflow using the platform scheduling system.
+- [x] Implement and validate the secure, idempotent daily-digest callback and durable scheduled-task identity record.
+- [ ] Configure the production canonical origin after the published CasinoVerse domain is known.
+- [x] Add and update Vitest coverage for database helpers, routers, content transformations, archive filtering, and metadata logic.
+- [x] Run type checking, unit tests, build validation, and inspect runtime logs for errors.
+- [x] Visually verify the homepage and all public page templates at desktop and mobile breakpoints against the supplied design direction.
+- [x] Add explicit focus-visible styles for every custom interactive pattern, including navigation links, icon controls, CTAs, topic cards, archive cards, source links, and footer links.
+- [x] Complete a keyboard-only and contrast-focused accessibility pass across all public routes and document the results.
+- [x] Create the final project checkpoint and deliver the CasinoVerse website with all dated Markdown research files.

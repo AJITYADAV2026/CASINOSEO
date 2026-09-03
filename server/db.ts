@@ -1,6 +1,14 @@
-import { eq } from "drizzle-orm";
+import { and, desc, eq, inArray, like, or } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users } from "../drizzle/schema";
+import {
+  categories,
+  dailyDigests,
+  digestStories,
+  InsertUser,
+  stories,
+  storySources,
+  users,
+} from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -89,4 +97,120 @@ export async function getUserByOpenId(openId: string) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-// TODO: add feature queries here as your schema grows.
+const publicStoryStatuses = ["published", "developing"] as const;
+
+export async function getHomepageContent() {
+  const db = await getDb();
+  if (!db) return { categories: [], stories: [], digests: [] };
+
+  const [categoryRows, storyRows, digestRows] = await Promise.all([
+    db.select().from(categories).orderBy(categories.name),
+    db
+      .select({ story: stories, category: categories })
+      .from(stories)
+      .innerJoin(categories, eq(stories.categoryId, categories.id))
+      .where(inArray(stories.status, publicStoryStatuses))
+      .orderBy(desc(stories.publishedAt)),
+    db
+      .select()
+      .from(dailyDigests)
+      .where(inArray(dailyDigests.status, ["published", "developing"]))
+      .orderBy(desc(dailyDigests.digestDate))
+      .limit(8),
+  ]);
+
+  return { categories: categoryRows, stories: storyRows, digests: digestRows };
+}
+
+export async function getStoryBySlug(slug: string) {
+  const db = await getDb();
+  if (!db) return undefined;
+
+  const rows = await db
+    .select({ story: stories, category: categories })
+    .from(stories)
+    .innerJoin(categories, eq(stories.categoryId, categories.id))
+    .where(and(eq(stories.slug, slug), inArray(stories.status, publicStoryStatuses)))
+    .limit(1);
+
+  if (!rows[0]) return undefined;
+  const sources = await db
+    .select()
+    .from(storySources)
+    .where(eq(storySources.storyId, rows[0].story.id))
+    .orderBy(storySources.id);
+
+  return { ...rows[0], sources };
+}
+
+export async function getCategoryBySlug(slug: string) {
+  const db = await getDb();
+  if (!db) return undefined;
+
+  const categoryRows = await db.select().from(categories).where(eq(categories.slug, slug)).limit(1);
+  if (!categoryRows[0]) return undefined;
+
+  const storyRows = await db
+    .select({ story: stories, category: categories })
+    .from(stories)
+    .innerJoin(categories, eq(stories.categoryId, categories.id))
+    .where(
+      and(
+        eq(stories.categoryId, categoryRows[0].id),
+        inArray(stories.status, publicStoryStatuses),
+      ),
+    )
+    .orderBy(desc(stories.publishedAt));
+
+  return { category: categoryRows[0], stories: storyRows };
+}
+
+export async function getArchive() {
+  const db = await getDb();
+  if (!db) return [];
+  return db
+    .select()
+    .from(dailyDigests)
+    .where(inArray(dailyDigests.status, ["published", "developing", "archived"]))
+    .orderBy(desc(dailyDigests.digestDate));
+}
+
+export async function getDigestByDate(digestDate: string) {
+  const db = await getDb();
+  if (!db) return undefined;
+
+  const digestRows = await db
+    .select()
+    .from(dailyDigests)
+    .where(eq(dailyDigests.digestDate, digestDate))
+    .limit(1);
+  if (!digestRows[0]) return undefined;
+
+  const storyRows = await db
+    .select({ story: stories, category: categories, position: digestStories.position })
+    .from(digestStories)
+    .innerJoin(stories, eq(digestStories.storyId, stories.id))
+    .innerJoin(categories, eq(stories.categoryId, categories.id))
+    .where(eq(digestStories.digestId, digestRows[0].id))
+    .orderBy(digestStories.position);
+
+  return { digest: digestRows[0], stories: storyRows };
+}
+
+export async function searchStories(query: string) {
+  const db = await getDb();
+  if (!db || query.trim().length < 2) return [];
+  const term = `%${query.trim()}%`;
+  return db
+    .select({ story: stories, category: categories })
+    .from(stories)
+    .innerJoin(categories, eq(stories.categoryId, categories.id))
+    .where(
+      and(
+        inArray(stories.status, publicStoryStatuses),
+        or(like(stories.title, term), like(stories.dek, term), like(stories.body, term)),
+      ),
+    )
+    .orderBy(desc(stories.publishedAt))
+    .limit(24);
+}
