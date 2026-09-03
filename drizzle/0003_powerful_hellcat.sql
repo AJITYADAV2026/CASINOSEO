@@ -1,0 +1,1 @@
+ALTER TABLE `daily_digests` ADD `markdownArtifact` mediumtext;

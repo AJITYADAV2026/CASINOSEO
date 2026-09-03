@@ -5,7 +5,7 @@
 | Check | Result |
 | --- | --- |
 | TypeScript | Passed with no errors |
-| Vitest | 12 tests passed across authentication, editorial data, sources, dated digests, search, SSR prefetch, metadata, contrast, and focus styles |
+| Vitest | 13 tests passed across authentication, editorial data, sources, dated digests, search, SSR prefetch, metadata, contrast, focus styles, and production-origin configuration |
 | Client production build | Passed |
 | Server-side rendering build | Passed |
 | Express production bundle | Passed |
@@ -40,3 +40,9 @@ Continuing that native sequence moved focus from **Skip to content** to the **Ca
 ## Known Deployment Dependency
 
 Production canonical tags, absolute Open Graph image URLs, and absolute sitemap URLs require `CANONICAL_ORIGIN` to match the final published domain. The recurring daily agent also requires the published production callback and the user-confirmed daily trigger time.
+
+## Live Production Verification
+
+After publication, the confirmed domain `https://casinonews-flgw988r.manus.space` returned HTTP 200 for the homepage, `robots.txt`, `sitemap.xml`, and `news-sitemap.xml`. The live `robots.txt` response referenced both XML sitemaps using the confirmed HTTPS origin, and the HTML and XML outputs were regenerated under the production canonical configuration.
+
+The recurring task **CasinoVerse daily research edition** is active with task UID `2QvHU9jj3ngh2WzxrJ6NQ4`, timezone `Asia/Calcutta`, and six-field cron `0 31 18 * * *`, corresponding to **12:01 AM IST daily**. The task identity is stored against the publication job in the database. A direct unauthenticated request to the live `/api/scheduled/daily-digest` endpoint returned HTTP 403, confirming that only the scheduled-task identity can write research editions. The first full-window run will finalize the 3 September edition at 12:01 AM IST on 4 September.

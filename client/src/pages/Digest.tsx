@@ -1,4 +1,4 @@
-import { ArrowLeft, CalendarDays, CheckCircle2, CircleDot } from "lucide-react";
+import { ArrowLeft, CalendarDays, CheckCircle2, CircleDot, FileDown } from "lucide-react";
 import { useMemo } from "react";
 import { Link, useParams } from "wouter";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -71,6 +71,7 @@ export default function Digest() {
             <CalendarDays className="h-6 w-6 text-gold" />
             <h2 className="mt-4 font-display text-2xl text-ivory">Edition status</h2>
             <div className="mt-5 flex items-start gap-3 text-sm leading-6 text-ivory/55"><CircleDot className="mt-1 h-4 w-4 shrink-0 text-gold" /><p>{isDeveloping ? "This current-day edition may receive additional verified developments before the calendar-day window closes." : "This edition represents the completed research file for its publication date."}</p></div>
+            {data.digest.markdownArtifact ? <a href={`/research/${data.digest.digestDate}.md`} className="button-ghost mt-6 w-full justify-center"><FileDown className="h-4 w-4" /> View Markdown research</a> : null}
             <p className="mt-5 border-t border-white/10 pt-5 text-xs leading-5 text-ivory/38">All summaries are informational. Follow article source links to review the original reporting and official material.</p>
           </div>
         </aside>

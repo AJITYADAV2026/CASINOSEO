@@ -9,7 +9,7 @@ import {
   stories,
   storySources,
 } from "../drizzle/schema";
-import { getArchive, getDb, getHomepageContent } from "./db";
+import { getArchive, getDb, getDigestByDate, getHomepageContent } from "./db";
 import { sdk } from "./_core/sdk";
 
 const xml = (value: string) => value
@@ -46,11 +46,12 @@ const storySchema = z.object({
   sources: z.array(sourceSchema).min(1).max(12),
 });
 
-const digestPayloadSchema = z.object({
+export const digestPayloadSchema = z.object({
   digestDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
   title: z.string().trim().min(8).max(280),
   summary: z.string().trim().min(30).max(1500),
   body: z.string().trim().min(80).max(15000),
+  markdownArtifact: z.string().trim().min(200).max(500000),
   status: z.enum(["developing", "published"]),
   stories: z.array(storySchema).min(1).max(30),
 });
@@ -81,6 +82,7 @@ async function scheduledDailyDigest(req: Request, res: Response) {
         title: payload.title,
         summary: payload.summary,
         body: payload.body,
+        markdownArtifact: payload.markdownArtifact,
         status: payload.status,
         publishedAt: payload.status === "published" ? new Date() : null,
         modifiedAt: new Date(),
@@ -88,6 +90,7 @@ async function scheduledDailyDigest(req: Request, res: Response) {
         title: payload.title,
         summary: payload.summary,
         body: payload.body,
+        markdownArtifact: payload.markdownArtifact,
         status: payload.status,
         publishedAt: payload.status === "published" ? new Date() : null,
         modifiedAt: new Date(),
@@ -206,6 +209,18 @@ export function registerPublicationRoutes(app: Express) {
     const { stories: storyRows } = await getHomepageContent();
     const items = storyRows.filter(item => item.story.status === "published").slice(0, 30).map(item => `<item><title>${xml(item.story.title)}</title><link>${xml(origin + `/articles/${item.story.slug}`)}</link><guid>${xml(origin + `/articles/${item.story.slug}`)}</guid><description>${xml(item.story.dek)}</description>${item.story.publishedAt ? `<pubDate>${item.story.publishedAt.toUTCString()}</pubDate>` : ""}<category>${xml(item.category.name)}</category></item>`).join("");
     res.set("Cache-Control", "public, max-age=900").type("application/rss+xml").send(`<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>CasinoVerse</title><link>${xml(origin)}</link><description>${xml("Independent casino-industry research, culture, regulation, and responsible entertainment.")}</description>${items}</channel></rss>`);
+  });
+
+  app.get("/research/:date.md", async (req, res) => {
+    const date = z.string().regex(/^\d{4}-\d{2}-\d{2}$/).safeParse(req.params.date);
+    if (!date.success) return res.status(404).type("text/plain").send("Research edition not found");
+    const data = await getDigestByDate(date.data);
+    if (!data?.digest.markdownArtifact) return res.status(404).type("text/plain").send("Research edition not found");
+    res
+      .set("Cache-Control", data.digest.status === "developing" ? "no-cache" : "public, max-age=900")
+      .set("Content-Disposition", `inline; filename="CasinoVerse-${date.data}.md"`)
+      .type("text/markdown; charset=utf-8")
+      .send(data.digest.markdownArtifact);
   });
 
   app.post("/api/scheduled/daily-digest", scheduledDailyDigest);

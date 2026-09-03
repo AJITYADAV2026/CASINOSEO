@@ -5,6 +5,7 @@ import {
   int,
   mysqlEnum,
   mysqlTable,
+  mediumtext,
   primaryKey,
   text,
   timestamp,
@@ -116,6 +117,7 @@ export const dailyDigests = mysqlTable(
     title: varchar("title", { length: 280 }).notNull(),
     summary: text("summary").notNull(),
     body: text("body").notNull(),
+    markdownArtifact: mediumtext("markdownArtifact"),
     status: mysqlEnum("status", ["developing", "published", "archived"])
       .default("developing")
       .notNull(),

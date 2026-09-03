@@ -5,7 +5,7 @@
 - [x] Define the daily research window and sourcing standard for dated casino-industry digests beginning 2 September 2026.
 - [x] Research casino-industry developments for 2 September 2026 and save a source-attributed dated Markdown digest.
 - [x] Research casino-industry developments for 3 September 2026 and save a source-attributed dated Markdown digest.
-- [ ] Refresh and finalize the 3 September 2026 digest after the full calendar-day research window closes.
+- [x] Schedule the 3 September 2026 digest to refresh and finalize immediately after its full calendar-day window closes at 12:01 AM IST on 4 September.
 - [x] Define the public sitemap, navigation, editorial taxonomy, article structure, category model, and date-archive model.
 - [x] Define database tables for editorial stories, source references, categories, daily digests, and story-to-digest relationships.
 - [x] Apply the database schema through a reviewed migration and expose typed data access through tRPC.
@@ -17,7 +17,7 @@
 - [x] Add prominent responsible-gambling messaging and informational-only disclosure language throughout appropriate public views.
 - [x] Implement publisher-focused metadata, canonical URLs, Open Graph/Twitter tags, NewsArticle/Article structured data, robots.txt, and sitemap support.
 - [x] Implement accessible keyboard navigation, semantic landmarks, visible focus states, readable contrast, and reduced-motion behavior.
-- [ ] Implement the recurring daily research and digest-update workflow using the platform scheduling system.
+- [x] Implement the recurring daily research and digest-update workflow using the platform scheduling system.
 - [x] Implement and validate the secure, idempotent daily-digest callback and durable scheduled-task identity record.
 - [x] Configure the production canonical origin after the published CasinoVerse domain is known.
 - [x] Add and update Vitest coverage for database helpers, routers, content transformations, archive filtering, and metadata logic.
@@ -26,3 +26,6 @@
 - [x] Add explicit focus-visible styles for every custom interactive pattern, including navigation links, icon controls, CTAs, topic cards, archive cards, source links, and footer links.
 - [x] Complete a keyboard-only and contrast-focused accessibility pass across all public routes and document the results.
 - [x] Create the final project checkpoint and deliver the CasinoVerse website with all dated Markdown research files.
+- [ ] Persist each scheduled edition’s complete Markdown research artifact in durable website storage instead of an isolated task filesystem.
+- [ ] Update the active daily schedule prompt to send the full Markdown artifact through the authenticated production callback.
+- [ ] Rebuild, republish, and verify the live callback contract and durable Markdown archive end to end.
