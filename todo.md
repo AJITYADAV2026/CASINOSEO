@@ -37,7 +37,9 @@
 - [x] Add an authenticated Agent 2 callback that reads the latest Agent 1 digest from website storage rather than an isolated task filesystem.
 - [x] Superseded by the user’s agent-layer clarification: Agent 2 will only recommend additions, updates, retention, archival, or removal; it will not apply page or URL changes.
 - [x] Superseded by the user’s agent-layer clarification: persist the dated Site Find artifact without creating a public route; Agent 3 owns URL creation.
-- [ ] Create and activate Agent 2 at 2:00 AM in the confirmed timezone, after Agent 1’s 12:01 AM run.
+- [x] Create and activate Agent 2 at 2:00 AM IST, after Agent 1’s 12:01 AM IST run.
 - [x] Add tests for Agent 2 analysis payload validation, latest-digest selection, durable Site Find persistence, and analysis-only boundary behavior.
 - [ ] Rebuild, republish, verify the live Agent 2 workflow, and deliver the updated CasinoVerse checkpoint.
 - [x] Verify Agent 2 does not create pages or URLs and does not modify indexing or sitemap behavior reserved for Agents 3 and 4.
+- [ ] Trigger or verify one authenticated Agent 2 execution and confirm it persists a Site Find report through the scheduled callback path.
+- [ ] Save a final post-schedule checkpoint containing Agent 2’s complete implementation and validation documentation.

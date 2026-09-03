@@ -197,7 +197,16 @@ async function scheduledContentAnalysis(req: Request, res: Response) {
     const [job] = await db.select().from(publicationJobs).where(eq(publicationJobs.scheduleCronTaskUid, taskUid)).limit(1);
     if (!job || job.jobKey !== "casinoverse-content-analysis") return res.json({ ok: true, skipped: "orphan" });
 
-    const result = await runContentAnalysis({ taskUid, db });
+    const verificationInput = z.object({
+      includeDeveloping: z.boolean().optional().default(false),
+      force: z.boolean().optional().default(false),
+    }).parse(req.body ?? {});
+    const result = await runContentAnalysis({
+      taskUid,
+      db,
+      includeDeveloping: verificationInput.includeDeveloping,
+      force: verificationInput.force,
+    });
     if ("report" in result && result.report) {
       await db.update(publicationJobs).set({
         status: "active",
