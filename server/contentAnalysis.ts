@@ -1,7 +1,7 @@
 import { and, desc, eq } from "drizzle-orm";
 import { z } from "zod";
 import { dailyDigests, siteFindReports, stories } from "../drizzle/schema";
-import { getDb, getLatestDigestForAnalysis, getStoryCatalogForAnalysis } from "./db";
+import { getDb, getDigestByDate, getLatestDigestForAnalysis, getStoryCatalogForAnalysis } from "./db";
 import { invokeLLM } from "./_core/llm";
 
 export const AGENT_2_MODEL = "gemini-3-flash-preview";
@@ -44,6 +44,7 @@ type EditorialDb = NonNullable<Awaited<ReturnType<typeof getDb>>>;
 type Analyzer = (digestMarkdown: string, storyCatalog: Awaited<ReturnType<typeof getStoryCatalogForAnalysis>>) => Promise<ContentAnalysis>;
 type AnalyzableDigest = NonNullable<Awaited<ReturnType<typeof getLatestDigestForAnalysis>>>;
 type AnalysisCatalog = Awaited<ReturnType<typeof getStoryCatalogForAnalysis>>;
+type DigestStoryRows = NonNullable<Awaited<ReturnType<typeof getDigestByDate>>>["stories"];
 
 const outputSchema = {
   name: "casinoverse_site_find",
@@ -110,6 +111,40 @@ export async function analyzeDigestContent(digestMarkdown: string, storyCatalog:
   return contentAnalysisSchema.parse(JSON.parse(normalized));
 }
 
+export function buildDeterministicAnalysis(sourceDigestDate: string, sourceStatus: string, digestStoryRows: DigestStoryRows): ContentAnalysis {
+  const decisions = digestStoryRows.slice(0, 12).map(item => {
+    const action = sourceStatus === "developing" ? "update" as const : "retain" as const;
+    const highPriority = item.category.slug === "regulation" || item.category.slug === "responsible-entertainment";
+    return {
+      action,
+      proposedTitle: item.story.title,
+      existingSlug: item.story.slug,
+      categorySlug: categories.includes(item.category.slug as (typeof categories)[number])
+        ? item.category.slug as (typeof categories)[number]
+        : "market-intelligence" as const,
+      contentType: contentTypes.includes(item.story.contentType as (typeof contentTypes)[number])
+        ? item.story.contentType as (typeof contentTypes)[number]
+        : "analysis" as const,
+      priority: highPriority ? "high" as const : "medium" as const,
+      rationale: action === "update"
+        ? "Refresh this developing item after Agent 1 closes the research window and preserve every source qualification."
+        : "Retain this completed source-attributed item unless later evidence materially changes the reported facts.",
+      evidence: [`Agent 1 ${sourceDigestDate}: ${item.story.title}`],
+      confidence: 0.8,
+      requiresHumanReview: action === "update",
+    };
+  });
+  return contentAnalysisSchema.parse({
+    executiveSummary: `Agent 2 reviewed ${decisions.length} source-linked items from the ${sourceDigestDate} research digest and produced conservative content decisions without page, URL, indexing, or sitemap actions.`,
+    sourceAssessment: "The fallback retained Agent 1’s durable story relationships and source-qualified wording; downstream agents should review the original references before publication changes.",
+    decisions,
+    warnings: [
+      "The structured model response was unavailable, so Agent 2 used its deterministic source-linked fallback.",
+      "Agent 3 must review every update recommendation before creating or changing a page.",
+    ],
+  });
+}
+
 const tableCell = (value: string) => value.replace(/\|/g, "\\|").replace(/\s+/g, " ").trim();
 const titleCase = (value: string) => value.replace(/-/g, " ").replace(/\b\w/g, character => character.toUpperCase());
 
@@ -155,6 +190,7 @@ export async function runContentAnalysis(options: {
   analyzer?: Analyzer;
   digest?: AnalyzableDigest;
   storyCatalog?: AnalysisCatalog;
+  digestStories?: DigestStoryRows;
 } = {}) {
   const db = options.db ?? await getDb();
   if (!db) throw new Error("Database unavailable for Agent 2");
@@ -168,12 +204,22 @@ export async function runContentAnalysis(options: {
 
   const catalog = options.storyCatalog ?? await getStoryCatalogForAnalysis();
   const analyzer = options.analyzer ?? analyzeDigestContent;
-  const analysis = await analyzer(digest.markdownArtifact, catalog);
+  let modelId = AGENT_2_MODEL;
+  let analysis: ContentAnalysis;
+  try {
+    analysis = await analyzer(digest.markdownArtifact, catalog);
+  } catch (error) {
+    const digestStoryRows = options.digestStories ?? (await getDigestByDate(digest.digestDate))?.stories ?? [];
+    if (digestStoryRows.length === 0) throw error;
+    console.warn("[Agent 2] Structured model analysis failed; using deterministic source-linked fallback", error);
+    analysis = buildDeterministicAnalysis(digest.digestDate, digest.status, digestStoryRows);
+    modelId = `${AGENT_2_MODEL}+deterministic-fallback`;
+  }
   const markdownArtifact = renderSiteFindMarkdown({
     reportDate,
     sourceDigestDate: digest.digestDate,
     sourceDigestStatus: digest.status,
-    modelId: AGENT_2_MODEL,
+    modelId,
     analysis,
     sourceMarkdown: digest.markdownArtifact,
   });
@@ -184,7 +230,7 @@ export async function runContentAnalysis(options: {
     sourceDigestDate: digest.digestDate,
     sourceDigestUpdatedAt: digest.updatedAt,
     status: digest.status === "published" ? "completed" as const : "draft" as const,
-    modelId: AGENT_2_MODEL,
+    modelId,
     executiveSummary: analysis.executiveSummary,
     decisionsJson: JSON.stringify(analysis),
     markdownArtifact,

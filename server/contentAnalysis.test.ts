@@ -2,8 +2,8 @@ import express from "express";
 import { eq } from "drizzle-orm";
 import { describe, expect, it } from "vitest";
 import { siteFindReports } from "../drizzle/schema";
-import { getDb, getLatestDigestForAnalysis, selectLatestAnalyzableDigest } from "./db";
-import { contentAnalysisSchema, renderSiteFindMarkdown, runContentAnalysis } from "./contentAnalysis";
+import { getDb, getDigestByDate, getLatestDigestForAnalysis, selectLatestAnalyzableDigest } from "./db";
+import { buildDeterministicAnalysis, contentAnalysisSchema, renderSiteFindMarkdown, runContentAnalysis } from "./contentAnalysis";
 import { registerPublicationRoutes } from "./publicationRoutes";
 
 const analysisFixture = {
@@ -42,6 +42,18 @@ describe("Agent 2 content analysis", () => {
       decisions: [{ ...analysisFixture.decisions[0], action: "remove" as const, requiresHumanReview: false }],
     };
     expect(() => contentAnalysisSchema.parse(unsafe)).toThrow("Removal recommendations always require human review");
+  });
+
+  it("builds a source-linked fallback when structured model output is unavailable", async () => {
+    const digest = await getLatestDigestForAnalysis(true);
+    expect(digest).toBeTruthy();
+    if (!digest) return;
+    const data = await getDigestByDate(digest.digestDate);
+    expect(data?.stories.length).toBeGreaterThan(0);
+    const fallback = buildDeterministicAnalysis(digest.digestDate, digest.status, data?.stories ?? []);
+    expect(fallback.decisions.length).toBe(data?.stories.length);
+    expect(fallback.decisions.every(decision => decision.existingSlug && decision.evidence.length === 1)).toBe(true);
+    expect(fallback.warnings.join(" ")).toContain("deterministic");
   });
 
   it("renders a dated Site Find artifact with Agent 3 and Agent 4 boundaries", () => {
