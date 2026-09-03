@@ -8,6 +8,7 @@ import {
   siteFindReports,
   stories,
   storySources,
+  urlManifests,
   users,
 } from "../drizzle/schema";
 import { ENV } from './_core/env';
@@ -268,5 +269,32 @@ export async function getLatestSiteFindReport() {
   const db = await getDb();
   if (!db) return undefined;
   const rows = await db.select().from(siteFindReports).orderBy(desc(siteFindReports.reportDate)).limit(1);
+  return rows[0];
+}
+
+export function selectLatestSiteFindForPublishing<T extends { reportDate: string; status: string; markdownArtifact: string; updatedAt: Date }>(rows: T[], includeDraft = false) {
+  const allowed = includeDraft ? new Set(["completed", "draft"]) : new Set(["completed"]);
+  return [...rows]
+    .filter(row => allowed.has(row.status) && Boolean(row.markdownArtifact.trim()))
+    .sort((left, right) => right.reportDate.localeCompare(left.reportDate) || right.updatedAt.getTime() - left.updatedAt.getTime())[0];
+}
+
+export async function getLatestSiteFindForPublishing(includeDraft = false) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const allowedStatuses = includeDraft ? ["completed", "draft"] as const : ["completed"] as const;
+  const rows = await db
+    .select()
+    .from(siteFindReports)
+    .where(inArray(siteFindReports.status, allowedStatuses))
+    .orderBy(desc(siteFindReports.reportDate), desc(siteFindReports.updatedAt))
+    .limit(20);
+  return selectLatestSiteFindForPublishing(rows, includeDraft);
+}
+
+export async function getUrlManifestByDate(manifestDate: string) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const rows = await db.select().from(urlManifests).where(eq(urlManifests.manifestDate, manifestDate)).limit(1);
   return rows[0];
 }

@@ -208,3 +208,36 @@ export const siteFindReports = mysqlTable(
 
 export type SiteFindReport = typeof siteFindReports.$inferSelect;
 export type InsertSiteFindReport = typeof siteFindReports.$inferInsert;
+
+export const urlManifests = mysqlTable(
+  "url_manifests",
+  {
+    id: int("id").autoincrement().primaryKey(),
+    manifestDate: date("manifestDate", { mode: "string" }).notNull(),
+    sourceSiteFindId: int("sourceSiteFindId").notNull(),
+    sourceSiteFindUpdatedAt: timestamp("sourceSiteFindUpdatedAt").notNull(),
+    sourceReportDate: date("sourceReportDate", { mode: "string" }).notNull(),
+    status: mysqlEnum("status", ["completed", "partial", "failed"]).default("completed").notNull(),
+    actionsJson: mediumtext("actionsJson").notNull(),
+    markdownArtifact: mediumtext("markdownArtifact").notNull(),
+    createdCount: int("createdCount").default(0).notNull(),
+    updatedCount: int("updatedCount").default(0).notNull(),
+    retainedCount: int("retainedCount").default(0).notNull(),
+    archivedCount: int("archivedCount").default(0).notNull(),
+    reviewCount: int("reviewCount").default(0).notNull(),
+    scheduleCronTaskUid: varchar("schedule_cron_task_uid", { length: 65 }),
+    processedAt: timestamp("processedAt").defaultNow().notNull(),
+    errorMessage: text("errorMessage"),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+    updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  },
+  table => [
+    uniqueIndex("url_manifest_date_idx").on(table.manifestDate),
+    index("url_manifest_source_report_idx").on(table.sourceSiteFindId),
+    index("url_manifest_source_date_idx").on(table.sourceReportDate),
+    index("url_manifest_cron_uid_idx").on(table.scheduleCronTaskUid),
+  ],
+);
+
+export type UrlManifest = typeof urlManifests.$inferSelect;
+export type InsertUrlManifest = typeof urlManifests.$inferInsert;

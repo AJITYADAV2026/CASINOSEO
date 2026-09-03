@@ -44,3 +44,16 @@
 - [x] Trigger and verify one authenticated Agent 2 execution and confirm it persists a Site Find report through the scheduled callback path.
 - [x] Save a final post-schedule checkpoint containing Agent 2’s complete implementation and validation documentation.
 - [x] Resolve the authenticated Agent 2 heartbeat timeout by using an optimized analysis path with a deterministic source-linked fallback that completes within the callback execution limit.
+- [x] Review Agent 2’s durable Site Find format, current article renderer, dynamic sitemap, and scheduler behavior for Agent 3.
+- [x] Define Agent 3 rules for add, update, retain, archive, and remove recommendations, with no hard deletion and no indexing submission.
+- [x] Add durable URL-manifest storage for dated `url-YYYY-MM-DD.md` artifacts and structured page actions.
+- [x] Implement and verify Agent 3’s transactional page creator and updater using Agent 2 decisions and Agent 1 source-attributed content.
+- [x] Ensure and verify Agent 3-created and updated public pages receive permanent canonical URLs and appear in the dynamic sitemap when published.
+- [x] Add an authenticated `/api/scheduled/page-creation` callback that processes the latest completed Site Find report idempotently.
+- [x] Add tests for Site Find selection, page creation/update safety, archive/remove handling, URL manifest rendering, no indexing submission, and sitemap inclusion.
+- [ ] Create and activate Agent 3 at 2:30 AM IST after Agent 2’s 2:00 AM run.
+- [x] Generate today’s dated URL manifest from the latest available Site Find report without duplicating existing pages.
+- [ ] Publish, trigger, and verify an authenticated Agent 3 run, durable URL manifest, live pages, and sitemap updates.
+- [ ] Save and deliver the final Agent 3 checkpoint and dated URL Markdown file.
+- [x] Add a matched `add` decision test proving a source-attributed Agent 1 story is published without creating a duplicate slug.
+- [x] Verify an Agent 3-published page appears in `sitemap.xml` with its canonical URL and refreshed modification timestamp.

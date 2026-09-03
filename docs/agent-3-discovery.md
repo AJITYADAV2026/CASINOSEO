@@ -1,0 +1,17 @@
+# CasinoVerse Agent 3 Discovery Notes
+
+Agent 3 will run as a project-level HTTP heartbeat because its work is deterministic database publishing rather than open-web research. The permanent trigger is **2:30 AM IST**, represented by the six-field UTC cron `0 0 21 * * *`. The handler must be deployed before schedule creation, authenticate the platform task identity, look up its durable publication job by task UID, remain idempotent, and return JSON-encoded diagnostics on failures.
+
+The latest Agent 2 artifact is `site-find-2026-09-03.md`. It is a draft based on the developing 3 September Agent 1 digest and contains **seven update recommendations**, with no additions, archives, or removals. Every recommendation identifies an existing story slug, category, content type, rationale, evidence, confidence, and relevant source citation. This means today’s Agent 3 run should update existing story content and metadata without creating duplicate URLs.
+
+Agent 3 must consume the durable `site_find_reports` record and its source `daily_digests` relationships rather than depend on a sandbox file. The user-requested dated artifact will be stored as `url-YYYY-MM-DD.md`. It must list every created, updated, retained, archived, or removal-review URL and clearly state the action taken.
+
+Agent 3 is allowed to create and update public pages and permanent URLs. It must not submit URLs to search engines or perform indexing actions. Sitemap behavior will be refreshed through the site’s existing dynamic sitemap data source rather than by overwriting a static XML file.
+
+The existing public article route is data-driven: stories with `published` or `developing` status are rendered at `/articles/{slug}`. The main XML sitemap includes only `published` story rows, while the Google News sitemap includes published stories from the most recent 48 hours. Therefore Agent 3 updates `sitemap.xml` safely by publishing or modifying durable story rows; no static XML file edit is required.
+
+The Agent 1 ingestion flow already stores full story bodies, category relationships, sources, and digest membership. Agent 3 can reuse the source digest linked to the Site Find report. For an `update` action, Agent 3 will preserve the current slug and permanent URL, merge Agent 2’s rationale and evidence into a concise editorial update note, retain original source attribution, set a new modification timestamp, and publish only when the source digest is complete. For today’s draft Site Find, existing developing pages can be updated without creating duplicate URLs, while the dated URL manifest records each affected canonical path.
+
+The existing schema provides unique story slugs, public/draft/developing/published/archived states, source relationships, digest relationships, durable Site Find JSON, and indexed publication-job task identities. Agent 3 only needs one additional durable `url_manifests` table; it does not need a new public route or a second page renderer.
+
+The reviewed additive migration creates `url_manifests` with a unique manifest date, source Site Find freshness metadata, complete Markdown and structured action storage, action counts, cron identity, and audit timestamps; it contains no destructive statements. The digest query returns every story linked to the source digest together with its category and position, allowing Agent 3 to resolve Site Find slugs against already sourced durable story records without copying Agent 2 rationale into article bodies.

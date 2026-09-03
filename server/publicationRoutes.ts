@@ -12,6 +12,7 @@ import {
 import { getArchive, getDb, getDigestByDate, getHomepageContent } from "./db";
 import { sdk } from "./_core/sdk";
 import { runContentAnalysis } from "./contentAnalysis";
+import { runPageCreation } from "./pageCreation";
 
 const xml = (value: string) => value
   .replace(/&/g, "&amp;")
@@ -22,6 +23,22 @@ const xml = (value: string) => value
 
 function publicationOrigin() {
   return (process.env.CANONICAL_ORIGIN || (process.env.NODE_ENV === "development" ? "http://localhost:3000" : "")).replace(/\/$/, "");
+}
+
+export function buildSitemapDocument(origin: string, data: {
+  categories: Array<{ slug: string; updatedAt: Date }>;
+  stories: Array<{ story: { slug: string; status: string; modifiedAt: Date | null; publishedAt: Date | null } }>;
+  digests: Array<{ digestDate: string; status: string; modifiedAt: Date | null; publishedAt: Date | null }>;
+}) {
+  const staticPaths = ["/", "/archive", "/games", "/guides", "/responsible-entertainment", "/about"];
+  const urls = [
+    ...staticPaths.map(path => ({ path, modified: undefined as Date | undefined })),
+    ...data.categories.map(category => ({ path: `/category/${category.slug}`, modified: category.updatedAt })),
+    ...data.stories.filter(item => item.story.status === "published").map(item => ({ path: `/articles/${item.story.slug}`, modified: item.story.modifiedAt ?? item.story.publishedAt ?? undefined })),
+    ...data.digests.filter(digest => digest.status !== "developing").map(digest => ({ path: `/archive/${digest.digestDate}`, modified: digest.modifiedAt ?? digest.publishedAt ?? undefined })),
+  ];
+  const body = urls.map(item => `<url><loc>${xml(origin + item.path)}</loc>${item.modified ? `<lastmod>${item.modified.toISOString()}</lastmod>` : ""}</url>`).join("");
+  return `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${body}</urlset>`;
 }
 
 const sourceSchema = z.object({
@@ -239,6 +256,66 @@ async function scheduledContentAnalysis(req: Request, res: Response) {
   }
 }
 
+async function scheduledPageCreation(req: Request, res: Response) {
+  let taskUid: string | undefined;
+  try {
+    let user;
+    try {
+      user = await sdk.authenticateRequest(req);
+    } catch {
+      return res.status(403).json({ error: "cron-only" });
+    }
+    taskUid = user.taskUid;
+    if (!user.isCron || !taskUid) return res.status(403).json({ error: "cron-only" });
+
+    const db = await getDb();
+    if (!db) return res.status(503).json({ error: "database-unavailable" });
+    const [job] = await db.select().from(publicationJobs).where(eq(publicationJobs.scheduleCronTaskUid, taskUid)).limit(1);
+    if (!job || job.jobKey !== "casinoverse-page-creation") return res.json({ ok: true, skipped: "orphan" });
+
+    const verificationInput = z.object({
+      includeDraft: z.boolean().optional().default(false),
+      force: z.boolean().optional().default(false),
+    }).parse(req.body ?? {});
+    const result = await runPageCreation({
+      taskUid,
+      db,
+      includeDraft: verificationInput.includeDraft,
+      force: verificationInput.force,
+    });
+    if ("manifest" in result && result.manifest) {
+      await db.update(publicationJobs).set({
+        status: "active",
+        lastCompletedDigestDate: result.manifest.sourceReportDate,
+        lastRunAt: new Date(),
+      }).where(eq(publicationJobs.id, job.id));
+      return res.json({
+        ok: true,
+        manifestDate: result.manifest.manifestDate,
+        sourceReportDate: result.manifest.sourceReportDate,
+        status: result.manifest.status,
+        counts: {
+          created: result.manifest.createdCount,
+          updated: result.manifest.updatedCount,
+          retained: result.manifest.retainedCount,
+          archived: result.manifest.archivedCount,
+          reviewRequired: result.manifest.reviewCount,
+        },
+      });
+    }
+    return res.json({ ok: true, skipped: result.skipped });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Unknown Agent 3 page-creation error";
+    return res.status(error instanceof z.ZodError ? 400 : 500).json({
+      error: message,
+      details: error instanceof z.ZodError ? error.issues : undefined,
+      stack: error instanceof Error ? error.stack : undefined,
+      context: { url: req.originalUrl, taskUid },
+      timestamp: new Date().toISOString(),
+    });
+  }
+}
+
 export function registerPublicationRoutes(app: Express) {
   app.get("/robots.txt", (_req, res) => {
     const origin = publicationOrigin();
@@ -250,15 +327,7 @@ export function registerPublicationRoutes(app: Express) {
     const origin = publicationOrigin();
     if (!origin) return res.status(503).type("text/plain").send("CANONICAL_ORIGIN is not configured");
     const [{ categories: categoryRows, stories: storyRows }, digests] = await Promise.all([getHomepageContent(), getArchive()]);
-    const staticPaths = ["/", "/archive", "/games", "/guides", "/responsible-entertainment", "/about"];
-    const urls = [
-      ...staticPaths.map(path => ({ path, modified: undefined as Date | undefined })),
-      ...categoryRows.map(category => ({ path: `/category/${category.slug}`, modified: category.updatedAt })),
-      ...storyRows.filter(item => item.story.status === "published").map(item => ({ path: `/articles/${item.story.slug}`, modified: item.story.modifiedAt ?? item.story.publishedAt ?? undefined })),
-      ...digests.filter(digest => digest.status !== "developing").map(digest => ({ path: `/archive/${digest.digestDate}`, modified: digest.modifiedAt ?? digest.publishedAt ?? undefined })),
-    ];
-    const body = urls.map(item => `<url><loc>${xml(origin + item.path)}</loc>${item.modified ? `<lastmod>${item.modified.toISOString()}</lastmod>` : ""}</url>`).join("");
-    res.set("Cache-Control", "public, max-age=900").type("application/xml").send(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${body}</urlset>`);
+    res.set("Cache-Control", "public, max-age=900").type("application/xml").send(buildSitemapDocument(origin, { categories: categoryRows, stories: storyRows, digests }));
   });
 
   app.get("/news-sitemap.xml", async (_req, res) => {
@@ -293,4 +362,5 @@ export function registerPublicationRoutes(app: Express) {
 
   app.post("/api/scheduled/daily-digest", scheduledDailyDigest);
   app.post("/api/scheduled/content-analysis", scheduledContentAnalysis);
+  app.post("/api/scheduled/page-creation", scheduledPageCreation);
 }
