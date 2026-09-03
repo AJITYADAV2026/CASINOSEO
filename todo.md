@@ -59,14 +59,14 @@
 - [x] Verify an Agent 3-published page appears in `sitemap.xml` with its canonical URL and refreshed modification timestamp.
 - [x] Review Agent 3’s dated URL manifest, live sitemaps, current Search Console access, and Google’s permitted indexing methods for CasinoVerse content.
 - [x] Define Agent 4’s eligible URL rules, duplicate prevention, sitemap submission behavior, indexing-report format, and strict separation from Agents 1–3.
-- [ ] Add durable storage for dated Agent 4 indexing reports and per-URL submission outcomes.
-- [ ] Implement Search Console sitemap submission using the verified CasinoVerse property and authorised integration.
-- [ ] Process only newly published canonical URLs from Agent 3’s manifest and prevent repeated individual actions for already handled URLs.
+- [x] Deferred at the user’s request: add durable storage for dated Agent 4 indexing reports and per-URL submission outcomes when Agent 4 resumes.
+- [x] Deferred at the user’s request: implement Search Console sitemap submission after authorised property access is provided.
+- [x] Deferred at the user’s request: process newly published canonical URLs from Agent 3’s manifest when Agent 4 resumes.
 - [x] Avoid unsupported use of Google’s restricted Indexing API for ordinary casino-news pages and document compliant alternatives.
-- [ ] Add an authenticated `/api/scheduled/page-indexing` callback and activate Agent 4 at 5:00 AM IST.
-- [ ] Add tests for URL eligibility, duplicate control, sitemap selection, report persistence, retry-safe behavior, and no page-content mutation.
-- [ ] Create today’s dated indexing report from `url-2026-09-03.md` after the Search Console operation is verified.
-- [ ] Publish, execute, verify Agent 4’s authenticated production run, and deliver the final checkpoint and dated report.
+- [x] Deferred at the user’s request: add and activate Agent 4’s 5:00 AM IST callback only after Search Console credentials are supplied.
+- [x] Deferred at the user’s request: add Agent 4 indexing tests when its implementation resumes.
+- [x] Deferred at the user’s request: create the dated indexing report after the Search Console operation is verified.
+- [x] Deferred at the user’s request: publish and verify Agent 4 after authorised Search Console setup resumes.
 - [x] Keep Agent 4 paused until the user explicitly resumes Search Console setup.
 - [x] Audit every public route for repeated image URLs, thin editorial sections, SSR HTML output, and unconditional analytics loading.
 - [x] Document editorial-depth findings for homepage, article, category, archive, digest, games, guides, responsible-entertainment, about, search, and 404 route classes.
@@ -86,6 +86,7 @@
 - [x] Visually verify the refined Guides, About, Search, Archive, Category, and Digest pages on mobile and document responsive cropping and content readability.
 - [x] Re-run a final route smoke pass after the complete refined mobile review to confirm non-repeating imagery and responsive behavior.
 - [x] Re-run the full test suite, TypeScript validation, production builds, and live route smoke tests.
-- [ ] Save and auto-publish the refined CasinoVerse checkpoint and deliver the updated multi-page HTML website.
-- [ ] Save a new checkpoint containing all refinement changes and confirm auto-publication succeeds.
-- [ ] Verify the live published site serves refined SSR HTML, distinct imagery/content, and consent-gated analytics before final delivery.
+- [x] Save and auto-publish the refined CasinoVerse checkpoint and deliver the updated multi-page HTML website.
+- [x] Save a new checkpoint containing all refinement changes and confirm auto-publication succeeds.
+- [x] Verify the live published site serves refined SSR HTML, distinct imagery/content, and consent-gated analytics before final delivery.
+- [x] Send the user-facing refined CasinoVerse delivery update with the final post-verification checkpoint and live-site confirmation.

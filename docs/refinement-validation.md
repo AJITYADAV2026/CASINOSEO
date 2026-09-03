@@ -40,3 +40,7 @@ The final missing desktop checks confirmed that Market Intelligence presents its
 No major route showed broken regenerated imagery, unintended horizontal overflow, or illegible foreground text in the final desktop/mobile smoke matrix.
 
 The final built-server smoke pass verified populated H1 content and route-specific canonical metadata across the major public route classes. Search correctly retained its noindex utility-page behavior, the unknown route returned HTTP 404 with a branded H1, server-rendered HTML contained no unconditional analytics script, and production logs contained no runtime errors.
+
+## Published-Site Verification
+
+Checkpoint `e31f9e05` auto-published successfully to `https://casinonews-flgw988r.manus.space`. Live HTML returned the refined research content and dedicated hero assets for the homepage, Games, About, and Responsible Entertainment, while ten representative public routes returned HTTP 200. No unconditional CasinoVerse analytics script appeared in the server response. On first live entry, the consent panel displayed both choices; selecting **Accept analytics** persisted the versioned consent record, dismissed the panel, and loaded exactly one analytics script.
