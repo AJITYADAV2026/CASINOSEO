@@ -19,7 +19,7 @@
 - [x] Implement accessible keyboard navigation, semantic landmarks, visible focus states, readable contrast, and reduced-motion behavior.
 - [ ] Implement the recurring daily research and digest-update workflow using the platform scheduling system.
 - [x] Implement and validate the secure, idempotent daily-digest callback and durable scheduled-task identity record.
-- [ ] Configure the production canonical origin after the published CasinoVerse domain is known.
+- [x] Configure the production canonical origin after the published CasinoVerse domain is known.
 - [x] Add and update Vitest coverage for database helpers, routers, content transformations, archive filtering, and metadata logic.
 - [x] Run type checking, unit tests, build validation, and inspect runtime logs for errors.
 - [x] Visually verify the homepage and all public page templates at desktop and mobile breakpoints against the supplied design direction.

@@ -33,14 +33,14 @@ The production recurring agent should receive a self-contained prompt equivalent
 
 The recurring task cannot be activated against the development sandbox. The website must first be published so the platform can reach the production callback. After publication, the production canonical origin must be configured for canonical tags, absolute social-share images, robots directives, and sitemap URLs.
 
-The user’s phrase **“00:01 PM”** is ambiguous between 12:01 PM and a possible intended 00:01/12:01 AM trigger. The exact daily trigger time and timezone must be confirmed before creating the recurring task. The website code therefore contains the complete callback and durable job identity but does not create an incorrectly timed schedule.
+The user confirmed **12:01 AM IST** as the intended daily trigger. The production recurring schedule therefore uses the six-field UTC cron expression `0 31 18 * * *`, which corresponds to 00:01 IST on the following local calendar day. Each run will research and finalize the preceding IST calendar day so the source window has fully closed.
 
 ## Suggested Timing Choices
 
 | Interpretation | UTC cron for IST | Editorial effect |
 | --- | --- | --- |
 | 12:01 PM IST daily | `0 31 6 * * *` | Produces a midday developing edition and requires a later finalization pass |
-| 12:01 AM IST daily | `0 31 18 * * *` | Starts a new calendar-day edition shortly after midnight |
+| **12:01 AM IST daily — selected** | `0 31 18 * * *` | Finalizes the immediately preceding IST calendar-day edition |
 | 11:59 PM IST daily | `0 29 18 * * *` | Best suited to finalizing the complete calendar-day edition |
 
 All cron expressions use six fields and UTC.
