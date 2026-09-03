@@ -2,6 +2,7 @@ import { ArrowRight, BookOpen, CalendarDays, Globe2, Landmark, Scale, ShieldChec
 import { Link } from "wouter";
 import { Skeleton } from "@/components/ui/skeleton";
 import { SectionHeading } from "@/components/SectionHeading";
+import { ResearchReferences } from "@/components/ResearchReferences";
 import { Seo } from "@/components/Seo";
 import { StoryCard, type StoryCardData } from "@/components/StoryCard";
 import { trpc } from "@/lib/trpc";
@@ -134,6 +135,21 @@ export default function Home() {
             <Link href="/games" className="image-panel group" style={{ backgroundImage: `linear-gradient(to top, rgba(0,0,0,.92), rgba(0,0,0,.1)), url(${GUIDES_IMAGE})` }}><span className="eyebrow text-gold">Explore by game</span><h3 className="mt-3 max-w-xl font-display text-4xl text-white md:text-5xl">From the first rule to the house edge.</h3><span className="mt-5 inline-flex items-center gap-2 text-sm text-gold-light">Browse all games <ArrowRight className="h-4 w-4" /></span></Link>
             <div className="grid gap-5">{guides.map(item => <StoryCard key={item.story.id} item={item} variant="horizontal" />)}{guides.length === 0 && <div className="story-card p-8 text-ivory/55">New learning guides are being prepared.</div>}</div>
           </div>
+        </div>
+      </section>
+
+      <section className="pb-24">
+        <div className="container">
+          <ResearchReferences
+            eyebrow="The evidence desk"
+            title="Research before recommendation"
+            intro="CasinoVerse combines primary regulator material, original trade reporting, public-health evidence, and visible source links. We label uncertainty and keep information separate from gambling promotion."
+            sources={[
+              { name: "Nevada Gaming Control Board", detail: "Primary monthly revenue, quarterly statistics, licensing, and regulatory publications.", href: "https://www.gaming.nv.gov/about-us/statistics-and-publications/" },
+              { name: "World Health Organization", detail: "Global public-health evidence on gambling exposure, harm, prevention, and support.", href: "https://www.who.int/news-room/fact-sheets/detail/gambling" },
+              { name: "Society of Professional Journalists", detail: "Verification, context, source attribution, independence, and correction principles.", href: "https://www.spj.org/spj-code-of-ethics/" },
+            ]}
+          />
         </div>
       </section>
 

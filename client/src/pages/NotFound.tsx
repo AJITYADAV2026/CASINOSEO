@@ -1,4 +1,4 @@
-import { ArrowLeft, FileSearch } from "lucide-react";
+import { ArrowLeft, FileSearch, Search } from "lucide-react";
 import { Link } from "wouter";
 import { Seo } from "@/components/Seo";
 
@@ -19,6 +19,7 @@ export default function NotFound() {
             <div className="mt-8 flex flex-wrap gap-4">
               <Link href="/" className="button-gold"><ArrowLeft className="h-4 w-4" /> Latest edition</Link>
               <Link href="/archive" className="button-ghost">Research archive</Link>
+              <Link href="/search" className="button-ghost"><Search className="h-4 w-4" /> Search CasinoVerse</Link>
             </div>
           </div>
         </div>

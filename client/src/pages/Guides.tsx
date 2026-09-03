@@ -2,8 +2,9 @@ import { ArrowRight, BookMarked, Compass, History, Languages, Scale, ShieldCheck
 import { Link } from "wouter";
 import { Seo } from "@/components/Seo";
 import { StoryCard, type StoryCardData } from "@/components/StoryCard";
-import { GUIDES_IMAGE } from "@/lib/site";
+import { GUIDES_HERO_IMAGE } from "@/lib/site";
 import { trpc } from "@/lib/trpc";
+import { ResearchReferences } from "@/components/ResearchReferences";
 
 const paths = [
   { icon: History, title: "Start with history", text: "Understand where games came from, how rules evolved, and why different regions developed distinct casino cultures." },
@@ -19,11 +20,11 @@ export default function Guides() {
 
   return (
     <>
-      <Seo title="Casino guides" description="Beginner-friendly CasinoVerse guides to game history, terminology, probability, etiquette, and responsible entertainment." path="/guides" image={GUIDES_IMAGE} />
+      <Seo title="Casino guides" description="Beginner-friendly CasinoVerse guides to game history, terminology, probability, etiquette, and responsible entertainment." path="/guides" image={GUIDES_HERO_IMAGE} />
       <header className="guides-header border-b border-gold/15">
         <div className="container grid gap-10 py-16 md:py-24 lg:grid-cols-[1fr_.75fr] lg:items-center">
           <div><p className="eyebrow text-gold">The CasinoVerse field guide</p><h1 className="mt-5 font-display text-[clamp(4rem,9vw,8rem)] leading-[.84] tracking-[-.045em] text-ivory">Curiosity,<br /><em className="font-normal text-gold-light">properly informed.</em></h1><p className="mt-7 max-w-2xl text-xl leading-8 text-ivory/58">Build a clear foundation before learning any betting layout: origins, vocabulary, probability, etiquette, and limits.</p></div>
-          <div className="image-frame aspect-[4/3] rounded-[28px] border border-gold/15"><img src={GUIDES_IMAGE} alt="Gaming equipment and a vintage rulebook arranged for educational study" /></div>
+          <div className="image-frame aspect-[4/3] rounded-[28px] border border-gold/15"><img src={GUIDES_HERO_IMAGE} alt="Quiet editorial library with probability diagrams, rulebooks, and annotated research notes" /></div>
         </div>
       </header>
 
@@ -49,6 +50,17 @@ export default function Guides() {
           <div><p className="eyebrow text-gold">Our guide standard</p><h2 className="mt-4 font-display text-4xl text-ivory md:text-5xl">Explain the mechanism. State the limitation. Link the evidence.</h2><p className="mt-5 max-w-3xl text-lg leading-8 text-ivory/55">CasinoVerse guides distinguish mathematical properties from anecdotes, label regional rule differences, avoid claims that a system can guarantee profit, and connect responsible-entertainment guidance to every subject where financial risk is relevant.</p></div>
         </div>
       </section>
+
+      <div className="container pb-24">
+        <ResearchReferences
+          title="Evidence before anecdotes"
+          intro="Our learning path uses regulator and public-health material to explain randomness, cognitive bias, pre-commitment, and the limits of short-session experience. Regional rules still vary, so a guide is never a substitute for checking the specific venue or regulator."
+          sources={[
+            { name: "Arizona Responsible Gaming Training", detail: "Gambling literacy, the gambler’s fallacy, pre-commitment, warning signs, and support tools.", href: "https://gaming.az.gov/sites/default/files/files/AZ%20Responsible%20Gaming%20-%20Modules%204-6.pdf" },
+            { name: "UK Gambling Commission", detail: "Regulatory guidance on transparent, socially responsible gambling communication.", href: "https://www.gamblingcommission.gov.uk/licensees-and-businesses/guide/advertising-marketing-rules-and-regulations" },
+          ]}
+        />
+      </div>
     </>
   );
 }

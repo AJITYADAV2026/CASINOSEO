@@ -1,6 +1,6 @@
 import { ArrowUpRight, Clock3 } from "lucide-react";
 import { Link } from "wouter";
-import { formatDate, MARKET_IMAGE } from "@/lib/site";
+import { formatDate, STORY_FALLBACK_IMAGE } from "@/lib/site";
 
 export type StoryCardData = {
   story: {
@@ -43,7 +43,7 @@ export function StoryCard({ item, variant = "standard" }: { item: StoryCardData;
     return (
       <article className="story-card group grid overflow-hidden sm:grid-cols-[180px_1fr]">
         <Link href={`/articles/${story.slug}`} className="image-frame min-h-44 sm:min-h-full">
-          <img src={story.featuredImageUrl || MARKET_IMAGE} alt={story.featuredImageAlt || "CasinoVerse editorial image"} />
+          <img src={story.featuredImageUrl || STORY_FALLBACK_IMAGE} alt={story.featuredImageAlt || "CasinoVerse editorial research image"} />
         </Link>
         <div className="p-5">
           <span className="eyebrow" style={{ color: category.accent }}>{category.name}</span>
@@ -58,7 +58,7 @@ export function StoryCard({ item, variant = "standard" }: { item: StoryCardData;
   return (
     <article className="story-card group overflow-hidden">
       <Link href={`/articles/${story.slug}`} className="image-frame aspect-[3/2]">
-        <img src={story.featuredImageUrl || MARKET_IMAGE} alt={story.featuredImageAlt || "CasinoVerse editorial image"} />
+        <img src={story.featuredImageUrl || STORY_FALLBACK_IMAGE} alt={story.featuredImageAlt || "CasinoVerse editorial research image"} />
       </Link>
       <div className="p-6">
         <div className="flex items-center justify-between gap-4">

@@ -1,10 +1,10 @@
-import { ArrowLeft, ArrowUpRight, Clock3, ExternalLink, ShieldCheck } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Clock3, ExternalLink, FileSearch, ShieldCheck } from "lucide-react";
 import { useMemo } from "react";
 import { Link, useParams } from "wouter";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Seo } from "@/components/Seo";
 import { StoryCard, type StoryCardData } from "@/components/StoryCard";
-import { bodyParagraphs, formatDate, HERO_IMAGE } from "@/lib/site";
+import { bodyParagraphs, formatDate, STORY_FALLBACK_IMAGE } from "@/lib/site";
 import { trpc } from "@/lib/trpc";
 
 export default function Article() {
@@ -17,7 +17,7 @@ export default function Article() {
     const canonical = `${origin}/articles/${data.story.slug}`;
     const image = data.story.featuredImageUrl
       ? `${origin}${data.story.featuredImageUrl}`
-      : `${origin}${HERO_IMAGE}`;
+      : `${origin}${STORY_FALLBACK_IMAGE}`;
     return {
       "@context": "https://schema.org",
       "@type": data.story.contentType === "news" ? "NewsArticle" : "Article",
@@ -68,6 +68,7 @@ export default function Article() {
             <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-white/10 pt-6 text-sm text-ivory/45">
               <span>By <strong className="font-medium text-ivory/75">{data.story.authorName}</strong></span>
               <span>{formatDate(data.story.publishedAt)}</span>
+              {data.story.modifiedAt && data.story.publishedAt && new Date(data.story.modifiedAt).getTime() > new Date(data.story.publishedAt).getTime() && <span>Updated {formatDate(data.story.modifiedAt)}</span>}
               <span className="inline-flex items-center gap-2"><Clock3 className="h-4 w-4" /> {data.story.readingMinutes} min read</span>
             </div>
           </div>
@@ -91,7 +92,7 @@ export default function Article() {
                     <li key={source.id}>
                       <a href={source.sourceUrl} target="_blank" rel="noreferrer noopener" className="source-link group">
                         <span className="source-number">{String(index + 1).padStart(2, "0")}</span>
-                        <span><strong>{source.publisher}</strong><small>{source.sourceTitle}</small></span>
+                        <span><strong>{source.publisher}</strong><small>{source.sourceTitle}{source.sourcePublishedAt ? ` · ${formatDate(source.sourcePublishedAt)}` : ""}</small></span>
                         <ExternalLink className="h-4 w-4 text-gold/60 transition-transform group-hover:translate-x-1" />
                       </a>
                     </li>
@@ -102,11 +103,19 @@ export default function Article() {
           </div>
 
           <aside className="lg:pt-2" aria-label="Article disclosure">
-            <div className="sticky top-28 rounded-[22px] border border-white/10 bg-card p-6">
-              <ShieldCheck className="h-6 w-6 text-gold" />
-              <h2 className="mt-4 font-display text-2xl text-ivory">Information, not encouragement</h2>
-              <p className="mt-3 text-sm leading-6 text-ivory/50">This story covers casino business and policy. It does not recommend gambling, investing, or legal action. Gambling involves financial risk.</p>
-              <Link href="/responsible-entertainment" className="mt-5 inline-flex items-center gap-2 text-sm text-gold hover:text-gold-light">Responsible entertainment <ArrowUpRight className="h-4 w-4" /></Link>
+            <div className="sticky top-28 space-y-4">
+              <div className="rounded-[22px] border border-gold/18 bg-card p-6">
+                <FileSearch className="h-6 w-6 text-gold" />
+                <h2 className="mt-4 font-display text-2xl text-ivory">How this was verified</h2>
+                <p className="mt-3 text-sm leading-6 text-ivory/50">This article retains {data.sources.length} original {data.sources.length === 1 ? "source" : "sources"}. Company statements, forecasts, proposals, and unresolved proceedings remain labeled as such rather than being converted into final outcomes.</p>
+                <Link href="/about#standards" className="mt-5 inline-flex items-center gap-2 text-sm text-gold hover:text-gold-light">Read our standards <ArrowUpRight className="h-4 w-4" /></Link>
+              </div>
+              <div className="rounded-[22px] border border-white/10 bg-card p-6">
+                <ShieldCheck className="h-6 w-6 text-gold" />
+                <h2 className="mt-4 font-display text-2xl text-ivory">Information, not encouragement</h2>
+                <p className="mt-3 text-sm leading-6 text-ivory/50">This story covers casino business and policy. It does not recommend gambling, investing, or legal action. Gambling involves financial risk.</p>
+                <Link href="/responsible-entertainment" className="mt-5 inline-flex items-center gap-2 text-sm text-gold hover:text-gold-light">Responsible entertainment <ArrowUpRight className="h-4 w-4" /></Link>
+              </div>
             </div>
           </aside>
         </div>

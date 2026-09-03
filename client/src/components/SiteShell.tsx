@@ -1,6 +1,7 @@
 import { Menu, Search, ShieldCheck } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { CookieConsent, openCookieSettings } from "@/components/CookieConsent";
 
 const navigation = [
   ["Latest", "/"],
@@ -95,10 +96,14 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
         <div className="border-t border-white/8">
           <div className="container flex flex-col gap-3 py-6 text-xs text-ivory/40 sm:flex-row sm:items-center sm:justify-between">
             <p>© 2026 CasinoVerse. Informational content only.</p>
-            <p>No wagering, deposits, bonuses, or real-money games are offered.</p>
+            <div className="flex flex-wrap items-center gap-3">
+              <p>No wagering, deposits, bonuses, or real-money games are offered.</p>
+              <button type="button" className="text-gold hover:text-gold-light" onClick={openCookieSettings}>Cookie settings</button>
+            </div>
           </div>
         </div>
       </footer>
+      <CookieConsent />
     </div>
   );
 }

@@ -1,7 +1,8 @@
 import { ArrowRight, BookOpen, CircleDot, Club, Diamond, Layers3, Spade } from "lucide-react";
 import { Link } from "wouter";
 import { Seo } from "@/components/Seo";
-import { GUIDES_IMAGE } from "@/lib/site";
+import { GAMES_HERO_IMAGE } from "@/lib/site";
+import { ResearchReferences } from "@/components/ResearchReferences";
 
 const games = [
   { name: "Poker", icon: Spade, history: "A family of comparing-card games shaped by riverboats, saloons, clubs, televised tournaments, and online play.", principle: "Players compete against one another rather than a fixed house hand. Skill affects long-term decisions, but chance remains material.", terms: ["Blinds", "Position", "Pot odds", "Showdown"] },
@@ -14,9 +15,9 @@ const games = [
 export default function Games() {
   return (
     <>
-      <Seo title="Casino game guides" description="Learn the history, terminology, probability, and risk fundamentals of poker, blackjack, roulette, baccarat, and slots." path="/games" image={GUIDES_IMAGE} />
+      <Seo title="Casino game guides" description="Learn the history, terminology, probability, and risk fundamentals of poker, blackjack, roulette, baccarat, and slots." path="/games" image={GAMES_HERO_IMAGE} />
       <header className="games-hero relative overflow-hidden border-b border-gold/15">
-        <img src={GUIDES_IMAGE} alt="Roulette wheel, cards, chips, and a rulebook arranged for educational study" className="absolute inset-0 h-full w-full object-cover opacity-35" />
+        <img src={GAMES_HERO_IMAGE} alt="Five-part casino game study table with cards, roulette geometry, a dealing shoe, notation, and reel mechanics" className="absolute inset-0 h-full w-full object-cover opacity-35" />
         <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-black/30" />
         <div className="container relative flex min-h-[600px] items-end py-16 md:items-center md:py-24">
           <div className="max-w-4xl">
@@ -53,6 +54,17 @@ export default function Games() {
           <div><p className="eyebrow text-gold">One rule applies everywhere</p><h2 className="mt-4 font-display text-4xl text-ivory md:text-5xl">No system can turn a house edge into a guarantee.</h2><p className="mt-5 max-w-3xl text-lg leading-8 text-ivory/55">Probability describes large numbers of outcomes, not a promise about a particular session. Treat any participation as a capped entertainment expense and never use money needed for essential commitments.</p><Link href="/responsible-entertainment" className="button-ghost mt-7">Read the responsible-entertainment guide <ArrowRight className="h-4 w-4" /></Link></div>
         </div>
       </section>
+
+      <div className="container py-20">
+        <ResearchReferences
+          title="How to read a game guide"
+          intro="Rules describe what can happen; probability describes long-run patterns; neither predicts a short session. CasinoVerse separates fixed game mechanisms from venue-specific rules and treats any participation as risk-bearing entertainment."
+          sources={[
+            { name: "Arizona Department of Gaming", detail: "2026 training on gambling literacy, independent outcomes, myths, limits, and signs of harm.", href: "https://gaming.az.gov/sites/default/files/files/AZ%20Responsible%20Gaming%20-%20Modules%204-6.pdf" },
+            { name: "World Health Organization", detail: "Public-health overview of gambling exposure, product risk, prevention, and harm.", href: "https://www.who.int/news-room/fact-sheets/detail/gambling" },
+          ]}
+        />
+      </div>
     </>
   );
 }

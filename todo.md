@@ -57,3 +57,35 @@
 - [x] Save and deliver the final Agent 3 checkpoint and dated URL Markdown file.
 - [x] Add a matched `add` decision test proving a source-attributed Agent 1 story is published without creating a duplicate slug.
 - [x] Verify an Agent 3-published page appears in `sitemap.xml` with its canonical URL and refreshed modification timestamp.
+- [x] Review Agent 3’s dated URL manifest, live sitemaps, current Search Console access, and Google’s permitted indexing methods for CasinoVerse content.
+- [x] Define Agent 4’s eligible URL rules, duplicate prevention, sitemap submission behavior, indexing-report format, and strict separation from Agents 1–3.
+- [ ] Add durable storage for dated Agent 4 indexing reports and per-URL submission outcomes.
+- [ ] Implement Search Console sitemap submission using the verified CasinoVerse property and authorised integration.
+- [ ] Process only newly published canonical URLs from Agent 3’s manifest and prevent repeated individual actions for already handled URLs.
+- [x] Avoid unsupported use of Google’s restricted Indexing API for ordinary casino-news pages and document compliant alternatives.
+- [ ] Add an authenticated `/api/scheduled/page-indexing` callback and activate Agent 4 at 5:00 AM IST.
+- [ ] Add tests for URL eligibility, duplicate control, sitemap selection, report persistence, retry-safe behavior, and no page-content mutation.
+- [ ] Create today’s dated indexing report from `url-2026-09-03.md` after the Search Console operation is verified.
+- [ ] Publish, execute, verify Agent 4’s authenticated production run, and deliver the final checkpoint and dated report.
+- [x] Keep Agent 4 paused until the user explicitly resumes Search Console setup.
+- [x] Audit every public route for repeated image URLs, thin editorial sections, SSR HTML output, and unconditional analytics loading.
+- [x] Document editorial-depth findings for homepage, article, category, archive, digest, games, guides, responsible-entertainment, about, search, and 404 route classes.
+- [x] Verify every current public route returns populated crawlable SSR HTML during this refinement pass, including article, category, archive, digest, search, and 404 route classes.
+- [x] Define a unique visual assignment for every major page and editorial content family with no repeated feature image usage.
+- [x] Research authoritative sources for the homepage, Games, Guides, Responsible Entertainment, About, category, archive, digest, and article experiences.
+- [x] Replace repeated imagery with distinct cinematic editorial assets while preserving performance, alt text, and responsive cropping.
+- [x] Deepen every major public page with source-based editorial context, references, methodology, and responsible-entertainment framing.
+- [x] Add an accessible desktop entry cookie-consent banner with Accept and essential-only choices.
+- [x] Prevent analytics from loading until the visitor accepts non-essential cookies and persist the consent decision locally.
+- [x] Verify every public route returns populated server-rendered HTML with route-specific metadata and crawlable content.
+- [x] Add tests for consent persistence, analytics gating, unique image assignments, and deep-content source links.
+- [x] Visually verify the refined homepage and each major page on desktop and mobile without repeated imagery.
+- [x] Visually verify the refined Category and Daily Digest pages on desktop and document imagery, cropping, and readability.
+- [x] Complete a final visual smoke summary covering every major refined route class after the missing desktop checks.
+- [x] Add a final desktop/mobile visual smoke matrix covering homepage, article, category, archive, digest, games, guides, responsible-entertainment, about, and search.
+- [x] Visually verify the refined Guides, About, Search, Archive, Category, and Digest pages on mobile and document responsive cropping and content readability.
+- [x] Re-run a final route smoke pass after the complete refined mobile review to confirm non-repeating imagery and responsive behavior.
+- [x] Re-run the full test suite, TypeScript validation, production builds, and live route smoke tests.
+- [ ] Save and auto-publish the refined CasinoVerse checkpoint and deliver the updated multi-page HTML website.
+- [ ] Save a new checkpoint containing all refinement changes and confirm auto-publication succeeds.
+- [ ] Verify the live published site serves refined SSR HTML, distinct imagery/content, and consent-gated analytics before final delivery.

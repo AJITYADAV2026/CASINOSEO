@@ -1,10 +1,11 @@
 import { Search as SearchIcon } from "lucide-react";
 import { FormEvent, useState } from "react";
-import { useSearch } from "wouter";
+import { Link, useSearch } from "wouter";
 import { Seo } from "@/components/Seo";
 import { StoryCard, type StoryCardData } from "@/components/StoryCard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { trpc } from "@/lib/trpc";
+import { SEARCH_HERO_IMAGE } from "@/lib/site";
 
 export default function Search() {
   const search = useSearch();
@@ -23,8 +24,8 @@ export default function Search() {
 
   return (
     <>
-      <Seo title="Search" description="Search CasinoVerse research, regulation, culture, game guides, and responsible-entertainment coverage." path="/search" noIndex />
-      <header className="search-header border-b border-gold/15">
+      <Seo title="Search" description="Search CasinoVerse research, regulation, culture, game guides, and responsible-entertainment coverage." path="/search" image={SEARCH_HERO_IMAGE} noIndex />
+      <header className="search-header relative overflow-hidden border-b border-gold/15" style={{ backgroundImage: `linear-gradient(90deg, rgba(17,16,15,.98), rgba(17,16,15,.83) 58%, rgba(17,16,15,.32)), url(${SEARCH_HERO_IMAGE})`, backgroundSize: "cover", backgroundPosition: "center" }}>
         <div className="container py-16 md:py-24">
           <p className="eyebrow text-gold">Search the publication</p>
           <h1 className="mt-4 font-display text-[clamp(4rem,9vw,8rem)] leading-[.84] tracking-[-.045em] text-ivory">Find the context.</h1>
@@ -44,7 +45,7 @@ export default function Search() {
               <div className="mb-8 flex items-end justify-between border-b border-gold/20 pb-5"><div><p className="eyebrow text-gold">Results</p><h2 className="mt-2 font-display text-4xl text-ivory">{data.length} {data.length === 1 ? "story" : "stories"} for “{query}”</h2></div></div>
               {data.length > 0 ? <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">{(data as StoryCardData[]).map(item => <StoryCard key={item.story.id} item={item} />)}</div> : <div className="story-card p-12 text-center"><SearchIcon className="mx-auto h-8 w-8 text-gold" /><h2 className="mt-5 font-display text-3xl text-ivory">No matching stories.</h2><p className="mt-3 text-ivory/50">Try a broader topic such as Macau, regulation, tourism, or responsible entertainment.</p></div>}
             </>
-          ) : <div className="mx-auto max-w-2xl text-center"><SearchIcon className="mx-auto h-9 w-9 text-gold/70" /><h2 className="mt-5 font-display text-4xl text-ivory">Search the research desk.</h2><p className="mt-4 text-lg leading-8 text-ivory/50">Enter at least two characters to search article headlines, summaries, and reporting.</p></div>}
+          ) : <div className="mx-auto max-w-3xl text-center"><SearchIcon className="mx-auto h-9 w-9 text-gold/70" /><h2 className="mt-5 font-display text-4xl text-ivory">Search the research desk.</h2><p className="mt-4 text-lg leading-8 text-ivory/50">Enter at least two characters to search article headlines, summaries, and reporting. Start with a jurisdiction, operator, regulatory question, destination, or game concept.</p><nav className="mt-8 flex flex-wrap justify-center gap-3" aria-label="Suggested research topics"><Link href="/category/market-intelligence" className="term-chip hover:text-gold-light">Market intelligence</Link><Link href="/category/regulation" className="term-chip hover:text-gold-light">Regulation</Link><Link href="/category/culture-travel" className="term-chip hover:text-gold-light">Culture & travel</Link><Link href="/responsible-entertainment" className="term-chip hover:text-gold-light">Responsible entertainment</Link></nav></div>}
         </div>
       </section>
     </>

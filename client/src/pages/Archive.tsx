@@ -2,15 +2,16 @@ import { ArrowRight, CalendarDays, FileText } from "lucide-react";
 import { Link } from "wouter";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Seo } from "@/components/Seo";
-import { formatDate, MARKET_IMAGE } from "@/lib/site";
+import { ARCHIVE_HERO_IMAGE, formatDate } from "@/lib/site";
 import { trpc } from "@/lib/trpc";
+import { ResearchReferences } from "@/components/ResearchReferences";
 
 export default function Archive() {
   const { data, isLoading } = trpc.editorial.archive.useQuery();
 
   return (
     <>
-      <Seo title="Daily research archive" description="Browse CasinoVerse casino-industry research editions by publication date, with clear sourcing and developing-story labels." path="/archive" image={MARKET_IMAGE} />
+      <Seo title="Daily research archive" description="Browse CasinoVerse casino-industry research editions by publication date, with clear sourcing and developing-story labels." path="/archive" image={ARCHIVE_HERO_IMAGE} />
       <header className="archive-header border-b border-gold/15">
         <div className="container grid gap-10 py-16 md:py-24 lg:grid-cols-[1fr_360px] lg:items-end">
           <div>
@@ -51,6 +52,18 @@ export default function Archive() {
           ) : <div className="story-card mt-8 p-12 text-center"><h2 className="font-display text-3xl text-ivory">The first daily edition is being prepared.</h2></div>}
         </div>
       </section>
+
+      <div className="container pb-24">
+        <ResearchReferences
+          eyebrow="Archive method"
+          title="What makes an edition complete"
+          intro="A dated edition preserves the day’s verified source trail, labels forecasts and proposals, and remains developing until the collection window closes. Material corrections update the record rather than silently rewriting its history."
+          sources={[
+            { name: "The Trust Project", detail: "Reference and methods indicators for showing readers where information came from and how reporting was built.", href: "https://thetrustproject.org/trust-indicators/" },
+            { name: "SPJ Code of Ethics", detail: "Guidance to verify information, provide context, update stories, identify sources, and correct mistakes prominently.", href: "https://www.spj.org/spj-code-of-ethics/" },
+          ]}
+        />
+      </div>
     </>
   );
 }

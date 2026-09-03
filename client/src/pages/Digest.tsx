@@ -4,7 +4,7 @@ import { Link, useParams } from "wouter";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Seo } from "@/components/Seo";
 import { StoryCard, type StoryCardData } from "@/components/StoryCard";
-import { bodyParagraphs, formatDate, MARKET_IMAGE } from "@/lib/site";
+import { ARCHIVE_HERO_IMAGE, bodyParagraphs, formatDate } from "@/lib/site";
 import { trpc } from "@/lib/trpc";
 
 export default function Digest() {
@@ -37,7 +37,7 @@ export default function Digest() {
 
   return (
     <>
-      <Seo title={data.digest.title} description={data.digest.summary} path={`/archive/${data.digest.digestDate}`} image={items[0]?.story.featuredImageUrl || MARKET_IMAGE} noIndex={isDeveloping} jsonLd={jsonLd} />
+      <Seo title={data.digest.title} description={data.digest.summary} path={`/archive/${data.digest.digestDate}`} image={items[0]?.story.featuredImageUrl || ARCHIVE_HERO_IMAGE} noIndex={isDeveloping} jsonLd={jsonLd} />
       <header className="digest-header border-b border-gold/15">
         <div className="container py-14 md:py-24">
           <Link href="/archive" className="inline-flex items-center gap-2 text-sm text-ivory/45 hover:text-gold-light"><ArrowLeft className="h-4 w-4" /> Back to the research archive</Link>
@@ -66,13 +66,19 @@ export default function Digest() {
           </section>
         </div>
 
-        <aside>
-          <div className="sticky top-28 rounded-[22px] border border-gold/18 bg-card p-6">
+        <aside className="space-y-4">
+          <div className="rounded-[22px] border border-gold/18 bg-card p-6">
             <CalendarDays className="h-6 w-6 text-gold" />
             <h2 className="mt-4 font-display text-2xl text-ivory">Edition status</h2>
             <div className="mt-5 flex items-start gap-3 text-sm leading-6 text-ivory/55"><CircleDot className="mt-1 h-4 w-4 shrink-0 text-gold" /><p>{isDeveloping ? "This current-day edition may receive additional verified developments before the calendar-day window closes." : "This edition represents the completed research file for its publication date."}</p></div>
             {data.digest.markdownArtifact ? <a href={`/research/${data.digest.digestDate}.md`} className="button-ghost mt-6 w-full justify-center"><FileDown className="h-4 w-4" /> View Markdown research</a> : null}
             <p className="mt-5 border-t border-white/10 pt-5 text-xs leading-5 text-ivory/38">All summaries are informational. Follow article source links to review the original reporting and official material.</p>
+          </div>
+          <div className="rounded-[22px] border border-white/10 bg-card p-6">
+            <FileDown className="h-6 w-6 text-gold" />
+            <h2 className="mt-4 font-display text-2xl text-ivory">Collection method</h2>
+            <p className="mt-3 text-sm leading-6 text-ivory/50">The edition prioritizes regulators, government material, company filings, and established trade reporting. Forecasts, proposals, and company statements retain their original labels. Material corrections update the record.</p>
+            <Link href="/about#standards" className="mt-5 inline-flex text-sm text-gold hover:text-gold-light">Review editorial standards →</Link>
           </div>
         </aside>
       </div>

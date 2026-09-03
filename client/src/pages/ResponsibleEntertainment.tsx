@@ -1,7 +1,8 @@
 import { AlarmClock, Ban, CreditCard, ExternalLink, HandHeart, PauseCircle, ShieldCheck, WalletCards } from "lucide-react";
 import { Link } from "wouter";
 import { Seo } from "@/components/Seo";
-import { RESPONSIBLE_IMAGE } from "@/lib/site";
+import { RESPONSIBLE_HERO_IMAGE } from "@/lib/site";
+import { ResearchReferences } from "@/components/ResearchReferences";
 
 const limits = [
   { icon: WalletCards, title: "Set a loss limit", text: "Choose an amount that can be lost without affecting housing, food, bills, debt, savings, or other commitments." },
@@ -15,11 +16,11 @@ const signs = ["Spending more time or money than intended", "Trying to recover l
 export default function ResponsibleEntertainment() {
   return (
     <>
-      <Seo title="Responsible entertainment" description="Practical information about gambling risk, time and spending limits, warning signs, blocking tools, self-exclusion, and support." path="/responsible-entertainment" image={RESPONSIBLE_IMAGE} />
+      <Seo title="Responsible entertainment" description="Practical information about gambling risk, time and spending limits, warning signs, blocking tools, self-exclusion, and support." path="/responsible-entertainment" image={RESPONSIBLE_HERO_IMAGE} />
       <header className="responsible-hero border-b border-[#7893A6]/25">
         <div className="container grid gap-10 py-16 md:py-24 lg:grid-cols-[1fr_.78fr] lg:items-center">
           <div><div className="flex items-center gap-3"><ShieldCheck className="h-6 w-6 text-[#9fb8c9]" /><p className="eyebrow text-[#9fb8c9]">Responsible entertainment</p></div><h1 className="mt-6 font-display text-[clamp(4rem,9vw,8rem)] leading-[.84] tracking-[-.045em] text-ivory">Keep the game<br /><em className="font-normal text-[#b4c7d4]">in its place.</em></h1><p className="mt-7 max-w-2xl text-xl leading-8 text-ivory/60">Gambling is a paid form of entertainment with a built-in risk of loss. Limits are most effective when they are decided before play—not while emotions are high.</p></div>
-          <div className="image-frame aspect-[4/3] rounded-[28px] border border-[#7893A6]/25"><img src={RESPONSIBLE_IMAGE} alt="Calm lounge still life with a clock, notebook, water, and one gaming chip" /></div>
+          <div className="image-frame aspect-[4/3] rounded-[28px] border border-[#7893A6]/25"><img src={RESPONSIBLE_HERO_IMAGE} alt="Calm planning desk with a clock, written budget, closed wallet, water, and protective phone symbol" /></div>
         </div>
       </header>
 
@@ -57,6 +58,19 @@ export default function ResponsibleEntertainment() {
           <div className="rounded-[26px] border border-gold/20 bg-[#171410] p-8 md:p-10"><p className="eyebrow text-gold">Important disclosure</p><p className="mt-4 max-w-5xl text-lg leading-8 text-ivory/62">CasinoVerse is an informational publication. We do not offer gambling, deposits, withdrawals, bonuses, odds, or real-money games. This page provides general education and is not medical or financial advice. If gambling is causing immediate danger, severe distress, or thoughts of self-harm, contact local emergency services or an appropriate crisis service now.</p><Link href="/" className="mt-6 inline-flex text-sm text-gold">Return to CasinoVerse →</Link></div>
         </div>
       </section>
+
+      <div className="container pb-24">
+        <ResearchReferences
+          eyebrow="Public-health sources"
+          title="Help should not depend on a loss total"
+          intro="Harm can affect health, relationships, work, and household security before a clinical threshold is reached. Warning signs are reasons to pause and seek qualified support; they are not a diagnosis."
+          sources={[
+            { name: "World Health Organization", detail: "Global fact sheet on gambling harm, prevention, treatment, pre-commitment, and self-exclusion.", href: "https://www.who.int/news-room/fact-sheets/detail/gambling" },
+            { name: "National Council on Problem Gambling", detail: "Plain-language warning signs, impact, treatment pathways, and United States support resources.", href: "https://www.ncpgambling.org/help-treatment/faqs-what-is-problem-gambling/" },
+            { name: "Arizona Department of Gaming", detail: "2026 training on positive play, warning signs, lower-risk boundaries, and evidence-based support.", href: "https://gaming.az.gov/sites/default/files/files/AZ%20Responsible%20Gaming%20-%20Modules%204-6.pdf" },
+          ]}
+        />
+      </div>
     </>
   );
 }

@@ -1,7 +1,8 @@
 import { ArrowRight, CheckCircle2, ExternalLink, FileSearch, Scale, ShieldCheck } from "lucide-react";
 import { Link } from "wouter";
 import { Seo } from "@/components/Seo";
-import { HERO_IMAGE } from "@/lib/site";
+import { ABOUT_HERO_IMAGE } from "@/lib/site";
+import { ResearchReferences } from "@/components/ResearchReferences";
 
 const standards = [
   ["Trace the claim", "Research stories retain original publisher names, headlines, URLs, publication dates when visible, and the date CasinoVerse accessed the source."],
@@ -13,9 +14,9 @@ const standards = [
 export default function About() {
   return (
     <>
-      <Seo title="About CasinoVerse" description="Learn how CasinoVerse researches casino-industry news, attributes sources, handles developing stories, and maintains an informational-only editorial standard." path="/about" image={HERO_IMAGE} />
+      <Seo title="About CasinoVerse" description="Learn how CasinoVerse researches casino-industry news, attributes sources, handles developing stories, and maintains an informational-only editorial standard." path="/about" image={ABOUT_HERO_IMAGE} />
       <header className="about-hero relative overflow-hidden border-b border-gold/15">
-        <img src={HERO_IMAGE} alt="Contemporary integrated-resort architecture in a restrained editorial style" className="absolute inset-0 h-full w-full object-cover opacity-25" />
+        <img src={ABOUT_HERO_IMAGE} alt="Independent research newsroom with source folders, a verification timeline, and empty analyst desks" className="absolute inset-0 h-full w-full object-cover opacity-25" />
         <div className="absolute inset-0 bg-gradient-to-r from-black via-black/85 to-black/40" />
         <div className="container relative flex min-h-[620px] items-end py-16 md:items-center md:py-24">
           <div className="max-w-4xl"><p className="eyebrow text-gold">About the publication</p><h1 className="mt-5 font-display text-[clamp(4rem,9vw,8rem)] leading-[.84] tracking-[-.045em] text-ivory">Context before<br /><em className="font-normal text-gold-light">conclusion.</em></h1><p className="mt-7 max-w-2xl text-xl leading-8 text-ivory/62">CasinoVerse is an independent informational publication about casino business, design, regulation, games, destinations, and responsible entertainment.</p></div>
@@ -25,7 +26,7 @@ export default function About() {
       <section className="section-space">
         <div className="container grid gap-12 lg:grid-cols-[.6fr_1.4fr]">
           <div><FileSearch className="h-10 w-10 text-gold" /><p className="eyebrow mt-7 text-gold">Our mission</p></div>
-          <div><h2 className="font-display text-5xl leading-none text-ivory md:text-6xl">Make a complex global industry easier to understand.</h2><p className="mt-7 max-w-3xl text-xl leading-9 text-ivory/58">Casino coverage often sits between finance, law, tourism, technology, entertainment, and public health. CasinoVerse brings those threads together, keeps original sources visible, and writes for readers who want explanation rather than promotion.</p></div>
+          <div><h2 className="font-display text-5xl leading-none text-ivory md:text-6xl">Make a complex global industry easier to understand.</h2><p className="mt-7 max-w-3xl text-xl leading-9 text-ivory/58">Casino coverage often sits between finance, law, tourism, technology, entertainment, and public health. CasinoVerse brings those threads together, keeps original sources visible, and writes for readers who want explanation rather than promotion.</p><p className="mt-5 text-xs uppercase tracking-[.14em] text-ivory/35">Standards last reviewed 3 September 2026 · Research desk: CasinoVerse Editorial</p></div>
         </div>
       </section>
 
@@ -47,6 +48,18 @@ export default function About() {
       <section className="pb-24">
         <div className="container"><div className="digest-banner rounded-[28px] border border-gold/20 p-8 md:p-11"><p className="eyebrow text-gold">Read the work</p><h2 className="mt-3 max-w-3xl font-display text-4xl text-ivory md:text-5xl">Begin with the latest dated research edition.</h2><div className="mt-7 flex flex-wrap gap-4"><Link href="/archive" className="button-gold">Open the archive <ArrowRight className="h-4 w-4" /></Link><a href="mailto:editorial@casinoverse.example" className="button-ghost">Contact the editorial desk <ExternalLink className="h-4 w-4" /></a></div></div></div>
       </section>
+
+      <div className="container pb-24">
+        <ResearchReferences
+          eyebrow="Standards we consult"
+          title="A visible reporting method"
+          intro="CasinoVerse’s internal standards reflect established principles of verification, source transparency, labeling, independence, correction, and accountable feedback. These references guide our method; they do not certify or endorse the publication."
+          sources={[
+            { name: "The Trust Project", detail: "Eight indicators covering best practices, expertise, labels, references, methods, local knowledge, diverse voices, and feedback.", href: "https://thetrustproject.org/trust-indicators/" },
+            { name: "Society of Professional Journalists", detail: "Ethics guidance on verification, original sources, context, independence, minimizing harm, and prominent corrections.", href: "https://www.spj.org/spj-code-of-ethics/" },
+          ]}
+        />
+      </div>
     </>
   );
 }
