@@ -26,6 +26,8 @@
 - [x] Add explicit focus-visible styles for every custom interactive pattern, including navigation links, icon controls, CTAs, topic cards, archive cards, source links, and footer links.
 - [x] Complete a keyboard-only and contrast-focused accessibility pass across all public routes and document the results.
 - [x] Create the final project checkpoint and deliver the CasinoVerse website with all dated Markdown research files.
-- [ ] Persist each scheduled edition’s complete Markdown research artifact in durable website storage instead of an isolated task filesystem.
-- [ ] Update the active daily schedule prompt to send the full Markdown artifact through the authenticated production callback.
-- [ ] Rebuild, republish, and verify the live callback contract and durable Markdown archive end to end.
+- [x] Persist each scheduled edition’s complete Markdown research artifact in durable website storage instead of an isolated task filesystem.
+- [x] Update the active daily schedule prompt to send the full Markdown artifact through the authenticated production callback.
+- [x] Rebuild, republish, and verify the live callback contract and durable Markdown archive end to end.
+- [x] Re-verify the republished live callback returns 403 without scheduled credentials and the active schedule detail requires `markdownArtifact`.
+- [x] Complete a safe authenticated scheduled-ingestion validation, or an equivalent authenticated transaction test, and verify the resulting durable Markdown output.

@@ -1,5 +1,8 @@
+import { eq } from "drizzle-orm";
 import { describe, expect, it } from "vitest";
-import { digestPayloadSchema } from "./publicationRoutes";
+import { dailyDigests, publicationJobs, stories, storySources } from "../drizzle/schema";
+import { getDb } from "./db";
+import { digestPayloadSchema, persistScheduledDigest } from "./publicationRoutes";
 
 const basePayload = {
   digestDate: "2026-09-03",
@@ -39,4 +42,42 @@ describe("scheduled daily digest payload", () => {
     const { markdownArtifact: _omitted, ...withoutMarkdown } = basePayload;
     expect(() => digestPayloadSchema.parse(withoutMarkdown)).toThrow();
   });
+
+  it("persists a trusted scheduled edition, Markdown artifact, story, and source atomically", async () => {
+    const db = await getDb();
+    expect(db).toBeTruthy();
+    if (!db) return;
+    const [job] = await db.select().from(publicationJobs).where(eq(publicationJobs.jobKey, "casinoverse-daily-research")).limit(1);
+    expect(job?.scheduleCronTaskUid).toBeTruthy();
+    if (!job?.scheduleCronTaskUid) return;
+
+    const digestDate = "2099-12-31";
+    const storySlug = "scheduled-transaction-test-story";
+    const payload = digestPayloadSchema.parse({
+      ...basePayload,
+      digestDate,
+      title: "CasinoVerse scheduled transaction verification edition",
+      stories: [{ ...basePayload.stories[0], slug: storySlug }],
+    });
+    const rollback = new Error("ROLLBACK_VERIFIED_SCHEDULE_TEST");
+
+    await expect(db.transaction(async tx => {
+      const transactionalDb = { transaction: async (callback: (inner: typeof tx) => Promise<void>) => callback(tx) } as unknown as Parameters<typeof persistScheduledDigest>[0];
+      await persistScheduledDigest(transactionalDb, job, job.scheduleCronTaskUid!, payload);
+
+      const [digest] = await tx.select().from(dailyDigests).where(eq(dailyDigests.digestDate, digestDate)).limit(1);
+      expect(digest?.markdownArtifact).toContain("## References");
+      const [story] = await tx.select().from(stories).where(eq(stories.slug, storySlug)).limit(1);
+      expect(story?.title).toContain("Verified market development");
+      const sourceRows = story ? await tx.select().from(storySources).where(eq(storySources.storyId, story.id)) : [];
+      expect(sourceRows).toHaveLength(1);
+      expect(sourceRows[0]?.sourceUrl).toBe("https://example.com/source");
+      throw rollback;
+    })).rejects.toBe(rollback);
+
+    const [rolledBackDigest] = await db.select().from(dailyDigests).where(eq(dailyDigests.digestDate, digestDate)).limit(1);
+    const [rolledBackStory] = await db.select().from(stories).where(eq(stories.slug, storySlug)).limit(1);
+    expect(rolledBackDigest).toBeUndefined();
+    expect(rolledBackStory).toBeUndefined();
+  }, 20_000);
 });

@@ -56,6 +56,94 @@ export const digestPayloadSchema = z.object({
   stories: z.array(storySchema).min(1).max(30),
 });
 
+export type DigestPayload = z.infer<typeof digestPayloadSchema>;
+type EditorialDb = NonNullable<Awaited<ReturnType<typeof getDb>>>;
+type PublicationJob = typeof publicationJobs.$inferSelect;
+
+export async function persistScheduledDigest(db: EditorialDb, job: PublicationJob, cronTaskUid: string, payload: DigestPayload) {
+  await db.transaction(async tx => {
+    await tx.insert(dailyDigests).values({
+      digestDate: payload.digestDate,
+      slug: `daily-digest-${payload.digestDate}`,
+      title: payload.title,
+      summary: payload.summary,
+      body: payload.body,
+      markdownArtifact: payload.markdownArtifact,
+      status: payload.status,
+      publishedAt: payload.status === "published" ? new Date() : null,
+      modifiedAt: new Date(),
+    }).onDuplicateKeyUpdate({ set: {
+      title: payload.title,
+      summary: payload.summary,
+      body: payload.body,
+      markdownArtifact: payload.markdownArtifact,
+      status: payload.status,
+      publishedAt: payload.status === "published" ? new Date() : null,
+      modifiedAt: new Date(),
+    } });
+
+    const [digest] = await tx.select().from(dailyDigests).where(eq(dailyDigests.digestDate, payload.digestDate)).limit(1);
+    if (!digest) throw new Error("Digest upsert did not return a durable record");
+    await tx.delete(digestStories).where(eq(digestStories.digestId, digest.id));
+
+    for (let position = 0; position < payload.stories.length; position += 1) {
+      const item = payload.stories[position]!;
+      const [category] = await tx.select().from(categories).where(eq(categories.slug, item.categorySlug)).limit(1);
+      if (!category) throw new Error(`Unknown category slug: ${item.categorySlug}`);
+      await tx.insert(stories).values({
+        slug: item.slug,
+        title: item.title,
+        dek: item.dek,
+        body: item.body,
+        contentType: item.contentType,
+        status: payload.status,
+        categoryId: category.id,
+        authorName: item.authorName,
+        readingMinutes: item.readingMinutes,
+        featuredImageUrl: item.featuredImageUrl ?? null,
+        featuredImageAlt: item.featuredImageAlt ?? null,
+        isLead: false,
+        isFeatured: position < 4,
+        publishedAt: new Date(item.publishedAt),
+        modifiedAt: new Date(),
+      }).onDuplicateKeyUpdate({ set: {
+        title: item.title,
+        dek: item.dek,
+        body: item.body,
+        contentType: item.contentType,
+        status: payload.status,
+        categoryId: category.id,
+        authorName: item.authorName,
+        readingMinutes: item.readingMinutes,
+        featuredImageUrl: item.featuredImageUrl ?? null,
+        featuredImageAlt: item.featuredImageAlt ?? null,
+        isFeatured: position < 4,
+        publishedAt: new Date(item.publishedAt),
+        modifiedAt: new Date(),
+      } });
+      const [story] = await tx.select().from(stories).where(eq(stories.slug, item.slug)).limit(1);
+      if (!story) throw new Error(`Story upsert failed: ${item.slug}`);
+      await tx.delete(storySources).where(eq(storySources.storyId, story.id));
+      await tx.insert(storySources).values(item.sources.map(source => ({
+        storyId: story.id,
+        publisher: source.publisher,
+        sourceTitle: source.sourceTitle,
+        sourceUrl: source.sourceUrl,
+        sourcePublishedAt: source.sourcePublishedAt ? new Date(source.sourcePublishedAt) : null,
+        accessedAt: new Date(),
+        sourceType: source.sourceType,
+      })));
+      await tx.insert(digestStories).values({ digestId: digest.id, storyId: story.id, position: position + 1 });
+    }
+
+    await tx.update(publicationJobs).set({
+      status: "active",
+      lastCompletedDigestDate: payload.status === "published" ? payload.digestDate : job.lastCompletedDigestDate,
+      lastRunAt: new Date(),
+    }).where(and(eq(publicationJobs.id, job.id), eq(publicationJobs.scheduleCronTaskUid, cronTaskUid)));
+  });
+}
+
 async function scheduledDailyDigest(req: Request, res: Response) {
   let taskUid: string | undefined;
   try {
@@ -75,87 +163,7 @@ async function scheduledDailyDigest(req: Request, res: Response) {
     if (!job) return res.json({ ok: true, skipped: "orphan" });
 
     const payload = digestPayloadSchema.parse(req.body);
-    await db.transaction(async tx => {
-      await tx.insert(dailyDigests).values({
-        digestDate: payload.digestDate,
-        slug: `daily-digest-${payload.digestDate}`,
-        title: payload.title,
-        summary: payload.summary,
-        body: payload.body,
-        markdownArtifact: payload.markdownArtifact,
-        status: payload.status,
-        publishedAt: payload.status === "published" ? new Date() : null,
-        modifiedAt: new Date(),
-      }).onDuplicateKeyUpdate({ set: {
-        title: payload.title,
-        summary: payload.summary,
-        body: payload.body,
-        markdownArtifact: payload.markdownArtifact,
-        status: payload.status,
-        publishedAt: payload.status === "published" ? new Date() : null,
-        modifiedAt: new Date(),
-      } });
-
-      const [digest] = await tx.select().from(dailyDigests).where(eq(dailyDigests.digestDate, payload.digestDate)).limit(1);
-      if (!digest) throw new Error("Digest upsert did not return a durable record");
-      await tx.delete(digestStories).where(eq(digestStories.digestId, digest.id));
-
-      for (let position = 0; position < payload.stories.length; position += 1) {
-        const item = payload.stories[position]!;
-        const [category] = await tx.select().from(categories).where(eq(categories.slug, item.categorySlug)).limit(1);
-        if (!category) throw new Error(`Unknown category slug: ${item.categorySlug}`);
-        await tx.insert(stories).values({
-          slug: item.slug,
-          title: item.title,
-          dek: item.dek,
-          body: item.body,
-          contentType: item.contentType,
-          status: payload.status,
-          categoryId: category.id,
-          authorName: item.authorName,
-          readingMinutes: item.readingMinutes,
-          featuredImageUrl: item.featuredImageUrl ?? null,
-          featuredImageAlt: item.featuredImageAlt ?? null,
-          isLead: false,
-          isFeatured: position < 4,
-          publishedAt: new Date(item.publishedAt),
-          modifiedAt: new Date(),
-        }).onDuplicateKeyUpdate({ set: {
-          title: item.title,
-          dek: item.dek,
-          body: item.body,
-          contentType: item.contentType,
-          status: payload.status,
-          categoryId: category.id,
-          authorName: item.authorName,
-          readingMinutes: item.readingMinutes,
-          featuredImageUrl: item.featuredImageUrl ?? null,
-          featuredImageAlt: item.featuredImageAlt ?? null,
-          isFeatured: position < 4,
-          publishedAt: new Date(item.publishedAt),
-          modifiedAt: new Date(),
-        } });
-        const [story] = await tx.select().from(stories).where(eq(stories.slug, item.slug)).limit(1);
-        if (!story) throw new Error(`Story upsert failed: ${item.slug}`);
-        await tx.delete(storySources).where(eq(storySources.storyId, story.id));
-        await tx.insert(storySources).values(item.sources.map(source => ({
-          storyId: story.id,
-          publisher: source.publisher,
-          sourceTitle: source.sourceTitle,
-          sourceUrl: source.sourceUrl,
-          sourcePublishedAt: source.sourcePublishedAt ? new Date(source.sourcePublishedAt) : null,
-          accessedAt: new Date(),
-          sourceType: source.sourceType,
-        })));
-        await tx.insert(digestStories).values({ digestId: digest.id, storyId: story.id, position: position + 1 });
-      }
-
-      await tx.update(publicationJobs).set({
-        status: "active",
-        lastCompletedDigestDate: payload.status === "published" ? payload.digestDate : job.lastCompletedDigestDate,
-        lastRunAt: new Date(),
-      }).where(and(eq(publicationJobs.id, job.id), eq(publicationJobs.scheduleCronTaskUid, cronTaskUid)));
-    });
+    await persistScheduledDigest(db, job, cronTaskUid, payload);
 
     return res.json({ ok: true, digestDate: payload.digestDate, status: payload.status, storiesSaved: payload.stories.length });
   } catch (error) {

@@ -5,7 +5,7 @@
 | Check | Result |
 | --- | --- |
 | TypeScript | Passed with no errors |
-| Vitest | 13 tests passed across authentication, editorial data, sources, dated digests, search, SSR prefetch, metadata, contrast, focus styles, and production-origin configuration |
+| Vitest | 16 tests passed across authentication, editorial data, sources, dated digests, search, SSR prefetch, metadata, contrast, focus styles, production-origin configuration, durable scheduled-payload validation, and atomic scheduled-ingestion persistence |
 | Client production build | Passed |
 | Server-side rendering build | Passed |
 | Express production bundle | Passed |
@@ -46,3 +46,7 @@ Production canonical tags, absolute Open Graph image URLs, and absolute sitemap 
 After publication, the confirmed domain `https://casinonews-flgw988r.manus.space` returned HTTP 200 for the homepage, `robots.txt`, `sitemap.xml`, and `news-sitemap.xml`. The live `robots.txt` response referenced both XML sitemaps using the confirmed HTTPS origin, and the HTML and XML outputs were regenerated under the production canonical configuration.
 
 The recurring task **CasinoVerse daily research edition** is active with task UID `2QvHU9jj3ngh2WzxrJ6NQ4`, timezone `Asia/Calcutta`, and six-field cron `0 31 18 * * *`, corresponding to **12:01 AM IST daily**. The task identity is stored against the publication job in the database. A direct unauthenticated request to the live `/api/scheduled/daily-digest` endpoint returned HTTP 403, confirming that only the scheduled-task identity can write research editions. The first full-window run will finalize the 3 September edition at 12:01 AM IST on 4 September.
+
+The schedule prompt was updated to build the entire dated Markdown document in memory and submit it as the required `markdownArtifact` callback field, avoiding reliance on an isolated task filesystem. The live production URLs `/research/2026-09-02.md` and `/research/2026-09-03.md` returned HTTP 200 with `text/markdown` content types and stored artifacts of 8,868 and 9,180 bytes respectively. The 2 September daily-edition HTML also exposed its **View Markdown research** link. Invalid research dates returned HTTP 404 in development validation. The callback schema rejects payloads without the durable Markdown artifact, and the active schedule status contains the updated callback instruction.
+
+After the durable-artifact deployment, the live production callback was rechecked and returned HTTP 403 for a request without platform-issued scheduled credentials. The active schedule remained enabled and its stored task detail explicitly required `markdownArtifact`. Because scheduled credentials are intentionally unavailable to an interactive session, the authenticated ingestion path was validated through the same exported production transaction with the real database schema and durable task identity inside a rollback-protected test. That test successfully persisted and read back a digest, Markdown artifact, article, and source atomically, then verified the rollback left no test data. The complete suite passed 16 tests, followed by successful type checking and all three production build stages.
