@@ -20,7 +20,7 @@ export const GAME_GUIDES: Record<string, GameGuide> = {
   poker: {
     slug: "poker", name: "Poker", eyebrow: "Cards, uncertainty, and culture",
     dek: "A source-led introduction to poker’s debated ancestry, shared hand structure, major families, and the difference between long-run analysis and short-run uncertainty.",
-    image: EXPANDED_IMAGES.poker, imageAlt: "Editorial study of poker hand rankings, probability notes, and river-route history",
+    image: EXPANDED_IMAGES.poker, imageAlt: "Empty professional poker table showing seating positions, face-down cards, dealer button, and layout notes",
     introduction: [
       "Poker is a family of card games rather than one fixed ruleset. Variants combine chance in the deal with decisions about betting, folding, and interpreting incomplete information.",
       "The game’s ancestry is debated. Historians connect modern poker to several European comparison and bluffing games rather than one proven inventor or single place of origin. CasinoVerse treats romantic origin stories as possibilities, not established fact.",
@@ -55,7 +55,7 @@ export const GAME_GUIDES: Record<string, GameGuide> = {
   blackjack: {
     slug: "blackjack", name: "Blackjack", eyebrow: "Twenty-one, rules, and dependent probability",
     dek: "How the game descended from European twenty-one forms, how a hand is valued, and why table rules materially change the mathematics.",
-    image: EXPANDED_IMAGES.blackjack, imageAlt: "Editorial study of Vingt-et-Un notes, a card shoe, and hard and soft hand diagrams",
+    image: EXPANDED_IMAGES.blackjack, imageAlt: "Empty blackjack table with dealer shoe, discard tray, demonstration cards, and table-mechanics notes",
     introduction: [
       "Blackjack compares a participant’s hand with a dealer hand. The aim is to finish closer to 21 without exceeding it; a participant who goes over 21 loses immediately under standard rules.",
       "Its precise origin is unresolved, but historians generally connect it to the French game Vingt-et-Un. Stories about a promotional ace-and-black-jack payout are often repeated, yet the history of the modern name is less certain than the legend suggests.",
@@ -90,7 +90,7 @@ export const GAME_GUIDES: Record<string, GameGuide> = {
   roulette: {
     slug: "roulette", name: "Roulette", eyebrow: "The wheel, its variants, and independent outcomes",
     dek: "A measured guide to roulette’s evolving history, the single-zero and double-zero layouts, common terminology, and the mathematics created by the zero pockets.",
-    image: EXPANDED_IMAGES.roulette, imageAlt: "Editorial drafting study comparing single-zero and double-zero roulette wheel geometry",
+    image: EXPANDED_IMAGES.roulette, imageAlt: "European roulette wheel at rest beside its felt layout, calibration tools, and probability diagram",
     introduction: [
       "Roulette uses a rotating numbered wheel and a ball that comes to rest in one pocket. Bets are settled according to the pocket and the table layout; no previous result changes the probability of the next properly conducted spin.",
       "Blaise Pascal is often named as the game’s inventor, but the modern casino game evolved from several European wheel and number games. CasinoVerse separates that popular story from the documentary record.",
@@ -125,7 +125,7 @@ export const GAME_GUIDES: Record<string, GameGuide> = {
   baccarat: {
     slug: "baccarat", name: "Baccarat", eyebrow: "Fixed drawing rules and the illusion of trends",
     dek: "A clear account of baccarat’s uncertain origin, Punto Banco mechanics, commission variations, outcome probabilities, and common misreadings of scoreboards.",
-    image: EXPANDED_IMAGES.baccarat, imageAlt: "Editorial study of a Punto Banco shoe, nine-point arithmetic, and commission notation",
+    image: EXPANDED_IMAGES.baccarat, imageAlt: "Empty baccarat table with symmetrical Player and Banker zones, card shoe, and score-card grid",
     introduction: [
       "Baccarat describes several related comparing-card games. Punto Banco, the form common in many casinos, deals a Player hand and Banker hand under fixed drawing rules; those labels name the hands, not the person and the casino.",
       "Legends place the game much earlier, but a securely documented printed description appears in the 19th century. Claims of a single 15th-century inventor should therefore be treated cautiously.",
@@ -160,7 +160,7 @@ export const GAME_GUIDES: Record<string, GameGuide> = {
   slots: {
     slug: "slots", name: "Slot Machines", eyebrow: "From mechanical reels to regulated software",
     dek: "How mechanical payout devices became software-driven machines, what RNG, RTP, and volatility mean, and why none predicts a short session.",
-    image: EXPANDED_IMAGES.slots, imageAlt: "Editorial technical study of mechanical reels transitioning to a regulated random-number-generator board",
+    image: EXPANDED_IMAGES.slots, imageAlt: "Opened mechanical slot reel assembly beside a dark modern machine aisle and technical tools",
     introduction: [
       "A slot machine is a game of chance in which a random mechanism selects reel positions or screen symbols and pays according to a disclosed table. Modern appearances can be complex, but the outcome is determined by software and rules tested within a jurisdiction’s regulatory framework.",
       "Mechanical histories often focus on Charles Fey’s late-19th-century San Francisco machines. Earlier and competing devices also existed, so the development is better understood as a sequence of mechanical and commercial innovations.",

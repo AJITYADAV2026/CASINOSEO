@@ -16,14 +16,14 @@ export default function Games() {
   return (
     <>
       <Seo title="Casino game guides" description="Learn the history, terminology, probability, and risk fundamentals of poker, blackjack, roulette, baccarat, and slots." path="/games" image={GAMES_HERO_IMAGE} />
-      <header className="games-hero relative overflow-hidden border-b border-gold/15">
-        <img src={GAMES_HERO_IMAGE} alt="Five-part casino game study table with cards, roulette geometry, a dealing shoe, notation, and reel mechanics" className="absolute inset-0 h-full w-full object-cover opacity-35" />
+      <header className="games-hero casino-games-hero relative overflow-hidden border-b border-gold/15">
+        <img src={GAMES_HERO_IMAGE} alt="Casino game laboratory with separate poker, blackjack, roulette, baccarat, and slot-mechanism study zones" className="absolute inset-0 h-full w-full object-cover opacity-45" />
         <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-black/30" />
         <div className="container relative flex min-h-[600px] items-end py-16 md:items-center md:py-24">
           <div className="max-w-4xl">
-            <p className="eyebrow text-gold">Casino games, decoded</p>
+            <p className="eyebrow text-gold">The game laboratory · Casino floor desk</p>
             <h1 className="mt-5 font-display text-[clamp(4rem,9vw,8rem)] leading-[.84] tracking-[-.045em] text-ivory">Learn the rules.<br /><em className="font-normal text-gold-light">Respect the odds.</em></h1>
-            <p className="mt-7 max-w-2xl text-xl leading-8 text-ivory/65">A history-led guide to how familiar casino games work, the language used at the table, and the mathematical reality behind the experience.</p>
+            <p className="mt-7 max-w-2xl text-xl leading-8 text-ivory/65">An article-led guide to casino table layouts, machine systems, dealing rules, game language, and the mathematical reality behind the experience.</p>
           </div>
         </div>
       </header>

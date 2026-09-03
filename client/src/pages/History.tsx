@@ -22,8 +22,8 @@ export default function History() {
     <>
       <Seo title="Casino history" description="Trace the documented evolution of casinos, card and wheel games, mechanical machines, regulation, and destination architecture without turning folklore into fact." path="/history" image={EXPANDED_IMAGES.history} />
       <article>
-        <header className="relative min-h-[70vh] overflow-hidden border-b border-gold/15">
-          <img src={EXPANDED_IMAGES.history} alt="Editorial illustration of a museum corridor connecting historic casino objects and modern city architecture" className="absolute inset-0 h-full w-full object-cover" />
+        <header className="casino-editorial-hero relative min-h-[70vh] overflow-hidden border-b border-gold/15">
+          <img src={EXPANDED_IMAGES.history} alt="Casino history conservation table with an early roulette wheel, antique cards, mechanical slot reel, dice, blueprint, and archival photographs" className="absolute inset-0 h-full w-full object-cover" />
           <div className="hero-vignette absolute inset-0" />
           <div className="container relative flex min-h-[70vh] items-end pb-16 pt-28">
             <div className="max-w-4xl"><p className="eyebrow">An evidence-led timeline</p><h1 className="mt-5 font-display text-6xl leading-[.92] text-ivory sm:text-7xl lg:text-9xl">How casinos became institutions.</h1><p className="mt-6 max-w-3xl text-xl leading-9 text-ivory/72">From regulated carnival rooms and spa-town wheels to mechanical reels, destination resorts, and modern oversight—told with uncertainty where the historical record is incomplete.</p><p className="mt-6 text-sm text-ivory/45">CasinoVerse Research Desk · Reviewed 3 September 2026 · Editorial illustration</p></div>

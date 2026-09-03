@@ -20,7 +20,7 @@ export default function ResponsibleEntertainment() {
       <header className="responsible-hero border-b border-[#7893A6]/25">
         <div className="container grid gap-10 py-16 md:py-24 lg:grid-cols-[1fr_.78fr] lg:items-center">
           <div><div className="flex items-center gap-3"><ShieldCheck className="h-6 w-6 text-[#9fb8c9]" /><p className="eyebrow text-[#9fb8c9]">Responsible entertainment</p></div><h1 className="mt-6 font-display text-[clamp(4rem,9vw,8rem)] leading-[.84] tracking-[-.045em] text-ivory">Keep the game<br /><em className="font-normal text-[#b4c7d4]">in its place.</em></h1><p className="mt-7 max-w-2xl text-xl leading-8 text-ivory/60">Gambling is a paid form of entertainment with a built-in risk of loss. Limits are most effective when they are decided before play—not while emotions are high.</p></div>
-          <div className="image-frame aspect-[4/3] rounded-[28px] border border-[#7893A6]/25"><img src={RESPONSIBLE_HERO_IMAGE} alt="Calm planning desk with a clock, written budget, closed wallet, water, and protective phone symbol" /></div>
+          <div className="image-frame aspect-[4/3] rounded-[28px] border border-[#7893A6]/25"><img src={RESPONSIBLE_HERO_IMAGE} alt="Quiet closed casino table with returned chips, stopped clock, limit card, support brochure, water, and a lit exit" /></div>
         </div>
       </header>
 

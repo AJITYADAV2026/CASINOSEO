@@ -46,7 +46,7 @@ describe("expanded multi-page publication", () => {
 
   it("implements the required article-led composition on every new page family", () => {
     const articles = read("client/src/pages/Articles.tsx");
-    ["Editor’s selection", "Complete desk", "filter-chip", "Search the publication"].forEach(value => expect(articles).toContain(value));
+    ["Editor’s selection", "Complete casino desk", "filter-chip", "Search the publication"].forEach(value => expect(articles).toContain(value));
 
     const game = read("client/src/pages/GameDetail.tsx");
     ["A measured history", "Concepts before terminology", "Plain-language glossary", "What the numbers mean", "Related reading", "Responsible entertainment"].forEach(value => expect(game).toContain(value));

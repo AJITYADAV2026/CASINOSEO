@@ -37,3 +37,18 @@ The Gallery was tested in a live browser rather than only through static asserti
 ## Automation Boundary Verification
 
 Agent 1 is active at **12:01 AM IST**. Durable publication-job records and heartbeat listings confirm Agent 2 is active at **2:00 AM IST** and Agent 3 is active at **2:30 AM IST**. No Agent 4 heartbeat exists. In accordance with the user’s latest instruction, Agent 4 remains paused and no URL indexing, Search Console operation, URL inspection, or sitemap submission will occur until the custom domain is live and the user explicitly authorizes resumption.
+
+## Casino-Editorial Identity Pass — 4 September 2026
+
+The follow-up redesign makes the casino subject visible without turning the publication into a betting or affiliate interface. Research into casino trade publishing, regulation, operations, architecture, game mechanics, and public-health communication produced a new desk structure: **Opening Table**, **Casino Floor**, **Industry & Rules**, **Places & Design**, **Research Vault**, **Game Laboratory**, **Rules of Play**, and **Responsible Play**. Written reporting remains labeled **Blog**; **Vlog** remains reserved for genuine original video.
+
+| Validation area | Result |
+| --- | --- |
+| Header and navigation | Passed on desktop and mobile. The two-level header separates publication desks from casino-topic navigation, adds visible active states, preserves all permanent routes, and retains the informational-risk disclosure. |
+| Homepage structure | Passed. The page now moves from the Opening Table into a dated Floor Report, four casino-system desks, game/history/design gateways, Rules of Play, source-led reading, newsletter, and responsible-play context. |
+| Image system | Passed visual review. Page heroes and Blog features now use distinct casino-floor, game-system, regulation, archive, architecture, destination, surveillance, and harm-prevention subjects. Replacement Blog, Games, About, and Responsible Play heroes rendered successfully after failed generations were replaced. |
+| Editorial tone | Passed. Headings, summaries, source trails, publication dates, caveats, no-wagering statements, and responsible-play copy remain prominent; no bonus, deposit, affiliate, or win-promotion interface was introduced. |
+| Responsive review | Passed at 1440 × 900 and 390 × 844 for Home, Blog, Games, About, Responsible Play, Culture, Destinations, Facts, Gallery, and Research Vault. Text, images, cards, source blocks, and footer navigation remained readable. |
+| Automated validation | All **52 tests** passed. TypeScript validation and the production client, SSR, and server builds completed successfully. |
+| SSR and runtime | Representative publication routes returned HTTP 200 with route-specific titles, the unknown-route control returned HTTP 404, casino image URLs resolved through the storage proxy, and the fresh runtime log scan found no errors. |
+| Automation boundary | Unchanged. Agents 1–3 retain their exact schedules and responsibilities. Agent 4, Search Console indexing, and sitemap submission remain paused pending the custom-domain authorization gate. |

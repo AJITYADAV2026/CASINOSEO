@@ -135,3 +135,10 @@
 - [x] Run and document mobile screenshot review for `/games`, `/games/poker`, `/games/blackjack`, `/games/baccarat`, `/games/slots`, `/gallery`, `/about`, `/archive`, `/guides`, `/privacy`, `/disclaimer`, and `/terms`.
 - [x] Perform browser-level Gallery QA for filter switching, lightbox opening and closing, Escape-key behavior, captions, and visible Editorial illustration labels.
 - [x] Complete the final page-by-page desktop/mobile visual audit record before publication.
+- [x] Research contemporary casino editorial, resort, game-mechanics, regulation, and responsible-gambling visual patterns to define a casino-specific but non-promotional design language.
+- [x] Audit the current header and navigation against the supplied screenshot and redesign it with clearer casino identity, stronger active states, and improved desktop/mobile hierarchy.
+- [x] Autonomously map the researched topics into the most useful website sections while keeping written coverage Blog/article-first and Vlog reserved for genuine video.
+- [x] Generate and assign a new unique casino-specific image system using tables, wheels, cards, architecture, surveillance, regulation, destination, history, and responsible-play cues without promotional wagering scenes.
+- [x] Redesign the homepage and major section pages so they visually read as a premium casino-industry publication while retaining sources, dates, caveats, related reading, and responsible-entertainment context.
+- [x] Validate image uniqueness, casino relevance, readable article hierarchy, SSR metadata, responsive navigation, accessibility, interactions, tests, and production builds.
+- [x] Save and auto-publish the casino-editorial redesign while keeping Agents 1–3 unchanged and Agent 4 indexing and sitemap submission paused.

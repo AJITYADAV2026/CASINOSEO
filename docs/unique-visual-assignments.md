@@ -2,19 +2,26 @@
 
 ## Visual System
 
-All new assets use a cohesive **luxury intelligence publication** style: cinematic editorial photography, near-black and charcoal environments, restrained antique-gold highlights, warm ivory practical light, realistic materials, no text, no logos, no visible brand marks, no celebratory winning imagery, and no identifiable people. Every subject, composition, dominant object, and location cue changes between assets so repeated imagery is eliminated without fragmenting the brand.
+All new assets use a cohesive **noir casino intelligence** style: cinematic editorial photography, black and bottle-green rooms, muted oxblood panels, restrained aged-gold details, warm practical light, realistic casino materials, and visible research or operational context. Every composition must be unmistakably connected to a casino floor, game system, regulatory record, resort building, destination, archive, or harm-prevention setting while remaining non-promotional. Assets contain no readable text, logos, identifiable people, active betting, money piles, celebratory winning imagery, bonus language, or jackpot spectacle.
 
 ## Page Heroes
 
 | Asset key | Unique subject and composition | Use |
 | --- | --- | --- |
-| `home-world-map` | Abstract brass world map assembled from fine research pins and archival paper over a dark newsroom desk | Homepage hero and default social preview |
-| `games-study-table` | Overhead study table divided into five zones: cards, roulette detail, baccarat shoe, poker notation, and slot reel mechanics | Games directory hero |
-| `guides-library` | Quiet editorial library with probability diagrams, rulebooks, pencil notes, and a single inactive chip tray | Guides hero |
-| `responsible-boundaries` | Calm dawn desk with clock, written budget, closed wallet, water, and phone displaying a generic blocking shield | Responsible Entertainment hero |
-| `about-newsroom` | Independent research newsroom with source folders, verification stamps, timeline wall, and empty analyst desks | About hero |
-| `archive-dossiers` | Dated black-and-gold research dossiers arranged chronologically in archival drawers | Archive hero and archive social preview |
-| `search-index` | Brass card catalogue and illuminated search lens over organized publication index cards | Search and discovery context |
+| `home-opening-table` | Unoccupied green-felt casino table with roulette wheel, dealer shoe, chip rack, regulatory dossier, and a subdued floor beyond | Homepage hero and default social preview |
+| `blog-floor-file` | Blackjack-layout reporting desk with notebook, licensing dossier, roulette detail, and source-review tools | Blog index hero |
+| `games-laboratory` | One training bench divided into poker, blackjack, roulette, baccarat, and slot-mechanism study zones | Games directory hero |
+| `guides-training-station` | Empty dealer-training station with card shoe, table-layout diagrams, wheel tools, and rule cards | Guides hero |
+| `responsible-closed-table` | Closed casino table with returned chips, stopped clock, limit card, support brochure, water, and a visible exit | Responsible Play hero |
+| `about-floor-newsroom` | Independent publication studio behind glass above an empty casino floor with reporting and verification tools | About hero |
+| `archive-research-vault` | Casino research archive with floor maps, game dossiers, chip trays, card evidence boxes, and brass index drawers | Archive hero and archive social preview |
+| `history-conservation-table` | Early roulette wheel, antique cards, mechanical slot reel, dice, blueprint, and archival photographs | History hero |
+| `culture-empty-interior` | Empty casino interior connecting roulette, carpet pattern, chandelier, theatre, lounge seating, and artwork | Culture hero |
+| `destinations-resort-atlas` | World map with integrated-resort models, roulette-wheel compass, architectural photographs, and skyline | Destinations hero |
+| `facts-mathematics-bench` | Roulette wheel, cards, dice, slot reel, calipers, graph paper, and evidence tags | Facts hero |
+| `gallery-design-room` | Framed studies of roulette, card shoes, slot reels, surveillance, carpet, chips, and resort architecture | Gallery hero |
+| `vlog-empty-set` | Documentary camera, field recorder, microphone, blank slate, and transcript beside an empty casino floor | Vlog standards hero |
+| `search-casino-index` | Casino surveillance stills, chip-inventory cards, floor maps, and a brass magnifier | Search and discovery context |
 
 ## Story Features
 
@@ -37,4 +44,4 @@ All new assets use a cohesive **luxury intelligence publication** style: cinemat
 
 ## Acceptance Rules
 
-Each stored story receives exactly one unique asset URL. Page heroes use page-specific assets rather than story images. The homepage may show story assets only where the story itself appears; a page hero or section promo cannot reuse that story image elsewhere. All assets include descriptive, non-promotional alt text and retain readable dark overlays for foreground text.
+Each stored story receives exactly one unique asset URL. Page heroes use page-specific assets rather than story images. Homepage casino-desk panels use separate floor, industry, destination, and archive compositions. A story asset appears only where that story is represented. All assets include descriptive, non-promotional alt text and retain readable dark overlays for foreground text. Responsible-play imagery must remain cooler, calmer, and more public-health oriented than the rest of the casino system.

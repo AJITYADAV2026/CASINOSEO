@@ -24,7 +24,7 @@ export default function Guides() {
       <header className="guides-header border-b border-gold/15">
         <div className="container grid gap-10 py-16 md:py-24 lg:grid-cols-[1fr_.75fr] lg:items-center">
           <div><p className="eyebrow text-gold">The CasinoVerse field guide</p><h1 className="mt-5 font-display text-[clamp(4rem,9vw,8rem)] leading-[.84] tracking-[-.045em] text-ivory">Curiosity,<br /><em className="font-normal text-gold-light">properly informed.</em></h1><p className="mt-7 max-w-2xl text-xl leading-8 text-ivory/58">Build a clear foundation before learning any betting layout: origins, vocabulary, probability, etiquette, and limits.</p></div>
-          <div className="image-frame aspect-[4/3] rounded-[28px] border border-gold/15"><img src={GUIDES_HERO_IMAGE} alt="Quiet editorial library with probability diagrams, rulebooks, and annotated research notes" /></div>
+          <div className="image-frame aspect-[4/3] rounded-[28px] border border-gold/15"><img src={GUIDES_HERO_IMAGE} alt="Empty casino dealer-training station with card shoe, wheel tools, table-layout diagram, and rule cards" /></div>
         </div>
       </header>
 

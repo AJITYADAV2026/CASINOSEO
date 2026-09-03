@@ -1,22 +1,32 @@
-import { Menu, Search, ShieldCheck } from "lucide-react";
+import { BookOpenText, ChevronRight, Menu, Search, ShieldCheck } from "lucide-react";
 import { Link, useLocation } from "wouter";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { CookieConsent, openCookieSettings } from "@/components/CookieConsent";
 
-const navigation = [
-  ["Blog", "/articles"],
+const primaryNavigation = [
+  ["Blog", "/articles", "Latest reporting"],
+  ["Casino floor", "/games", "Games and mechanics"],
+  ["Industry", "/category/market-intelligence", "Business and operations"],
+  ["Places & design", "/destinations", "Resorts and culture"],
+  ["Research", "/archive", "Dated source files"],
+  ["Vlog", "/vlogs", "Genuine video only"],
+] as const;
+
+const secondaryNavigation = [
   ["Games", "/games"],
   ["History", "/history"],
   ["Culture", "/culture"],
   ["Destinations", "/destinations"],
-  ["Vlogs", "/vlogs"],
   ["Facts", "/facts"],
   ["Gallery", "/gallery"],
-  ["About", "/about"],
+  ["Guides", "/guides"],
+  ["Responsible", "/responsible-entertainment"],
 ] as const;
 
 export function SiteShell({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
+  const isActive = (href: string) => location === href || location.startsWith(`${href}/`);
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <a className="skip-link" href="#main-content">Skip to content</a>
@@ -26,73 +36,92 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           <span>Informational publication only. Casino gambling involves risk and is age-restricted.</span>
         </div>
       </div>
+
       <header className="site-header">
-        <div className="container flex h-[76px] items-center justify-between gap-4">
-          <Link href="/" className="brand-mark" aria-label="CasinoVerse home">
-            <span className="brand-orbit" aria-hidden="true">C</span>
-            <span>
-              Casino<span className="text-gold">Verse</span>
-              <small>The world behind the games</small>
-            </span>
-          </Link>
-
-          <nav className="hidden items-center gap-4 xl:flex" aria-label="Primary navigation">
-            {navigation.map(([label, href]) => (
-              <Link
-                key={href}
-                href={href}
-                className={`nav-link text-xs ${location === href || location.startsWith(`${href}/`) ? "is-active" : ""}`}
-              >
-                {label}
-              </Link>
-            ))}
-          </nav>
-
-          <div className="flex items-center gap-2">
-            <Link href="/search" className="icon-link" aria-label="Search CasinoVerse">
-              <Search className="h-5 w-5" />
+        <div className="site-header-main">
+          <div className="container flex h-[82px] items-center justify-between gap-4">
+            <Link href="/" className="brand-mark" aria-label="CasinoVerse home">
+              <span className="brand-orbit" aria-hidden="true">C</span>
+              <span>
+                Casino<span className="text-gold">Verse</span>
+                <small>The world behind the games</small>
+              </span>
             </Link>
-            <Sheet>
-              <SheetTrigger asChild>
-                <button className="icon-link xl:hidden" aria-label="Open navigation menu">
-                  <Menu className="h-5 w-5" />
-                </button>
-              </SheetTrigger>
-              <SheetContent className="border-gold/20 bg-[#11100f] text-ivory">
-                <SheetHeader>
-                  <SheetTitle className="font-display text-2xl text-ivory">CasinoVerse</SheetTitle>
-                </SheetHeader>
-                <nav className="mt-10 flex flex-col" aria-label="Mobile navigation">
-                  {navigation.map(([label, href]) => (
-                    <Link key={href} href={href} className="border-b border-white/10 py-4 text-xl text-ivory/85">
-                      {label}
-                    </Link>
-                  ))}
-                  <Link href="/guides" className="border-b border-white/10 py-4 text-xl text-ivory/85">Guides</Link>
-                  <Link href="/archive" className="border-b border-white/10 py-4 text-xl text-ivory/85">Research archive</Link>
-                  <Link href="/responsible-entertainment" className="py-4 text-xl text-gold">Responsible entertainment</Link>
-                </nav>
-              </SheetContent>
-            </Sheet>
+
+            <nav className="hidden items-center gap-1 xl:flex" aria-label="Primary navigation">
+              {primaryNavigation.map(([label, href]) => (
+                <Link key={href} href={href} className={`nav-link ${isActive(href) ? "is-active" : ""}`}>
+                  {label}
+                </Link>
+              ))}
+            </nav>
+
+            <div className="flex items-center gap-2">
+              <Link href="/archive" className="edition-link hidden 2xl:inline-flex"><BookOpenText className="h-3.5 w-3.5" />Latest edition</Link>
+              <Link href="/search" className="icon-link" aria-label="Search CasinoVerse"><Search className="h-5 w-5" /></Link>
+              <Sheet>
+                <SheetTrigger asChild><button className="icon-link xl:hidden" aria-label="Open navigation menu"><Menu className="h-5 w-5" /></button></SheetTrigger>
+                <SheetContent className="overflow-y-auto border-gold/20 bg-[#11100f] text-ivory">
+                  <SheetHeader>
+                    <SheetTitle className="font-display text-3xl text-ivory">Casino<span className="text-gold">Verse</span></SheetTitle>
+                    <p className="text-sm leading-6 text-ivory/48">A research-led publication about the casino floor, the industry around it, and the risks within it.</p>
+                  </SheetHeader>
+                  <nav className="mt-8" aria-label="Mobile navigation">
+                    <p className="eyebrow text-gold">Publication desks</p>
+                    <div className="mt-3 border-t border-white/10">
+                      {primaryNavigation.map(([label, href, detail]) => (
+                        <SheetClose asChild key={href}>
+                          <Link href={href} className={`mobile-primary-link ${isActive(href) ? "is-active" : ""}`}>
+                            <span><strong>{label}</strong><small>{detail}</small></span><ChevronRight className="h-4 w-4" />
+                          </Link>
+                        </SheetClose>
+                      ))}
+                    </div>
+                    <p className="eyebrow mt-8 text-gold">Explore the house</p>
+                    <div className="mt-4 grid grid-cols-2 gap-2">
+                      {secondaryNavigation.map(([label, href]) => (
+                        <SheetClose asChild key={href}>
+                          <Link href={href} className={`mobile-secondary-link ${isActive(href) ? "is-active" : ""}`}>{label}</Link>
+                        </SheetClose>
+                      ))}
+                    </div>
+                    <SheetClose asChild><Link href="/about" className="mt-7 inline-flex items-center gap-2 text-sm text-gold-light">About the publication <ChevronRight className="h-4 w-4" /></Link></SheetClose>
+                  </nav>
+                </SheetContent>
+              </Sheet>
+            </div>
+          </div>
+        </div>
+
+        <div className="casino-nav-rail hidden xl:block">
+          <div className="container flex h-11 items-center justify-between gap-6">
+            <span className="casino-nav-kicker">Explore the house</span>
+            <nav className="flex flex-1 items-center justify-center gap-7" aria-label="Casino topics">
+              {secondaryNavigation.map(([label, href]) => <Link key={href} href={href} className={`casino-rail-link ${isActive(href) ? "is-active" : ""}`}>{label}</Link>)}
+            </nav>
+            <Link href="/about" className={`casino-rail-link ${isActive("/about") ? "is-active" : ""}`}>About</Link>
           </div>
         </div>
       </header>
 
       <main id="main-content">{children}</main>
 
-      <footer className="border-t border-gold/15 bg-[#0a0908]">
+      <footer className="casino-footer border-t border-gold/15 bg-[#0a0908]">
+        <div className="casino-footer-rule" aria-hidden="true" />
         <div className="container grid gap-12 py-16 md:grid-cols-2 xl:grid-cols-5">
           <div>
-            <div className="font-display text-3xl">Casino<span className="text-gold">Verse</span></div>
-            <p className="mt-4 max-w-xs text-sm leading-6 text-ivory/55">
-              Independent reporting and education on the business, culture, regulation, and social impact of casino entertainment.
-            </p>
+            <Link href="/" className="brand-mark">
+              <span className="brand-orbit" aria-hidden="true">C</span>
+              <span>Casino<span className="text-gold">Verse</span><small>The world behind the games</small></span>
+            </Link>
+            <p className="mt-5 max-w-xs text-sm leading-6 text-ivory/55">Independent reporting from the casino floor to the regulatory file: games, operations, design, destinations, history, and harm.</p>
+            <div className="mt-6 flex flex-wrap gap-2" aria-label="Publication principles"><span className="footer-chip">Source-led</span><span className="footer-chip">No wagering</span></div>
           </div>
-          <FooterGroup title="Editorial" links={[["Blog", "/articles"], ["Daily research", "/archive"], ["Vlogs", "/vlogs"], ["Interesting facts", "/facts"]]} />
-          <FooterGroup title="Explore" links={[["Game guides", "/games"], ["History", "/history"], ["Culture", "/culture"], ["Destinations", "/destinations"], ["Gallery", "/gallery"]]} />
+          <FooterGroup title="Editorial" links={[["Blog", "/articles"], ["Floor report", "/games"], ["Daily research", "/archive"], ["Vlog studio", "/vlogs"], ["Casino facts", "/facts"]]} />
+          <FooterGroup title="Casino world" links={[["Game laboratory", "/games"], ["History", "/history"], ["Culture & design", "/culture"], ["Destinations", "/destinations"], ["Visual gallery", "/gallery"]]} />
           <FooterGroup title="Publication" links={[["About CasinoVerse", "/about"], ["Editorial standards", "/about#standards"], ["Guides", "/guides"], ["Privacy", "/privacy"], ["Disclaimer", "/disclaimer"], ["Terms", "/terms"], ["Contact", "/about#contact"]]} />
           <div>
-            <h2 className="eyebrow">Responsible entertainment</h2>
+            <h2 className="eyebrow">Responsible play desk</h2>
             <p className="mt-4 text-sm leading-6 text-ivory/55">Gambling is not a way to make money. Set time and spending limits, never chase losses, and seek local support if play causes harm.</p>
             <Link href="/responsible-entertainment" className="mt-5 inline-flex text-sm text-gold hover:text-gold-light">Read the safety guide →</Link>
           </div>
@@ -100,10 +129,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
         <div className="border-t border-white/8">
           <div className="container flex flex-col gap-3 py-6 text-xs text-ivory/40 sm:flex-row sm:items-center sm:justify-between">
             <p>© 2026 CasinoVerse. Informational content only.</p>
-            <div className="flex flex-wrap items-center gap-3">
-              <p>No wagering, deposits, bonuses, or real-money games are offered.</p>
-              <button type="button" className="text-gold hover:text-gold-light" onClick={openCookieSettings}>Cookie settings</button>
-            </div>
+            <div className="flex flex-wrap items-center gap-3"><p>No wagering, deposits, bonuses, or real-money games are offered.</p><button type="button" className="text-gold hover:text-gold-light" onClick={openCookieSettings}>Cookie settings</button></div>
           </div>
         </div>
       </footer>

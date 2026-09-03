@@ -20,7 +20,7 @@ export default function About() {
     <>
       <Seo title="About CasinoVerse" description="Learn how CasinoVerse researches casino-industry news, attributes sources, handles developing stories, and maintains an informational-only editorial standard." path="/about" image={ABOUT_HERO_IMAGE} />
       <header className="about-hero relative overflow-hidden border-b border-gold/15">
-        <img src={ABOUT_HERO_IMAGE} alt="Independent research newsroom with source folders, a verification timeline, and empty analyst desks" className="absolute inset-0 h-full w-full object-cover opacity-25" />
+        <img src={ABOUT_HERO_IMAGE} alt="Independent publication studio overlooking an empty casino floor with notebook, recorder, floor plan, chip catalogue, and camera" className="absolute inset-0 h-full w-full object-cover opacity-35" />
         <div className="absolute inset-0 bg-gradient-to-r from-black via-black/85 to-black/40" />
         <div className="container relative flex min-h-[620px] items-end py-16 md:items-center md:py-24">
           <div className="max-w-4xl"><p className="eyebrow text-gold">About the publication</p><h1 className="mt-5 font-display text-[clamp(4rem,9vw,8rem)] leading-[.84] tracking-[-.045em] text-ivory">Context before<br /><em className="font-normal text-gold-light">conclusion.</em></h1><p className="mt-7 max-w-2xl text-xl leading-8 text-ivory/62">CasinoVerse is an independent informational publication about casino business, design, regulation, games, destinations, and responsible entertainment.</p></div>

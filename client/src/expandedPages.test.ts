@@ -22,8 +22,10 @@ describe("expanded editorial content", () => {
 
   it("keeps the navigation and homepage article-led", () => {
     const shell = read("client/src/components/SiteShell.tsx");
-    ["Blog", "Games", "History", "Culture", "Destinations", "Vlogs", "Facts", "Gallery", "About"].forEach(label => expect(shell).toContain(label));
+    ["Blog", "Casino floor", "Industry", "Places & design", "Research", "Vlog"].forEach(label => expect(shell).toContain(label));
+    ["Games", "History", "Culture", "Destinations", "Facts", "Gallery", "Guides", "Responsible"].forEach(label => expect(shell).toContain(label));
     const home = read("client/src/pages/Home.tsx");
+    ["The opening table", "Inside the house", "Rules of play", "The casino floor", "Industry & rules", "Places & design", "The research vault"].forEach(label => expect(home).toContain(label));
     expect(home).toContain("Editorial briefing");
     expect(home).toContain("The Blog in your inbox");
     expect(home).toContain("No bonuses, betting offers, or affiliate promotions");
@@ -53,8 +55,8 @@ describe("expanded editorial content", () => {
     const values = Object.values(EXPANDED_IMAGES);
     expect(values).toHaveLength(20);
     expect(new Set(values).size).toBe(values.length);
-    ["articles", "history", "culture", "destinations", "vlogs"].forEach(key => {
-      expect(EXPANDED_IMAGES[key as keyof typeof EXPANDED_IMAGES]).toContain("-v4_");
+    ["articles", "history", "culture", "destinations", "vlogs", "facts", "gallery", "poker", "blackjack", "roulette", "baccarat", "slots"].forEach(key => {
+      expect(EXPANDED_IMAGES[key as keyof typeof EXPANDED_IMAGES]).toContain("cv-casino-editorial-");
     });
   });
 });

@@ -12,11 +12,13 @@ export default function Archive() {
   return (
     <>
       <Seo title="Daily research archive" description="Browse CasinoVerse casino-industry research editions by publication date, with clear sourcing and developing-story labels." path="/archive" image={ARCHIVE_HERO_IMAGE} />
-      <header className="archive-header border-b border-gold/15">
-        <div className="container grid gap-10 py-16 md:py-24 lg:grid-cols-[1fr_360px] lg:items-end">
+      <header className="archive-header relative overflow-hidden border-b border-gold/15">
+        <img src={ARCHIVE_HERO_IMAGE} alt="" className="absolute inset-0 h-full w-full object-cover opacity-30" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#080b09] via-[#080b09]/90 to-[#080b09]/45" />
+        <div className="container relative grid gap-10 py-16 md:py-24 lg:grid-cols-[1fr_360px] lg:items-end">
           <div>
-            <p className="eyebrow text-gold">Dated research library</p>
-            <h1 className="mt-4 max-w-5xl font-display text-[clamp(4rem,9vw,8rem)] leading-[.83] tracking-[-.045em] text-ivory">The daily archive.</h1>
+            <p className="eyebrow text-gold">The research vault · Dated source files</p>
+            <h1 className="mt-4 max-w-5xl font-display text-[clamp(4rem,9vw,8rem)] leading-[.83] tracking-[-.045em] text-ivory">The daily casino archive.</h1>
             <p className="mt-7 max-w-2xl text-xl leading-8 text-ivory/58">Each edition captures a defined research day, separates confirmed facts from forecasts or proposals, and links readers to the original publishers.</p>
           </div>
           <div className="rounded-[22px] border border-gold/20 bg-black/15 p-6">
