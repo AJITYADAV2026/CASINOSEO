@@ -5,6 +5,7 @@ import { Seo } from "@/components/Seo";
 import { StoryCard, type StoryCardData } from "@/components/StoryCard";
 import { formatDate, STORY_FALLBACK_IMAGE } from "@/lib/site";
 import { trpc } from "@/lib/trpc";
+import { internalReferencePath } from "@/lib/internalSources";
 
 const categoryMethods: Record<string, { text: string; sourceName: string; sourceUrl: string }> = {
   "market-intelligence": { text: "We name the reporting period, currency, operator or jurisdiction, and distinguish realised results from forecasts. Primary regulator releases and company filings take precedence over commentary.", sourceName: "Nevada Gaming Control Board statistics", sourceUrl: "https://www.gaming.nv.gov/about-us/statistics-and-publications/" },
@@ -49,7 +50,7 @@ export default function Category() {
         <div className="container grid gap-5 md:grid-cols-[auto_1fr_auto] md:items-center">
           <BookOpenCheck className="h-7 w-7 text-gold" aria-hidden="true" />
           <div><p className="eyebrow text-gold">How we report this topic</p><p className="mt-2 max-w-4xl leading-7 text-ivory/56">{method.text}</p></div>
-          <a href={method.sourceUrl} target="_blank" rel="noreferrer noopener" className="inline-flex items-center gap-2 text-sm text-gold hover:text-gold-light">{method.sourceName}<ExternalLink className="h-4 w-4" /></a>
+          <Link href={internalReferencePath(method.sourceName, method.sourceUrl)} className="inline-flex items-center gap-2 text-sm text-gold hover:text-gold-light">Read the internal source record <BookOpenCheck className="h-4 w-4" /></Link>
         </div>
       </section>}
 

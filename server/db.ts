@@ -9,8 +9,10 @@ import {
   InsertUser,
   newsletterSubscribers,
   siteFindReports,
+  sourceCatalog,
   stories,
   storySources,
+  supportResources,
   urlManifests,
   users,
 } from "../drizzle/schema";
@@ -218,6 +220,37 @@ export async function searchStories(query: string) {
     )
     .orderBy(desc(stories.publishedAt))
     .limit(24);
+}
+
+export async function getSourceCatalog() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(sourceCatalog).where(eq(sourceCatalog.status, "active")).orderBy(sourceCatalog.name, sourceCatalog.publicationLabel);
+}
+
+export async function getSourceCatalogEntry(slug: string) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const rows = await db.select().from(sourceCatalog).where(and(eq(sourceCatalog.slug, slug), eq(sourceCatalog.status, "active"))).limit(1);
+  return rows[0];
+}
+
+export async function getStorySourceById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const rows = await db
+    .select({ source: storySources, story: { slug: stories.slug, title: stories.title, status: stories.status } })
+    .from(storySources)
+    .innerJoin(stories, eq(storySources.storyId, stories.id))
+    .where(and(eq(storySources.id, id), inArray(stories.status, publicStoryStatuses)))
+    .limit(1);
+  return rows[0];
+}
+
+export async function getSupportDirectory() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(supportResources).where(eq(supportResources.isActive, true)).orderBy(supportResources.sortOrder, supportResources.name);
 }
 
 export async function subscribeToEditorialBriefing(email: string) {

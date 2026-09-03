@@ -46,8 +46,8 @@ export default function ResponsibleEntertainment() {
             <SupportCard title="Add financial friction" text="Ask your bank whether it offers gambling transaction blocks. Remove saved payment methods and avoid carrying cards or cash into a venue." />
             <SupportCard title="Talk to someone early" text="A trusted person, qualified counsellor, or local gambling-harm service can help with practical, emotional, and financial next steps." />
             <div className="grid gap-3 rounded-[20px] border border-[#7893A6]/25 bg-[#14181a] p-6 sm:grid-cols-2">
-              <a href="https://www.ncpgambling.org/help-treatment/" target="_blank" rel="noreferrer noopener" className="support-link">National Council on Problem Gambling <ExternalLink className="h-4 w-4" /><small>United States resources</small></a>
-              <a href="https://www.gamblingtherapy.org/" target="_blank" rel="noreferrer noopener" className="support-link">Gambling Therapy <ExternalLink className="h-4 w-4" /><small>International online support</small></a>
+              <Link href="/support#national-problem-gambling-helpline-us" className="support-link">National Problem Gambling Helpline <ShieldCheck className="h-4 w-4" /><small>CasinoVerse internal support record</small></Link>
+              <Link href="/support#gambling-therapy-international" className="support-link">Gambling Therapy <ShieldCheck className="h-4 w-4" /><small>CasinoVerse internal support record</small></Link>
             </div>
           </div>
         </div>

@@ -44,6 +44,10 @@ function mockPrefetch(overrides: Partial<SsrPrefetch> = {}): SsrPrefetch {
     archive: vi.fn().mockResolvedValue([]),
     digestByDate: vi.fn().mockResolvedValue(undefined),
     search: vi.fn().mockResolvedValue([]),
+    sources: vi.fn().mockResolvedValue([]),
+    sourceBySlug: vi.fn().mockResolvedValue(undefined),
+    storySourceById: vi.fn().mockResolvedValue(undefined),
+    support: vi.fn().mockResolvedValue([]),
     ...overrides,
   } as SsrPrefetch;
 }
@@ -86,7 +90,7 @@ describe("CasinoVerse SSR prefetch", () => {
     const routes = [
       "/articles", "/history", "/culture", "/destinations", "/vlogs", "/facts", "/gallery",
       "/games/poker", "/games/blackjack", "/games/roulette", "/games/baccarat", "/games/slots",
-      "/privacy", "/disclaimer", "/terms",
+      "/privacy", "/disclaimer", "/terms", "/sources", "/support",
     ];
     for (const route of routes) {
       const head = await prefetchForPath(route, new QueryClient(), mockPrefetch());
@@ -106,6 +110,28 @@ describe("CasinoVerse SSR prefetch", () => {
     }
     const missing = await prefetchForPath("/games/craps", new QueryClient(), mockPrefetch());
     expect(missing.notFound).toBe(true);
+  });
+
+  it("prefetches internal source records without creating outbound navigation metadata", async () => {
+    const source = {
+      id: 1,
+      slug: "world-health-organization",
+      name: "World Health Organization",
+      publicationLabel: "Gambling Fact Sheet",
+      description: "Global public-health overview of gambling harm and prevention.",
+      sourceType: "health" as const,
+      originalUrl: "https://www.who.int/news-room/fact-sheets/detail/gambling",
+      accessedAt: new Date("2026-09-03T00:00:00Z"),
+      status: "active" as const,
+      createdAt: new Date("2026-09-03T00:00:00Z"),
+      updatedAt: new Date("2026-09-03T00:00:00Z"),
+    };
+    const qc = new QueryClient();
+    const head = await prefetchForPath("/sources/world-health-organization", qc, mockPrefetch({ sourceBySlug: vi.fn().mockResolvedValue(source) }));
+    expect(head.canonicalPath).toBe("/sources/world-health-organization");
+    expect(head.noindex).toBe(true);
+    expect(head.title).toContain("World Health Organization");
+    expect(qc.getQueryData(getQueryKey(trpc.editorial.sourceBySlug, { slug: source.slug }, "query"))).toEqual(source);
   });
 });
 

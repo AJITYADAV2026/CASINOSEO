@@ -47,6 +47,8 @@ export function buildSitemapDocument(origin: string, data: {
     "/vlogs",
     "/facts",
     "/gallery",
+    "/sources",
+    "/support",
     "/responsible-entertainment",
     "/about",
     "/privacy",

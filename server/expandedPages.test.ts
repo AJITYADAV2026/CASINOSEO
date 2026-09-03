@@ -76,11 +76,11 @@ describe("expanded multi-page publication", () => {
     expect(gallery).toContain("Escape closes the dialog");
   });
 
-  it("documents analytics, newsletter, informational-only, and external-link boundaries", () => {
+  it("documents analytics, newsletter, informational-only, and internal-source boundaries", () => {
     const legal = read("client/src/pages/LegalPages.tsx");
     expect(legal).toContain("does not load until a visitor selects Accept analytics");
     expect(legal).toContain("not a casino, wagering service");
-    expect(legal).toContain("Links are provided for evidence");
+    expect(legal).toContain("Evidence links open CasinoVerse-owned source records on this domain");
     expect(legal).toContain("newsletter email address");
     expect(legal).not.toContain("casinoverse.example");
   });

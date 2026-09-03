@@ -142,3 +142,11 @@
 - [x] Redesign the homepage and major section pages so they visually read as a premium casino-industry publication while retaining sources, dates, caveats, related reading, and responsible-entertainment context.
 - [x] Validate image uniqueness, casino relevance, readable article hierarchy, SSR metadata, responsive navigation, accessibility, interactions, tests, and production builds.
 - [x] Save and auto-publish the casino-editorial redesign while keeping Agents 1–3 unchanged and Agent 4 indexing and sitemap submission paused.
+- [x] Audit the existing project-owned database schema, stored editorial sources, support resources, and every `http://`, `https://`, external anchor, or redirect surface in public code and database content.
+- [x] Add a database-backed internal source-library model that preserves source name, original publication context, retrieval date, provenance, and original URL as non-clickable reference data.
+- [x] Add a database-backed internal support-directory model for jurisdiction, organization, service type, contact information, and emergency guidance without outbound website redirects.
+- [x] Build CasinoVerse-owned `/sources`, `/sources/:slug`, and `/support` pages with SSR metadata, visible provenance, accessible navigation, and responsible-information disclaimers.
+- [x] Replace every public outbound website link with a same-domain CasinoVerse source, methodology, legal, support, or reference page while preserving attribution.
+- [x] Add automated and browser-level link validation proving every public anchor and redirect target remains on the CasinoVerse domain or uses a non-navigation protocol such as `mailto:` or `tel:` only when appropriate.
+- [x] Run complete database, SSR, route, accessibility, TypeScript, test, build, and production smoke validation with Agents 1–3 unchanged and Agent 4 paused.
+- [x] Save and auto-publish the self-contained CasinoVerse checkpoint without performing URL indexing or sitemap submission.

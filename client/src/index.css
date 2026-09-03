@@ -202,6 +202,14 @@
   .casino-footer { position: relative; background-image: radial-gradient(circle at 15% 10%, rgba(22,77,50,.18), transparent 30%), radial-gradient(circle at 85% 15%, rgba(104,28,35,.1), transparent 25%); }
   .casino-footer-rule { height: 5px; background: linear-gradient(90deg, #0f3d29 0 34%, #c9a45c 34% 38%, #4d151b 38% 72%, #c9a45c 72% 76%, #0f3d29 76%); opacity: .76; }
   .footer-chip { padding: .35rem .55rem; border: 1px solid rgba(201,164,92,.2); border-radius: 999px; color: rgba(234,210,155,.66); font-size: .62rem; letter-spacing: .08em; text-transform: uppercase; background: rgba(22,77,50,.1); }
+  .source-library-hero, .source-record-hero { background: radial-gradient(circle at 82% 18%, rgba(201,164,92,.09), transparent 28%), linear-gradient(135deg, rgba(13,55,37,.32), transparent 48%), #0b0e0c; }
+  .source-catalog-card { display: block; min-height: 300px; padding: 1.6rem; border: 1px solid rgba(243,236,220,.1); border-radius: 1.4rem; color: inherit; background: linear-gradient(145deg, rgba(20,63,43,.14), transparent 48%), #151412; }
+  .source-catalog-card:hover { border-color: rgba(201,164,92,.34); transform: translateY(-3px); }
+  .source-record-sheet { padding: clamp(1.5rem, 4vw, 3rem); border: 1px solid rgba(201,164,92,.18); border-radius: 1.5rem; background: radial-gradient(circle at 90% 12%, rgba(201,164,92,.07), transparent 26%), #141311; }
+  .source-address { overflow-wrap: anywhere; padding: 1.2rem; border: 1px solid rgba(243,236,220,.09); border-radius: .9rem; color: rgba(234,210,155,.78); font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: .78rem; line-height: 1.7; white-space: normal; background: rgba(0,0,0,.26); }
+  .support-directory-hero { background: radial-gradient(circle at 18% 25%, rgba(91,131,153,.16), transparent 34%), linear-gradient(130deg, #10181b, #0d1011 68%); }
+  .support-directory-card { min-height: 340px; padding: 1.8rem; border: 1px solid rgba(120,147,166,.2); border-radius: 1.4rem; background: radial-gradient(circle at 92% 10%, rgba(120,147,166,.08), transparent 28%), #141719; }
+  .support-directory-card:hover { border-color: rgba(169,194,208,.38); }
   .cookie-consent { position: fixed; z-index: 80; right: 1rem; bottom: 1rem; display: grid; width: min(720px, calc(100vw - 2rem)); grid-template-columns: auto minmax(0, 1fr) auto; align-items: start; gap: 1.1rem; padding: 1.35rem; border: 1px solid rgba(201,164,92,.38); border-radius: 1.35rem; background: rgba(16,15,14,.97); color: #f3ecdc; box-shadow: 0 26px 80px rgba(0,0,0,.48); backdrop-filter: blur(18px); }
   .cookie-consent__icon { display: grid; place-items: center; width: 2.7rem; height: 2.7rem; border: 1px solid rgba(201,164,92,.28); border-radius: 999px; color: #c9a45c; background: rgba(201,164,92,.06); }
   .cookie-consent__icon svg { width: 1.25rem; height: 1.25rem; }

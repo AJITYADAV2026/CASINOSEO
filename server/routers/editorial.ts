@@ -4,6 +4,10 @@ import {
   getCategoryBySlug,
   getDigestByDate,
   getHomepageContent,
+  getSourceCatalog,
+  getSourceCatalogEntry,
+  getStorySourceById,
+  getSupportDirectory,
   getStoryBySlug,
   searchStories,
   submitEditorialInquiry,
@@ -26,6 +30,14 @@ export const editorialRouter = router({
   search: publicProcedure
     .input(z.object({ query: z.string().trim().min(2).max(120) }))
     .query(({ input }) => searchStories(input.query)),
+  sources: publicProcedure.query(() => getSourceCatalog()),
+  sourceBySlug: publicProcedure
+    .input(z.object({ slug: z.string().trim().min(1).max(180) }))
+    .query(({ input }) => getSourceCatalogEntry(input.slug)),
+  storySourceById: publicProcedure
+    .input(z.object({ id: z.number().int().positive() }))
+    .query(({ input }) => getStorySourceById(input.id)),
+  support: publicProcedure.query(() => getSupportDirectory()),
   subscribe: publicProcedure
     .input(z.object({
       email: z.string().trim().email().max(320),

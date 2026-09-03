@@ -108,6 +108,55 @@ export const storySources = mysqlTable(
 export type StorySource = typeof storySources.$inferSelect;
 export type InsertStorySource = typeof storySources.$inferInsert;
 
+export const sourceCatalog = mysqlTable(
+  "source_catalog",
+  {
+    id: int("id").autoincrement().primaryKey(),
+    slug: varchar("slug", { length: 180 }).notNull().unique(),
+    name: varchar("name", { length: 220 }).notNull(),
+    publicationLabel: varchar("publicationLabel", { length: 220 }),
+    description: text("description").notNull(),
+    sourceType: mysqlEnum("sourceType", ["official", "regulator", "research", "journalism", "standards", "industry", "education", "health"])
+      .default("research")
+      .notNull(),
+    originalUrl: text("originalUrl").notNull(),
+    accessedAt: timestamp("accessedAt").defaultNow().notNull(),
+    status: mysqlEnum("status", ["active", "archived"]).default("active").notNull(),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+    updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  },
+  table => [index("source_catalog_type_idx").on(table.sourceType), index("source_catalog_status_idx").on(table.status)],
+);
+
+export type SourceCatalogEntry = typeof sourceCatalog.$inferSelect;
+export type InsertSourceCatalogEntry = typeof sourceCatalog.$inferInsert;
+
+export const supportResources = mysqlTable(
+  "support_resources",
+  {
+    id: int("id").autoincrement().primaryKey(),
+    slug: varchar("slug", { length: 180 }).notNull().unique(),
+    name: varchar("name", { length: 220 }).notNull(),
+    jurisdiction: varchar("jurisdiction", { length: 180 }).notNull(),
+    serviceType: mysqlEnum("serviceType", ["helpline", "counselling", "self_exclusion", "financial_blocking", "emergency", "information"])
+      .default("information")
+      .notNull(),
+    summary: text("summary").notNull(),
+    phone: varchar("phone", { length: 80 }),
+    contactInstructions: text("contactInstructions").notNull(),
+    originalUrl: text("originalUrl"),
+    sortOrder: int("sortOrder").default(0).notNull(),
+    isActive: boolean("isActive").default(true).notNull(),
+    verifiedAt: timestamp("verifiedAt").defaultNow().notNull(),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+    updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  },
+  table => [index("support_resources_jurisdiction_idx").on(table.jurisdiction), index("support_resources_active_idx").on(table.isActive, table.sortOrder)],
+);
+
+export type SupportResource = typeof supportResources.$inferSelect;
+export type InsertSupportResource = typeof supportResources.$inferInsert;
+
 export const dailyDigests = mysqlTable(
   "daily_digests",
   {

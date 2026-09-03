@@ -29,6 +29,10 @@ export type SsrPrefetch = {
   archive: () => Promise<RO["editorial"]["archive"]>;
   digestByDate: (date: string) => Promise<RO["editorial"]["digestByDate"]>;
   search: (query: string) => Promise<RO["editorial"]["search"]>;
+  sources: () => Promise<RO["editorial"]["sources"]>;
+  sourceBySlug: (slug: string) => Promise<RO["editorial"]["sourceBySlug"]>;
+  storySourceById: (id: number) => Promise<RO["editorial"]["storySourceById"]>;
+  support: () => Promise<RO["editorial"]["support"]>;
 };
 
 const withSite = (title: string) => `${title} | ${SITE_NAME}`;
@@ -155,9 +159,35 @@ export async function prefetchForPath(url: string, qc: QueryClient, p: SsrPrefet
   if (clean === "/vlogs") return { title: withSite("Vlogs and video desk"), description: "CasinoVerse’s transparent video desk: planned research-led formats, caption and transcript standards, source disclosure, and current written coverage.", canonicalPath: clean, ogImage: EXPANDED_IMAGES.vlogs };
   if (clean === "/facts") return { title: withSite("Casino facts"), description: "Verify casino history, game mathematics, regulation, markets, technology, architecture, and risk with dated sources and interpretation cautions.", canonicalPath: clean, ogImage: EXPANDED_IMAGES.facts };
   if (clean === "/gallery") return { title: withSite("Visual gallery"), description: "Explore CasinoVerse editorial illustrations of architecture, interiors, games, entertainment, destinations, inclusive design, and archival research.", canonicalPath: clean, ogImage: EXPANDED_IMAGES.gallery };
+  if (clean === "/sources") {
+    const data = await p.sources();
+    seed(qc, getQueryKey(trpc.editorial.sources, undefined, "query"), data);
+    return { title: withSite("Source library"), description: "Browse CasinoVerse-owned source records with publisher, publication, source type, retrieval date, and stored provenance address.", canonicalPath: clean, ogImage: ARCHIVE_HERO_IMAGE };
+  }
+  const storySourceMatch = clean.match(/^\/sources\/story\/(\d+)$/i);
+  if (storySourceMatch) {
+    const id = Number(storySourceMatch[1]);
+    const data = await p.storySourceById(id);
+    if (!data) return { title: withSite("Source record not found"), description: SITE_DESCRIPTION, notFound: true };
+    seed(qc, getQueryKey(trpc.editorial.storySourceById, { id }, "query"), data);
+    return { title: withSite(`${data.source.publisher} — source record`), description: `CasinoVerse internal provenance record for ${data.source.sourceTitle}.`, canonicalPath: clean, noindex: true };
+  }
+  const sourceMatch = clean.match(/^\/sources\/([^/]+)$/i);
+  if (sourceMatch) {
+    const slug = sourceMatch[1];
+    const data = await p.sourceBySlug(slug);
+    if (!data) return { title: withSite("Source record not found"), description: SITE_DESCRIPTION, notFound: true };
+    seed(qc, getQueryKey(trpc.editorial.sourceBySlug, { slug }, "query"), data);
+    return { title: withSite(`${data.name} source record`), description: data.description, canonicalPath: clean, noindex: true };
+  }
+  if (clean === "/support") {
+    const data = await p.support();
+    seed(qc, getQueryKey(trpc.editorial.support, undefined, "query"), data);
+    return { title: withSite("Gambling-harm support directory"), description: "CasinoVerse internal directory of emergency guidance, helplines, counselling, self-exclusion, and financial-blocking information.", canonicalPath: clean, ogImage: RESPONSIBLE_HERO_IMAGE };
+  }
   if (clean === "/privacy") return { title: withSite("Privacy Policy"), description: "How CasinoVerse handles cookie choices, consent-gated analytics, newsletter email addresses, infrastructure records, and privacy requests.", canonicalPath: clean, ogImage: HERO_IMAGE };
   if (clean === "/disclaimer") return { title: withSite("Disclaimer"), description: "CasinoVerse is an informational publication, not a casino, wagering service, financial adviser, legal adviser, or treatment provider.", canonicalPath: clean, ogImage: HERO_IMAGE };
-  if (clean === "/terms") return { title: withSite("Terms of Use"), description: "Terms governing access to CasinoVerse articles, research archives, newsletter signup, external sources, and publication-owned material.", canonicalPath: clean, ogImage: HERO_IMAGE };
+  if (clean === "/terms") return { title: withSite("Terms of Use"), description: "Terms governing access to CasinoVerse articles, research archives, newsletter signup, internal source records, and publication-owned material.", canonicalPath: clean, ogImage: HERO_IMAGE };
   if (clean === "/responsible-entertainment") return { title: withSite("Responsible entertainment"), description: "Practical information about gambling risk, time and spending limits, warning signs, blocking tools, self-exclusion, and support.", canonicalPath: clean, ogImage: RESPONSIBLE_HERO_IMAGE };
   if (clean === "/about") return { title: withSite("About CasinoVerse"), description: "Learn how CasinoVerse researches casino-industry news, attributes sources, handles developing stories, and maintains an informational-only editorial standard.", canonicalPath: clean, ogImage: ABOUT_HERO_IMAGE };
 

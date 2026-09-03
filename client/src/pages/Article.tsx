@@ -87,15 +87,15 @@ export default function Article() {
               <section className="mt-16 border-t border-gold/20 pt-9" aria-labelledby="sources-heading">
                 <p className="eyebrow text-gold">Research transparency</p>
                 <h2 id="sources-heading" className="mt-3 font-display text-3xl text-ivory">Original sources</h2>
-                <p className="mt-3 max-w-2xl text-sm leading-6 text-ivory/50">CasinoVerse summarizes and contextualizes reporting. Follow the links below to read the original material and evaluate its evidence directly.</p>
+                <p className="mt-3 max-w-2xl text-sm leading-6 text-ivory/50">CasinoVerse summarizes and contextualizes reporting. Open each internal source record to inspect the publisher, title, dates, source type, and stored provenance address without leaving CasinoVerse.</p>
                 <ol className="mt-7 space-y-3">
                   {data.sources.map((source, index) => (
                     <li key={source.id}>
-                      <a href={source.sourceUrl} target="_blank" rel="noreferrer noopener" className="source-link group">
+                      <Link href={`/sources/story/${source.id}`} className="source-link group">
                         <span className="source-number">{String(index + 1).padStart(2, "0")}</span>
                         <span><strong>{source.publisher}</strong><small>{source.sourceTitle}{source.sourcePublishedAt ? ` · ${formatDate(source.sourcePublishedAt)}` : ""}</small></span>
-                        <ExternalLink className="h-4 w-4 text-gold/60 transition-transform group-hover:translate-x-1" />
-                      </a>
+                        <FileSearch className="h-4 w-4 text-gold/60 transition-transform group-hover:translate-x-1" />
+                      </Link>
                     </li>
                   ))}
                 </ol>

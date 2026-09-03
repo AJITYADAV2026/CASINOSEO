@@ -24,6 +24,10 @@ import Vlogs from "./pages/Vlogs";
 import Facts from "./pages/Facts";
 import Gallery from "./pages/Gallery";
 import { Disclaimer, Privacy, Terms } from "./pages/LegalPages";
+import Sources from "./pages/Sources";
+import SourceDetail from "./pages/SourceDetail";
+import StorySource from "./pages/StorySource";
+import Support from "./pages/Support";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -44,6 +48,10 @@ function Router() {
         <Route path={"/vlogs"} component={Vlogs} />
         <Route path={"/facts"} component={Facts} />
         <Route path={"/gallery"} component={Gallery} />
+        <Route path={"/sources/story/:id"} component={StorySource} />
+        <Route path={"/sources/:slug"} component={SourceDetail} />
+        <Route path={"/sources"} component={Sources} />
+        <Route path={"/support"} component={Support} />
         <Route path={"/privacy"} component={Privacy} />
         <Route path={"/disclaimer"} component={Disclaimer} />
         <Route path={"/terms"} component={Terms} />

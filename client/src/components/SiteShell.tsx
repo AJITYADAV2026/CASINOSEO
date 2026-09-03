@@ -85,6 +85,10 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                         </SheetClose>
                       ))}
                     </div>
+                    <div className="mt-5 grid grid-cols-2 gap-2">
+                      <SheetClose asChild><Link href="/sources" className={`mobile-secondary-link ${isActive("/sources") ? "is-active" : ""}`}>Source library</Link></SheetClose>
+                      <SheetClose asChild><Link href="/support" className={`mobile-secondary-link ${isActive("/support") ? "is-active" : ""}`}>Support directory</Link></SheetClose>
+                    </div>
                     <SheetClose asChild><Link href="/about" className="mt-7 inline-flex items-center gap-2 text-sm text-gold-light">About the publication <ChevronRight className="h-4 w-4" /></Link></SheetClose>
                   </nav>
                 </SheetContent>
@@ -119,11 +123,11 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           </div>
           <FooterGroup title="Editorial" links={[["Blog", "/articles"], ["Floor report", "/games"], ["Daily research", "/archive"], ["Vlog studio", "/vlogs"], ["Casino facts", "/facts"]]} />
           <FooterGroup title="Casino world" links={[["Game laboratory", "/games"], ["History", "/history"], ["Culture & design", "/culture"], ["Destinations", "/destinations"], ["Visual gallery", "/gallery"]]} />
-          <FooterGroup title="Publication" links={[["About CasinoVerse", "/about"], ["Editorial standards", "/about#standards"], ["Guides", "/guides"], ["Privacy", "/privacy"], ["Disclaimer", "/disclaimer"], ["Terms", "/terms"], ["Contact", "/about#contact"]]} />
+          <FooterGroup title="Publication" links={[["About CasinoVerse", "/about"], ["Editorial standards", "/about#standards"], ["Source library", "/sources"], ["Guides", "/guides"], ["Privacy", "/privacy"], ["Disclaimer", "/disclaimer"], ["Terms", "/terms"], ["Contact", "/about#contact"]]} />
           <div>
             <h2 className="eyebrow">Responsible play desk</h2>
             <p className="mt-4 text-sm leading-6 text-ivory/55">Gambling is not a way to make money. Set time and spending limits, never chase losses, and seek local support if play causes harm.</p>
-            <Link href="/responsible-entertainment" className="mt-5 inline-flex text-sm text-gold hover:text-gold-light">Read the safety guide →</Link>
+            <div className="mt-5 flex flex-col items-start gap-3"><Link href="/responsible-entertainment" className="inline-flex text-sm text-gold hover:text-gold-light">Read the safety guide →</Link><Link href="/support" className="inline-flex text-sm text-gold hover:text-gold-light">Open support directory →</Link></div>
           </div>
         </div>
         <div className="border-t border-white/8">
