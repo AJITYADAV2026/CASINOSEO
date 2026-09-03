@@ -39,8 +39,8 @@
 - [x] Superseded by the user’s agent-layer clarification: persist the dated Site Find artifact without creating a public route; Agent 3 owns URL creation.
 - [x] Create and activate Agent 2 at 2:00 AM IST, after Agent 1’s 12:01 AM IST run.
 - [x] Add tests for Agent 2 analysis payload validation, latest-digest selection, durable Site Find persistence, and analysis-only boundary behavior.
-- [ ] Rebuild, republish, verify the live Agent 2 workflow, and deliver the updated CasinoVerse checkpoint.
+- [x] Rebuild, republish, verify the live Agent 2 workflow, and deliver the updated CasinoVerse checkpoint.
 - [x] Verify Agent 2 does not create pages or URLs and does not modify indexing or sitemap behavior reserved for Agents 3 and 4.
-- [ ] Trigger or verify one authenticated Agent 2 execution and confirm it persists a Site Find report through the scheduled callback path.
-- [ ] Save a final post-schedule checkpoint containing Agent 2’s complete implementation and validation documentation.
-- [ ] Resolve the authenticated Agent 2 heartbeat timeout by using an analysis path that completes within the callback execution limit.
+- [x] Trigger and verify one authenticated Agent 2 execution and confirm it persists a Site Find report through the scheduled callback path.
+- [x] Save a final post-schedule checkpoint containing Agent 2’s complete implementation and validation documentation.
+- [x] Resolve the authenticated Agent 2 heartbeat timeout by using an optimized analysis path with a deterministic source-linked fallback that completes within the callback execution limit.

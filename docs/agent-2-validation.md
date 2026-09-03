@@ -40,6 +40,12 @@ The heartbeat authenticates through the platform-issued task identity. The websi
 
 ## Validation Evidence
 
-The complete CasinoVerse suite passed **22 tests** before the Agent 2 callback was published. Agent 2-specific tests cover latest eligible digest selection, published-versus-developing handling, missing Markdown exclusion, removal-review enforcement, deterministic Markdown rendering, rollback-protected durable persistence, absence of a public Site Find route, and unchanged robots and sitemap feeds.
+The complete CasinoVerse suite passed **23 tests** before the final Agent 2 callback was published. Agent 2-specific tests cover latest eligible digest selection, published-versus-developing handling, missing Markdown exclusion, removal-review enforcement, deterministic Markdown rendering, rollback-protected durable persistence, source-linked fallback behavior, absence of a public Site Find route, and unchanged robots and sitemap feeds.
 
 TypeScript validation and all three production build stages passed. The published callback returned HTTP 403 without scheduled credentials, confirming it is not a public write endpoint. The active heartbeat was verified with the expected task UID, callback path, enabled state, and UTC cron expression.
+
+## Authenticated Production Run
+
+The platform heartbeat executed Agent 2 successfully with valid scheduled credentials on **3 September 2026**. Run UID `44SEVSgDrTC5hEEr8MU5xy` returned HTTP 200 in **21,375 ms**. The callback analyzed source digest `2026-09-03`, saved report date `2026-09-03` as a draft because Agent 1’s source was still developing, and recorded **7 update decisions** with no additions, archives, or removals.
+
+Database verification confirmed a 6,787-character Markdown artifact, model `gemini-3-flash-preview`, scheduled task UID `SMKJgcDzsbupAs6uq8apxE`, and an active publication job. After verification, the heartbeat was restored to its permanent **2:00 AM IST** cron `0 30 20 * * *` with the normal empty payload.
