@@ -34,7 +34,7 @@ The report retained Agent 1’s references, distinguished forecasts from realise
 | UTC cron | `0 30 20 * * *` |
 | Callback | `/api/scheduled/content-analysis` |
 | Status | Active |
-| Model | `gpt-5-mini` |
+| Model | `gemini-3-flash-preview` |
 
 The heartbeat authenticates through the platform-issued task identity. The website looks up the owning `publication_jobs` row by task UID, selects the latest completed digest with a non-empty durable Markdown artifact, runs one structured analysis call, and stores the dated Markdown and structured decision JSON in `site_find_reports`.
 

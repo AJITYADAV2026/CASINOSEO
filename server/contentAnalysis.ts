@@ -4,7 +4,7 @@ import { dailyDigests, siteFindReports, stories } from "../drizzle/schema";
 import { getDb, getLatestDigestForAnalysis, getStoryCatalogForAnalysis } from "./db";
 import { invokeLLM } from "./_core/llm";
 
-export const AGENT_2_MODEL = "gpt-5-mini";
+export const AGENT_2_MODEL = "gemini-3-flash-preview";
 const actions = ["add", "update", "retain", "archive", "remove"] as const;
 const priorities = ["critical", "high", "medium", "low"] as const;
 const categories = ["market-intelligence", "regulation", "casino-operations", "culture-travel", "game-guides", "responsible-entertainment"] as const;
@@ -18,7 +18,7 @@ export const contentDecisionSchema = z.object({
   contentType: z.enum(contentTypes),
   priority: z.enum(priorities),
   rationale: z.string().trim().min(20).max(2000),
-  evidence: z.array(z.string().trim().min(2).max(500)).min(1).max(12),
+  evidence: z.array(z.string().trim().min(2).max(500)).max(12),
   confidence: z.number().min(0).max(1),
   requiresHumanReview: z.boolean(),
 });
@@ -30,6 +30,9 @@ export const contentAnalysisSchema = z.object({
   warnings: z.array(z.string().trim().min(4).max(1000)).max(20),
 }).superRefine((analysis, ctx) => {
   analysis.decisions.forEach((decision, index) => {
+    if (decision.action !== "retain" && decision.evidence.length === 0) {
+      ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["decisions", index, "evidence"], message: "Actionable recommendations require evidence" });
+    }
     if (decision.action === "remove" && !decision.requiresHumanReview) {
       ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["decisions", index, "requiresHumanReview"], message: "Removal recommendations always require human review" });
     }
@@ -48,21 +51,21 @@ const outputSchema = {
   schema: {
     type: "object",
     properties: {
-      executiveSummary: { type: "string" },
-      sourceAssessment: { type: "string" },
+      executiveSummary: { type: "string", maxLength: 1200 },
+      sourceAssessment: { type: "string", maxLength: 1000 },
       decisions: {
         type: "array",
         items: {
           type: "object",
           properties: {
             action: { type: "string", enum: actions },
-            proposedTitle: { type: "string" },
+            proposedTitle: { type: "string", maxLength: 280 },
             existingSlug: { type: ["string", "null"] },
             categorySlug: { type: "string", enum: categories },
             contentType: { type: "string", enum: contentTypes },
             priority: { type: "string", enum: priorities },
-            rationale: { type: "string" },
-            evidence: { type: "array", items: { type: "string" } },
+            rationale: { type: "string", maxLength: 300 },
+            evidence: { type: "array", maxItems: 1, items: { type: "string", maxLength: 180 } },
             confidence: { type: "number", minimum: 0, maximum: 1 },
             requiresHumanReview: { type: "boolean" },
           },
@@ -70,7 +73,7 @@ const outputSchema = {
           additionalProperties: false,
         },
       },
-      warnings: { type: "array", items: { type: "string" } },
+      warnings: { type: "array", maxItems: 3, items: { type: "string", maxLength: 250 } },
     },
     required: ["executiveSummary", "sourceAssessment", "decisions", "warnings"],
     additionalProperties: false,
@@ -81,19 +84,18 @@ export async function analyzeDigestContent(digestMarkdown: string, storyCatalog:
   const catalog = storyCatalog.map(story => ({
     slug: story.slug,
     title: story.title,
-    dek: story.dek,
     status: story.status,
     contentType: story.contentType,
     categorySlug: story.categorySlug,
   }));
   const response = await invokeLLM({
     model: AGENT_2_MODEL,
-    maxTokens: 9000,
+    maxTokens: 3500,
     responseFormat: { type: "json_schema", json_schema: outputSchema },
     messages: [
       {
         role: "system",
-        content: "You are CasinoVerse Agent 2, a precise content-analysis editor. Analyze only the supplied Agent 1 research and current story catalog. Recommend add, update, retain, archive, or remove decisions. An add decision means a new editorial content item only; never recommend creating a daily digest page, any other page, a URL, an indexing directive, or a sitemap change. The Agent 1 digest already exists and must not be proposed as a new page. Do not invent facts. Preserve uncertainty and source references. Prefer update over add when the same event already exists. Every remove decision must require human review. Return only the requested JSON schema.",
+        content: "You are CasinoVerse Agent 2, a precise content-analysis editor. Analyze only the supplied Agent 1 research and current story catalog. Return at most 7 decisions, only for content materially affected by this digest; never enumerate unrelated catalog items. Keep the executive summary under 75 words and source assessment under 60 words. Each rationale must be one sentence under 25 words. Each actionable decision must have exactly one compact evidence item under 20 words, preferably with the source citation number. Return at most 3 short warnings. An add decision means a new editorial content item only; never recommend creating a daily digest page, any other page, a URL, an indexing directive, or a sitemap change. The Agent 1 digest already exists and must not be proposed as a new page. Do not invent facts. Preserve uncertainty and source references. Prefer update over add when the same event already exists. Every remove decision must require human review. Return only the requested JSON schema.",
       },
       {
         role: "user",
@@ -104,7 +106,8 @@ export async function analyzeDigestContent(digestMarkdown: string, storyCatalog:
   const wrapped = response as unknown as { choices?: typeof response.choices; data?: { choices?: typeof response.choices } };
   const content = (wrapped.choices ?? wrapped.data?.choices)?.[0]?.message.content;
   if (typeof content !== "string") throw new Error(`Agent 2 returned an unexpected model response: ${JSON.stringify(response).slice(0, 1200)}`);
-  return contentAnalysisSchema.parse(JSON.parse(content));
+  const normalized = content.trim().replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/, "").replace(/,\s*([}\]])/g, "$1");
+  return contentAnalysisSchema.parse(JSON.parse(normalized));
 }
 
 const tableCell = (value: string) => value.replace(/\|/g, "\\|").replace(/\s+/g, " ").trim();

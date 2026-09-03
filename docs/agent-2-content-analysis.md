@@ -45,7 +45,7 @@ Each report is stored under the dated artifact name `site-find-YYYY-MM-DD.md` in
 
 ## Durable Data Contract
 
-The `site_find_reports` table stores one report per source digest and report date. It contains the source digest identifier/date, status, model identifier, executive summary, complete Markdown artifact, serialized structured decision payload, decision counts, schedule task UID, analysis timestamps, and an error message when a run fails.
+The `site_find_reports` table stores one report per report date. It contains the source digest identifier/date, status, model identifier, executive summary, complete Markdown artifact, serialized structured decision payload, decision counts, schedule task UID, analysis timestamps, and an error message when a run fails.
 
 The Agent 2 scheduled callback is `/api/scheduled/content-analysis`. It authenticates the platform task identity, looks up the owning job by `schedule_cron_task_uid`, selects the latest completed digest from the database, runs one structured server-side analysis call, validates the response, renders the Markdown artifact deterministically, and saves the report transactionally. Agent 2 does not expose a public report route; Agent 3 will own URL creation and page publication.
 

@@ -43,3 +43,4 @@
 - [x] Verify Agent 2 does not create pages or URLs and does not modify indexing or sitemap behavior reserved for Agents 3 and 4.
 - [ ] Trigger or verify one authenticated Agent 2 execution and confirm it persists a Site Find report through the scheduled callback path.
 - [ ] Save a final post-schedule checkpoint containing Agent 2’s complete implementation and validation documentation.
+- [ ] Resolve the authenticated Agent 2 heartbeat timeout by using an analysis path that completes within the callback execution limit.
