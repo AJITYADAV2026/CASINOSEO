@@ -131,6 +131,55 @@ export const sourceCatalog = mysqlTable(
 export type SourceCatalogEntry = typeof sourceCatalog.$inferSelect;
 export type InsertSourceCatalogEntry = typeof sourceCatalog.$inferInsert;
 
+export const historicalRecords = mysqlTable(
+  "historical_records",
+  {
+    id: int("id").autoincrement().primaryKey(),
+    slug: varchar("slug", { length: 220 }).notNull().unique(),
+    eventYear: int("eventYear").notNull(),
+    eventDate: date("eventDate", { mode: "string" }),
+    datePrecision: mysqlEnum("datePrecision", ["exact", "month", "year"]).default("year").notNull(),
+    title: varchar("title", { length: 280 }).notNull(),
+    desk: mysqlEnum("desk", [
+      "industry_and_regulation",
+      "operations_and_technology",
+      "games_and_game_literacy",
+      "places_architecture_destinations",
+      "culture_and_media",
+      "responsible_play_and_harm",
+    ]).notNull(),
+    jurisdiction: varchar("jurisdiction", { length: 180 }).notNull(),
+    summary: text("summary").notNull(),
+    significance: text("significance").notNull(),
+    sourceCatalogId: int("sourceCatalogId"),
+    sourceName: varchar("sourceName", { length: 220 }).notNull(),
+    sourceTitle: text("sourceTitle").notNull(),
+    sourceUrl: text("sourceUrl").notNull(),
+    sourcePublishedDate: date("sourcePublishedDate", { mode: "string" }),
+    sourceType: mysqlEnum("sourceType", ["official", "regulator", "legislation", "research", "trade", "news", "filing"])
+      .default("research")
+      .notNull(),
+    confidence: mysqlEnum("confidence", ["high", "medium"]).default("high").notNull(),
+    verificationStatus: mysqlEnum("verificationStatus", ["verified", "review_needed", "rejected"])
+      .default("verified")
+      .notNull(),
+    cutoffLabel: varchar("cutoffLabel", { length: 80 }).default("through-2026-09-03").notNull(),
+    isPublished: boolean("isPublished").default(true).notNull(),
+    accessedAt: timestamp("accessedAt").defaultNow().notNull(),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+    updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  },
+  table => [
+    index("historical_records_year_idx").on(table.eventYear, table.eventDate),
+    index("historical_records_desk_idx").on(table.desk, table.eventYear),
+    index("historical_records_source_idx").on(table.sourceCatalogId),
+    index("historical_records_publish_idx").on(table.isPublished, table.verificationStatus),
+  ],
+);
+
+export type HistoricalRecord = typeof historicalRecords.$inferSelect;
+export type InsertHistoricalRecord = typeof historicalRecords.$inferInsert;
+
 export const supportResources = mysqlTable(
   "support_resources",
   {

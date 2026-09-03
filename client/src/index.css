@@ -207,6 +207,21 @@
   .source-catalog-card:hover { border-color: rgba(201,164,92,.34); transform: translateY(-3px); }
   .source-record-sheet { padding: clamp(1.5rem, 4vw, 3rem); border: 1px solid rgba(201,164,92,.18); border-radius: 1.5rem; background: radial-gradient(circle at 90% 12%, rgba(201,164,92,.07), transparent 26%), #141311; }
   .source-address { overflow-wrap: anywhere; padding: 1.2rem; border: 1px solid rgba(243,236,220,.09); border-radius: .9rem; color: rgba(234,210,155,.78); font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: .78rem; line-height: 1.7; white-space: normal; background: rgba(0,0,0,.26); }
+  .bg-felt-deep { background: radial-gradient(circle at 12% 12%, rgba(201,164,92,.08), transparent 24%), linear-gradient(135deg, #0d2117, #0a130f 70%); }
+  .historical-archive-hero .hero-vignette { background: linear-gradient(90deg, rgba(7,8,7,.94) 0%, rgba(7,8,7,.7) 46%, rgba(7,8,7,.18) 82%), linear-gradient(0deg, rgba(7,8,7,.88), transparent 55%); }
+  .historical-record-hero { background: radial-gradient(circle at 83% 16%, rgba(201,164,92,.1), transparent 26%), linear-gradient(135deg, rgba(19,67,45,.3), transparent 52%), #0b0e0c; }
+  .historical-filter-bar { display: grid; gap: 1.5rem; align-items: end; padding: clamp(1.4rem, 3vw, 2rem); border: 1px solid rgba(201,164,92,.18); border-radius: 1.35rem; background: linear-gradient(135deg, rgba(15,61,41,.2), transparent 52%), #121310; }
+  .historical-filter { display: grid; gap: .55rem; min-width: 0; }
+  .historical-filter > span { display: inline-flex; align-items: center; gap: .5rem; color: rgba(234,210,155,.72); font-size: .68rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+  .historical-filter select { min-width: 0; width: 100%; height: 3rem; padding: 0 2.4rem 0 .9rem; border: 1px solid rgba(243,236,220,.14); border-radius: .75rem; color: #f3ecdc; background-color: #0d100e; }
+  .historical-filter select:focus-visible { outline: 2px solid #c9a45c; outline-offset: 2px; }
+  .historical-record-list { border-bottom: 1px solid rgba(243,236,220,.08); }
+  .historical-record-row { display: grid; grid-template-columns: 128px minmax(0,1fr) auto; gap: clamp(1.25rem, 4vw, 3rem); padding: clamp(1.6rem, 4vw, 3rem) 0; border-top: 1px solid rgba(243,236,220,.08); color: inherit; }
+  .historical-record-row:hover { background: linear-gradient(90deg, rgba(15,61,41,.1), transparent 76%); }
+  .historical-record-year { display: flex; flex-direction: column; gap: .55rem; }
+  .historical-record-year strong { font-family: var(--font-display); color: #d8b76e; font-size: clamp(2.5rem, 5vw, 4.6rem); font-weight: 500; line-height: .9; letter-spacing: -.04em; }
+  .historical-record-year span { color: rgba(243,236,220,.4); font-size: .72rem; line-height: 1.45; }
+  .historical-record-copy { min-width: 0; }
   .support-directory-hero { background: radial-gradient(circle at 18% 25%, rgba(91,131,153,.16), transparent 34%), linear-gradient(130deg, #10181b, #0d1011 68%); }
   .support-directory-card { min-height: 340px; padding: 1.8rem; border: 1px solid rgba(120,147,166,.2); border-radius: 1.4rem; background: radial-gradient(circle at 92% 10%, rgba(120,147,166,.08), transparent 28%), #141719; }
   .support-directory-card:hover { border-color: rgba(169,194,208,.38); }
@@ -218,6 +233,16 @@
   .cookie-consent__actions { display: flex; min-width: 10.5rem; flex-direction: column; gap: .6rem; }
   .cookie-consent__actions .button-gold, .cookie-consent__actions .button-ghost { justify-content: center; white-space: nowrap; }
   .research-references { padding: 2rem; border: 1px solid rgba(201,164,92,.16); border-radius: 1.5rem; background: radial-gradient(circle at 88% 10%, rgba(201,164,92,.07), transparent 28%), #141210; }
+
+  @media (min-width: 900px) {
+    .historical-filter-bar { grid-template-columns: minmax(0,1fr) minmax(420px,.8fr); }
+  }
+
+  @media (max-width: 640px) {
+    .historical-record-row { grid-template-columns: 1fr auto; }
+    .historical-record-year { grid-column: 1 / -1; flex-direction: row; align-items: baseline; justify-content: space-between; }
+    .historical-record-copy { grid-column: 1; }
+  }
   .research-reference { display: grid; grid-template-columns: auto minmax(0,1fr) auto; align-items: start; gap: 1rem; height: 100%; padding: 1.15rem; border: 1px solid rgba(243,236,220,.1); border-radius: 1rem; color: rgba(243,236,220,.72); background: rgba(255,255,255,.015); }
   .research-reference:hover { border-color: rgba(201,164,92,.36); background: rgba(201,164,92,.035); }
   .research-reference strong, .research-reference small { display: block; }

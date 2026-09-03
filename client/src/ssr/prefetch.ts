@@ -33,6 +33,8 @@ export type SsrPrefetch = {
   sourceBySlug: (slug: string) => Promise<RO["editorial"]["sourceBySlug"]>;
   storySourceById: (id: number) => Promise<RO["editorial"]["storySourceById"]>;
   support: () => Promise<RO["editorial"]["support"]>;
+  historicalArchive: () => Promise<RO["editorial"]["historicalArchive"]>;
+  historicalRecordBySlug: (slug: string) => Promise<RO["editorial"]["historicalRecordBySlug"]>;
 };
 
 const withSite = (title: string) => `${title} | ${SITE_NAME}`;
@@ -152,6 +154,37 @@ export async function prefetchForPath(url: string, qc: QueryClient, p: SsrPrefet
     const guide = GAME_GUIDES[gameMatch[1]];
     if (!guide) return { title: withSite("Game guide not found"), description: SITE_DESCRIPTION, notFound: true };
     return { title: withSite(`${guide.name} guide`), description: guide.dek, canonicalPath: `/games/${guide.slug}`, ogImage: guide.image, ogImageAlt: guide.imageAlt, jsonLd: { "@context": "https://schema.org", "@type": "Article", headline: `${guide.name}: history, concepts and probability`, description: guide.dek, articleSection: "Game Guides", author: { "@type": "Organization", name: "CasinoVerse Research Desk" }, publisher: { "@type": "Organization", name: SITE_NAME } } };
+  }
+  if (clean === "/history/archive") {
+    const data = await p.historicalArchive();
+    seed(qc, getQueryKey(trpc.editorial.historicalArchive, undefined, "query"), data);
+    return { title: withSite("Casino industry timeline: 2010–2026"), description: "Browse CasinoVerse’s verified year-by-year record of casino regulation, operations, technology, destinations, and gambling-harm policy from 2010 through 3 September 2026.", canonicalPath: clean, ogImage: EXPANDED_IMAGES.history, ogImageAlt: "Casino archive desk with dated ledgers, gaming tokens, and regulatory documents" };
+  }
+  const historicalRecordMatch = clean.match(/^\/history\/archive\/([^/]+)$/i);
+  if (historicalRecordMatch) {
+    const slug = historicalRecordMatch[1];
+    const data = await p.historicalRecordBySlug(slug);
+    if (!data) return { title: withSite("Historical record not found"), description: SITE_DESCRIPTION, notFound: true };
+    seed(qc, getQueryKey(trpc.editorial.historicalRecordBySlug, { slug }, "query"), data);
+    const eventDate = data.eventDate ?? `${data.eventYear}`;
+    return {
+      title: withSite(data.title),
+      description: data.summary,
+      canonicalPath: clean,
+      ogType: "article",
+      ogImage: EXPANDED_IMAGES.history,
+      ogImageAlt: "Casino archive desk with dated ledgers, gaming tokens, and regulatory documents",
+      jsonLd: {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        headline: data.title,
+        description: data.summary,
+        datePublished: eventDate,
+        articleSection: "Casino Industry History",
+        author: { "@type": "Organization", name: "CasinoVerse Research Desk" },
+        publisher: { "@type": "Organization", name: SITE_NAME },
+      },
+    };
   }
   if (clean === "/history") return { title: withSite("Casino history"), description: "Trace the documented evolution of casinos, card and wheel games, mechanical machines, regulation, and destination architecture without turning folklore into fact.", canonicalPath: clean, ogImage: EXPANDED_IMAGES.history };
   if (clean === "/culture") return { title: withSite("Casino culture"), description: "Explore casino architecture, interior design, art, entertainment, etiquette, fashion, and film as cultural subjects rather than promotional spectacle.", canonicalPath: clean, ogImage: EXPANDED_IMAGES.culture };

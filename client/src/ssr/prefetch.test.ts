@@ -48,6 +48,8 @@ function mockPrefetch(overrides: Partial<SsrPrefetch> = {}): SsrPrefetch {
     sourceBySlug: vi.fn().mockResolvedValue(undefined),
     storySourceById: vi.fn().mockResolvedValue(undefined),
     support: vi.fn().mockResolvedValue([]),
+    historicalArchive: vi.fn().mockResolvedValue([]),
+    historicalRecordBySlug: vi.fn().mockResolvedValue(undefined),
     ...overrides,
   } as SsrPrefetch;
 }
@@ -88,7 +90,7 @@ describe("CasinoVerse SSR prefetch", () => {
 
   it("returns complete canonical and social metadata for every expanded editorial route", async () => {
     const routes = [
-      "/articles", "/history", "/culture", "/destinations", "/vlogs", "/facts", "/gallery",
+      "/articles", "/history", "/history/archive", "/culture", "/destinations", "/vlogs", "/facts", "/gallery",
       "/games/poker", "/games/blackjack", "/games/roulette", "/games/baccarat", "/games/slots",
       "/privacy", "/disclaimer", "/terms", "/sources", "/support",
     ];
@@ -132,6 +134,41 @@ describe("CasinoVerse SSR prefetch", () => {
     expect(head.noindex).toBe(true);
     expect(head.title).toContain("World Health Organization");
     expect(qc.getQueryData(getQueryKey(trpc.editorial.sourceBySlug, { slug: source.slug }, "query"))).toEqual(source);
+  });
+
+  it("prefetches a verified historical milestone and emits article metadata", async () => {
+    const record = {
+      id: 1,
+      slug: "2010-pennsylvania-table-game-rules",
+      eventYear: 2010,
+      eventDate: "2010-02-17",
+      datePrecision: "exact" as const,
+      title: "Pennsylvania regulator approves table-game operating rules",
+      desk: "industry_and_regulation" as const,
+      jurisdiction: "Pennsylvania, United States",
+      summary: "A verified summary of the regulator’s implementation milestone for table-game rules.",
+      significance: "The record links legislative expansion to operating and consumer-protection controls.",
+      sourceCatalogId: null,
+      sourceName: "Pennsylvania Gaming Control Board",
+      sourceTitle: "Gaming Control Board Approves New Regulations for the Training and Play of Table Games",
+      sourceUrl: "https://gamingcontrolboard.pa.gov/example",
+      sourcePublishedDate: "2010-02-17",
+      sourceType: "regulator" as const,
+      confidence: "high" as const,
+      verificationStatus: "verified" as const,
+      cutoffLabel: "through-2026-09-03",
+      isPublished: true,
+      accessedAt: new Date("2026-09-04T00:00:00Z"),
+      createdAt: new Date("2026-09-04T00:00:00Z"),
+      updatedAt: new Date("2026-09-04T00:00:00Z"),
+    };
+    const qc = new QueryClient();
+    const path = `/history/archive/${record.slug}`;
+    const head = await prefetchForPath(path, qc, mockPrefetch({ historicalRecordBySlug: vi.fn().mockResolvedValue(record) }));
+    expect(head.canonicalPath).toBe(path);
+    expect(head.ogType).toBe("article");
+    expect(head.jsonLd?.headline).toBe(record.title);
+    expect(qc.getQueryData(getQueryKey(trpc.editorial.historicalRecordBySlug, { slug: record.slug }, "query"))).toEqual(record);
   });
 });
 

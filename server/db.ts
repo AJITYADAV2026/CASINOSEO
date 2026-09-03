@@ -6,6 +6,7 @@ import {
   dailyDigests,
   digestStories,
   editorialInquiries,
+  historicalRecords,
   InsertUser,
   newsletterSubscribers,
   siteFindReports,
@@ -251,6 +252,38 @@ export async function getSupportDirectory() {
   const db = await getDb();
   if (!db) return [];
   return db.select().from(supportResources).where(eq(supportResources.isActive, true)).orderBy(supportResources.sortOrder, supportResources.name);
+}
+
+export async function getHistoricalArchive() {
+  const db = await getDb();
+  if (!db) return [];
+  return db
+    .select()
+    .from(historicalRecords)
+    .where(
+      and(
+        eq(historicalRecords.isPublished, true),
+        eq(historicalRecords.verificationStatus, "verified"),
+      ),
+    )
+    .orderBy(desc(historicalRecords.eventYear), desc(historicalRecords.eventDate));
+}
+
+export async function getHistoricalRecordBySlug(slug: string) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const rows = await db
+    .select()
+    .from(historicalRecords)
+    .where(
+      and(
+        eq(historicalRecords.slug, slug),
+        eq(historicalRecords.isPublished, true),
+        eq(historicalRecords.verificationStatus, "verified"),
+      ),
+    )
+    .limit(1);
+  return rows[0];
 }
 
 export async function subscribeToEditorialBriefing(email: string) {

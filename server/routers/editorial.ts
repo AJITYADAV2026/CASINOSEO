@@ -3,6 +3,8 @@ import {
   getArchive,
   getCategoryBySlug,
   getDigestByDate,
+  getHistoricalArchive,
+  getHistoricalRecordBySlug,
   getHomepageContent,
   getSourceCatalog,
   getSourceCatalogEntry,
@@ -38,6 +40,10 @@ export const editorialRouter = router({
     .input(z.object({ id: z.number().int().positive() }))
     .query(({ input }) => getStorySourceById(input.id)),
   support: publicProcedure.query(() => getSupportDirectory()),
+  historicalArchive: publicProcedure.query(() => getHistoricalArchive()),
+  historicalRecordBySlug: publicProcedure
+    .input(z.object({ slug: z.string().trim().min(1).max(220) }))
+    .query(({ input }) => getHistoricalRecordBySlug(input.slug)),
   subscribe: publicProcedure
     .input(z.object({
       email: z.string().trim().email().max(320),

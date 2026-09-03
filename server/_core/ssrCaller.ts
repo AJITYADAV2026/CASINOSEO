@@ -17,5 +17,7 @@ export async function buildSsrPrefetch(req: Request, res: Response): Promise<Ssr
     sourceBySlug: slug => caller.editorial.sourceBySlug({ slug }),
     storySourceById: id => caller.editorial.storySourceById({ id }),
     support: () => caller.editorial.support(),
+    historicalArchive: () => caller.editorial.historicalArchive(),
+    historicalRecordBySlug: slug => caller.editorial.historicalRecordBySlug({ slug }),
   };
 }

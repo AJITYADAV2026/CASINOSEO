@@ -19,12 +19,13 @@ export default function Archive() {
           <div>
             <p className="eyebrow text-gold">The research vault · Dated source files</p>
             <h1 className="mt-4 max-w-5xl font-display text-[clamp(4rem,9vw,8rem)] leading-[.83] tracking-[-.045em] text-ivory">The daily casino archive.</h1>
-            <p className="mt-7 max-w-2xl text-xl leading-8 text-ivory/58">Each edition captures a defined research day, separates confirmed facts from forecasts or proposals, and links readers to the original publishers.</p>
+            <p className="mt-7 max-w-2xl text-xl leading-8 text-ivory/58">Each edition captures a defined research day, separates confirmed facts from forecasts or proposals, and opens its evidence through CasinoVerse-owned provenance records.</p>
           </div>
           <div className="rounded-[22px] border border-gold/20 bg-black/15 p-6">
             <FileText className="h-6 w-6 text-gold" />
             <h2 className="mt-4 font-display text-2xl text-ivory">How the archive works</h2>
             <p className="mt-3 text-sm leading-6 text-ivory/50">Completed editions are marked Published. The current calendar day remains Developing until its research window closes and may receive additional verified stories.</p>
+            <Link href="/history/archive" className="mt-5 inline-flex items-center gap-2 text-sm text-gold-light">Open the 2010–2026 baseline <ArrowRight className="h-4 w-4" /></Link>
           </div>
         </div>
       </header>

@@ -28,6 +28,8 @@ import Sources from "./pages/Sources";
 import SourceDetail from "./pages/SourceDetail";
 import StorySource from "./pages/StorySource";
 import Support from "./pages/Support";
+import HistoricalArchive from "./pages/HistoricalArchive";
+import HistoricalRecord from "./pages/HistoricalRecord";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -42,6 +44,8 @@ function Router() {
         <Route path={"/archive/:date"} component={Digest} />
         <Route path={"/games"} component={Games} />
         <Route path={"/games/:slug"} component={GameDetail} />
+        <Route path={"/history/archive/:slug"} component={HistoricalRecord} />
+        <Route path={"/history/archive"} component={HistoricalArchive} />
         <Route path={"/history"} component={History} />
         <Route path={"/culture"} component={Culture} />
         <Route path={"/destinations"} component={Destinations} />

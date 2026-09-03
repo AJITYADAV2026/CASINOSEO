@@ -9,7 +9,7 @@ import {
   stories,
   storySources,
 } from "../drizzle/schema";
-import { getArchive, getDb, getDigestByDate, getHomepageContent } from "./db";
+import { getArchive, getDb, getDigestByDate, getHistoricalArchive, getHomepageContent } from "./db";
 import { sdk } from "./_core/sdk";
 import { runContentAnalysis } from "./contentAnalysis";
 import { runPageCreation } from "./pageCreation";
@@ -29,6 +29,7 @@ export function buildSitemapDocument(origin: string, data: {
   categories: Array<{ slug: string; updatedAt: Date }>;
   stories: Array<{ story: { slug: string; status: string; modifiedAt: Date | null; publishedAt: Date | null } }>;
   digests: Array<{ digestDate: string; status: string; modifiedAt: Date | null; publishedAt: Date | null }>;
+  historicalRecords?: Array<{ slug: string; updatedAt: Date }>;
 }) {
   const staticPaths = [
     "/",
@@ -42,6 +43,7 @@ export function buildSitemapDocument(origin: string, data: {
     "/games/slots",
     "/guides",
     "/history",
+    "/history/archive",
     "/culture",
     "/destinations",
     "/vlogs",
@@ -60,6 +62,7 @@ export function buildSitemapDocument(origin: string, data: {
     ...data.categories.map(category => ({ path: `/category/${category.slug}`, modified: category.updatedAt })),
     ...data.stories.filter(item => item.story.status === "published").map(item => ({ path: `/articles/${item.story.slug}`, modified: item.story.modifiedAt ?? item.story.publishedAt ?? undefined })),
     ...data.digests.filter(digest => digest.status !== "developing").map(digest => ({ path: `/archive/${digest.digestDate}`, modified: digest.modifiedAt ?? digest.publishedAt ?? undefined })),
+    ...(data.historicalRecords ?? []).map(record => ({ path: `/history/archive/${record.slug}`, modified: record.updatedAt })),
   ];
   const body = urls.map(item => `<url><loc>${xml(origin + item.path)}</loc>${item.modified ? `<lastmod>${item.modified.toISOString()}</lastmod>` : ""}</url>`).join("");
   return `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${body}</urlset>`;
@@ -350,8 +353,8 @@ export function registerPublicationRoutes(app: Express) {
   app.get("/sitemap.xml", async (_req, res) => {
     const origin = publicationOrigin();
     if (!origin) return res.status(503).type("text/plain").send("CANONICAL_ORIGIN is not configured");
-    const [{ categories: categoryRows, stories: storyRows }, digests] = await Promise.all([getHomepageContent(), getArchive()]);
-    res.set("Cache-Control", "public, max-age=900").type("application/xml").send(buildSitemapDocument(origin, { categories: categoryRows, stories: storyRows, digests }));
+    const [{ categories: categoryRows, stories: storyRows }, digests, historicalRecords] = await Promise.all([getHomepageContent(), getArchive(), getHistoricalArchive()]);
+    res.set("Cache-Control", "public, max-age=900").type("application/xml").send(buildSitemapDocument(origin, { categories: categoryRows, stories: storyRows, digests, historicalRecords }));
   });
 
   app.get("/news-sitemap.xml", async (_req, res) => {

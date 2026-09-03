@@ -150,3 +150,16 @@
 - [x] Add automated and browser-level link validation proving every public anchor and redirect target remains on the CasinoVerse domain or uses a non-navigation protocol such as `mailto:` or `tel:` only when appropriate.
 - [x] Run complete database, SSR, route, accessibility, TypeScript, test, build, and production smoke validation with Agents 1–3 unchanged and Agent 4 paused.
 - [x] Save and auto-publish the self-contained CasinoVerse checkpoint without performing URL indexing or sitemap submission.
+- [x] Audit all current database records and public pages for dated historical coverage from 2010 through 3 September 2026, with a year-by-year and editorial-desk gap matrix.
+- [x] Research verified casino-industry, regulation, operations, game technology, architecture, destination, culture, and gambling-harm developments for every year from 2010 through 2025 and the period 1 January–3 September 2026.
+- [x] Preserve each historical claim with publication name, source title, publication date where available, access date, source type, and original address as non-clickable provenance data in the project-owned database.
+- [x] Add a project-owned historical-record data model and non-destructive migration supporting year, exact or approximate date, jurisdiction, desk, summary, significance, source relationship, and verification status.
+- [x] Populate at least one verified historical record for every calendar year from 2010 through 2025 plus verified records through 3 September 2026, without fabricated dates, metrics, events, or citations.
+- [x] Build an article-first historical archive with year filters, desk filters, internal source records, SSR metadata, responsive layouts, and clear distinctions between exact dates and year-level context.
+- [x] Integrate the historical archive into appropriate CasinoVerse navigation, History, Facts, Blog, and Research surfaces without creating outbound website links.
+- [x] Verify Agents 1, 2, and 3 continue automatic updates after the 3 September 2026 historical cutoff at 12:01 AM, 2:00 AM, and 2:30 AM IST respectively.
+- [x] Add automated coverage checks proving every year from 2010 through 2026 is represented, all public source links are same-domain, dates are valid, and Agent 4 remains paused.
+- [x] Run full tests, TypeScript, builds, SSR route crawling, desktop/mobile review, database counts, and runtime-log inspection.
+- [x] Save and auto-publish the verified 2010–3 September 2026 historical integration without URL indexing or sitemap submission.
+- [x] Verify the active Agent 1 schedule uses the user-supplied prior-day IST research, source-verification, durable Markdown, and authenticated callback contract at exactly 12:01 AM IST.
+- [x] Confirm the Agent 1 contract review does not alter Agents 2–3 and does not activate Agent 4 indexing or sitemap submission.

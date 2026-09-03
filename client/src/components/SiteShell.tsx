@@ -15,6 +15,7 @@ const primaryNavigation = [
 const secondaryNavigation = [
   ["Games", "/games"],
   ["History", "/history"],
+  ["2010–2026", "/history/archive"],
   ["Culture", "/culture"],
   ["Destinations", "/destinations"],
   ["Facts", "/facts"],
@@ -122,7 +123,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
             <div className="mt-6 flex flex-wrap gap-2" aria-label="Publication principles"><span className="footer-chip">Source-led</span><span className="footer-chip">No wagering</span></div>
           </div>
           <FooterGroup title="Editorial" links={[["Blog", "/articles"], ["Floor report", "/games"], ["Daily research", "/archive"], ["Vlog studio", "/vlogs"], ["Casino facts", "/facts"]]} />
-          <FooterGroup title="Casino world" links={[["Game laboratory", "/games"], ["History", "/history"], ["Culture & design", "/culture"], ["Destinations", "/destinations"], ["Visual gallery", "/gallery"]]} />
+          <FooterGroup title="Casino world" links={[["Game laboratory", "/games"], ["History", "/history"], ["2010–2026 timeline", "/history/archive"], ["Culture & design", "/culture"], ["Destinations", "/destinations"], ["Visual gallery", "/gallery"]]} />
           <FooterGroup title="Publication" links={[["About CasinoVerse", "/about"], ["Editorial standards", "/about#standards"], ["Source library", "/sources"], ["Guides", "/guides"], ["Privacy", "/privacy"], ["Disclaimer", "/disclaimer"], ["Terms", "/terms"], ["Contact", "/about#contact"]]} />
           <div>
             <h2 className="eyebrow">Responsible play desk</h2>
