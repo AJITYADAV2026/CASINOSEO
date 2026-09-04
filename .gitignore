@@ -9,10 +9,19 @@ build/
 
 # Environment variables
 .env
+.env.*
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+
+# Credentials and private keys
+credentials*.json
+service-account*.json
+*.pem
+*.key
+*.p12
+*.pfx
 
 # IDE and editor files
 .vscode/
