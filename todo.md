@@ -178,4 +178,4 @@
 - [x] Repair any Agent 1 schedule or callback fault and add durable lateness or failure detection without running Agents 1–3 together.
 - [x] Verify Agent 2 remains at 2:00 AM IST and Agent 3 remains at 2:30 AM IST, each consuming only the prior agent’s completed durable output.
 - [x] Keep Agent 4 paused and perform no indexing or sitemap submission during the Agent 1 investigation.
-- [ ] Publish any required safeguard and document the precise evidence and next-run expectations.
+- [x] Publish any required safeguard and document the precise evidence and next-run expectations.

@@ -16,6 +16,8 @@ The website now enforces the sequence in code. Agent 2 stops with `required-agen
 
 A separate non-editorial delivery monitor checks at **12:15 AM IST** whether the required prior-day published digest and Markdown artifact exist. If missing, it alerts the project owner. The monitor does not perform research and does not invoke Agents 2 or 3.
 
+The monitor is active as heartbeat task `8AaYeWw4SzGvsRwjbREqJM` with cron `0 45 18 * * *` UTC. Its protected production endpoint rejects unauthenticated requests with HTTP 403. The next recorded execution is 12:15 AM IST on 6 September 2026.
+
 ## Preserved boundaries
 
 | Workflow | Time (IST) | Status |
