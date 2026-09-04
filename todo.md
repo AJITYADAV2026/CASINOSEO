@@ -168,3 +168,8 @@
 - [x] If the expected dated URL manifest or page actions are missing, repair the Agent 3 schedule or callback safely and execute one authenticated recovery run without indexing submission. No recovery run was required because the durable manifest was completed successfully.
 - [x] Verify the resulting dated URL manifest, every created or updated internal URL, sitemap data, and the next exact 2:30 AM IST schedule.
 - [x] Document and report the precise Agent 3 run time and outcome without claiming success that is not supported by durable evidence.
+- [x] Audit every public route class to confirm its primary content, headings, navigation, canonical metadata, and structured data are present in the initial server-rendered HTML response without JavaScript execution.
+- [x] Repair any route that returns an empty application shell, loading-only body, generic metadata, incorrect HTTP status, or client-only primary content. The audit found no public route requiring a rendering repair.
+- [x] Add or update raw-HTML regression coverage for home, Blog, article, category, daily research, historical archive, game guide, source record, support directory, legal, search, and real 404 routes.
+- [x] Verify production client, server, and SSR builds; hydration behavior; same-domain navigation; accessibility; analytics consent gating; and clean runtime logs.
+- [x] Save and auto-publish the verified HTML-first CasinoVerse checkpoint without changing the separate Agent 1–3 schedules or activating Agent 4.

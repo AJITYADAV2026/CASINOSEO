@@ -34,7 +34,7 @@ function absoluteUrl(value?: string) {
   return value;
 }
 
-function buildHeadTags(head: HeadMeta) {
+export function buildHeadTags(head: HeadMeta) {
   const title = escapeHtml(clampText(head.title, 70) || SITE_NAME);
   const description = escapeHtml(clampText(head.description.replace(/[#*_`~]+/g, ""), 200));
   const canonical = head.canonicalPath && CANONICAL_ORIGIN ? `${CANONICAL_ORIGIN}${head.canonicalPath}` : undefined;
@@ -73,7 +73,7 @@ function buildHeadTags(head: HeadMeta) {
   return tags.join("\n");
 }
 
-function composeHtml(template: string, appHtml: string, head: HeadMeta, dehydratedState: unknown) {
+export function composeHtml(template: string, appHtml: string, head: HeadMeta, dehydratedState: unknown) {
   const state = JSON.stringify(superjson.serialize(dehydratedState)).replace(/</g, "\\u003c");
   const stateScript = `<script>window.__RQ_STATE__ = ${state}</script>`;
   return template

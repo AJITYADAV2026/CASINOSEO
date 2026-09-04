@@ -1,5 +1,6 @@
 import { QueryClient, QueryClientProvider, dehydrate } from "@tanstack/react-query";
 import { httpBatchLink } from "@trpc/client";
+import React from "react";
 import { renderToString } from "react-dom/server";
 import superjson from "superjson";
 import { Router } from "wouter";
