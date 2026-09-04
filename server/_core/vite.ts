@@ -112,9 +112,13 @@ export async function setupVite(app: Express, server: Server) {
 }
 
 export function serveStatic(app: Express) {
-  const distPath = process.env.NODE_ENV === "development"
-    ? path.resolve(import.meta.dirname, "../..", "dist", "public")
-    : path.resolve(import.meta.dirname, "public");
+  const distCandidates = [
+    path.resolve(process.cwd(), "public"),
+    path.resolve(process.cwd(), "dist", "public"),
+    path.resolve(import.meta.dirname, "public"),
+    path.resolve(import.meta.dirname, "../..", "dist", "public"),
+  ];
+  const distPath = distCandidates.find(candidate => fs.existsSync(path.resolve(candidate, "index.html"))) ?? distCandidates[0];
   if (!fs.existsSync(distPath)) console.error(`Could not find the build directory: ${distPath}`);
 
   app.use((req, res, next) => {
@@ -129,9 +133,12 @@ export function serveStatic(app: Express) {
 
   app.use(express.static(distPath, { index: false, redirect: false }));
   const templatePath = path.resolve(distPath, "index.html");
-  const serverEntryPath = process.env.NODE_ENV === "development"
-    ? path.resolve(import.meta.dirname, "../..", "dist", "server-ssr", "entry-server.js")
-    : path.resolve(import.meta.dirname, "server-ssr", "entry-server.js");
+  const serverEntryCandidates = [
+    path.resolve(process.cwd(), "dist", "server-ssr", "entry-server.js"),
+    path.resolve(import.meta.dirname, "server-ssr", "entry-server.js"),
+    path.resolve(import.meta.dirname, "../..", "dist", "server-ssr", "entry-server.js"),
+  ];
+  const serverEntryPath = serverEntryCandidates.find(candidate => fs.existsSync(candidate)) ?? serverEntryCandidates[0];
 
   app.use("*", async (req, res) => {
     try {

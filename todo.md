@@ -183,14 +183,15 @@
 - [x] Audit tracked and untracked files for API keys, cookies, database credentials, environment files, generated artifacts, and other secrets before any remote push.
 - [x] Confirm `.gitignore`, setup documentation, migration files, tests, source code, and required configuration templates make the complete CasinoVerse project reproducible without committing secrets.
 - [x] Confirm the desired GitHub repository name and public or private visibility if no existing destination is configured. The confirmed destination is the public repository `AJITYADAV2026/CASINOSEO`.
-- [ ] Create or connect the destination GitHub repository and push the complete validated CasinoVerse history and default branch.
-- [ ] Verify the remote commit, branch protection assumptions, file coverage, repository URL, and absence of exposed credentials after the push.
-- [ ] Preserve the live Manus deployment, Agents 1–3 schedules, Agent 1 monitor, and paused Agent 4 state during the GitHub export.
+- [x] Create or connect the destination GitHub repository and push the complete validated CasinoVerse history and default branch.
+- [x] Verify the remote commit, branch protection assumptions, file coverage, repository URL, and absence of exposed credentials after the push. Local and remote commit `2721c49963049dd8cb2c7a319d22377dd9e73638` match with 284 files; branch protection is not enabled.
+- [x] Preserve the live Manus deployment, Agents 1–3 schedules, Agent 1 monitor, and paused Agent 4 state during the GitHub export.
 - [x] Open GitHub in the project browser, allow the user to sign in, and verify the intended destination account before any repository operation; the confirmed owner is `AJITYADAV2026`, and neither token exposed in chat will be used.
-- [ ] After the GitHub push, assess Vercel compatibility for Express SSR, the project database, storage, environment variables, and scheduled Agents 1–3 before any external deployment; preserve the working Manus deployment as the rollback path.
-- [ ] Reuse only the persisted GitHub OAuth browser session for any later Vercel authorization; never store or copy the user’s password, token, verification code, or recovery credentials.
-- [ ] Complete and verify the `AJITYADAV2026/CASINOSEO` GitHub push before creating, importing, configuring, or deploying any Vercel project.
-- [ ] Prepare Vercel-compatible build and runtime configuration for the same CasinoVerse SSR application without weakening HTML output, database access, internal links, consent gating, or responsible-content safeguards.
-- [ ] Map all mandatory Vercel environment variables and external database or storage dependencies without committing secret values to GitHub.
+- [x] After the GitHub push, assess Vercel compatibility for Express SSR, the project database, storage, environment variables, and scheduled Agents 1–3 before any external deployment; preserve the working Manus deployment as the rollback path.
+- [x] Reuse only the persisted GitHub OAuth browser session for any later Vercel authorization; never store or copy the user’s password, token, verification code, or recovery credentials.
+- [x] Complete and verify the `AJITYADAV2026/CASINOSEO` GitHub push before creating, importing, configuring, or deploying any Vercel project.
+- [x] Prepare Vercel-compatible build and runtime configuration for the same CasinoVerse SSR application without weakening HTML output, database access, internal links, consent gating, or responsible-content safeguards.
+- [x] Map all mandatory Vercel environment variables and external database or storage dependencies without committing secret values to GitHub.
 - [ ] Deploy the same GitHub-backed CasinoVerse website to Vercel and validate representative SSR pages, article routes, historical archive, source library, support directory, sitemap, consent behavior, and real 404 responses.
 - [ ] Keep Manus hosting live as the rollback path and preserve Agents 1–3 plus the Agent 1 delivery monitor on their existing platform schedules unless a separately validated Vercel-safe migration is explicitly approved.
+- [ ] Save, sync, and verify the Vercel-compatible configuration in `AJITYADAV2026/CASINOSEO` before starting the Vercel deployment.
