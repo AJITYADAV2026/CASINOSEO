@@ -18,7 +18,13 @@ describe("Vercel deployment contract", () => {
 
     expect(config.framework).toBeNull();
     expect(config.buildCommand).toBe("pnpm vercel-build");
-    expect(config.functions).toBeUndefined();
+    expect(config.functions["api/index.ts"].includeFiles).toBe(
+      "{public/**,dist/server-ssr/**}",
+    );
+    expect(config.rewrites).toContainEqual({
+      source: "/(.*)",
+      destination: "/api/index",
+    });
     expect(pkg.scripts["vercel-build"]).toContain("prepare-vercel.mjs");
     expect(read("scripts/prepare-vercel.mjs")).toContain("cpSync(source, destination");
   });
