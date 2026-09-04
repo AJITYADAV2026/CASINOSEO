@@ -1,6 +1,6 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { createCasinoVerseApp } from "../server/_core/app";
-import { serveStatic } from "../server/_core/vite";
+import { serveStatic } from "../server/_core/staticSsr";
 
 const app = createCasinoVerseApp();
 let ready: Promise<void> | null = null;

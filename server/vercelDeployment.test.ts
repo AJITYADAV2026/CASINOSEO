@@ -18,7 +18,7 @@ describe("Vercel deployment contract", () => {
 
     expect(config.framework).toBeNull();
     expect(config.buildCommand).toBe("pnpm vercel-build");
-    expect(config.functions["api/index.ts"].includeFiles).toBe(
+    expect(config.functions["api/index.mjs"].includeFiles).toBe(
       "{public/**,dist/server-ssr/**}",
     );
     expect(config.rewrites).toContainEqual({
@@ -26,6 +26,10 @@ describe("Vercel deployment contract", () => {
       destination: "/api/index",
     });
     expect(pkg.scripts["vercel-build"]).toContain("prepare-vercel.mjs");
+    expect(pkg.scripts["vercel-build"]).toContain("build-vercel-function.mjs");
     expect(read("scripts/prepare-vercel.mjs")).toContain("cpSync(source, destination");
+    expect(read("scripts/build-vercel-function.mjs")).toContain("--packages=external");
+    expect(read("vercel/entry.ts")).toContain("createCasinoVerseApp");
+    expect(read("vercel/entry.ts")).toContain("server/_core/staticSsr");
   });
 });
