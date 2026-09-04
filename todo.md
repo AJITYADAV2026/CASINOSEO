@@ -173,3 +173,9 @@
 - [x] Add or update raw-HTML regression coverage for home, Blog, article, category, daily research, historical archive, game guide, source record, support directory, legal, search, and real 404 routes.
 - [x] Verify production client, server, and SSR builds; hydration behavior; same-domain navigation; accessibility; analytics consent gating; and clean runtime logs.
 - [x] Save and auto-publish the verified HTML-first CasinoVerse checkpoint without changing the separate Agent 1–3 schedules or activating Agent 4.
+- [x] Audit Agent 1’s configured 12:01 AM IST schedule, actual dispatch and completion timestamps, callback response, failure reason if any, and latest durable daily digest.
+- [x] Determine whether Agent 1 was late, missed, failed, or completed without visible output, and report the exact cause rather than relying on schedule configuration.
+- [x] Repair any Agent 1 schedule or callback fault and add durable lateness or failure detection without running Agents 1–3 together.
+- [x] Verify Agent 2 remains at 2:00 AM IST and Agent 3 remains at 2:30 AM IST, each consuming only the prior agent’s completed durable output.
+- [x] Keep Agent 4 paused and perform no indexing or sitemap submission during the Agent 1 investigation.
+- [ ] Publish any required safeguard and document the precise evidence and next-run expectations.

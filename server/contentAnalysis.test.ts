@@ -3,7 +3,7 @@ import { eq } from "drizzle-orm";
 import { describe, expect, it } from "vitest";
 import { siteFindReports } from "../drizzle/schema";
 import { getDb, getDigestByDate, getLatestDigestForAnalysis, selectLatestAnalyzableDigest } from "./db";
-import { buildDeterministicAnalysis, contentAnalysisSchema, renderSiteFindMarkdown, runContentAnalysis } from "./contentAnalysis";
+import { buildDeterministicAnalysis, contentAnalysisSchema, previousIsoCalendarDate, renderSiteFindMarkdown, runContentAnalysis } from "./contentAnalysis";
 import { registerPublicationRoutes } from "./publicationRoutes";
 
 const analysisFixture = {
@@ -34,6 +34,23 @@ describe("Agent 2 content analysis", () => {
     expect(selectLatestAnalyzableDigest(rows, true)?.digestDate).toBe("2026-09-03");
     expect(selectLatestAnalyzableDigest(rows, false)?.digestDate).toBe("2026-09-02");
     expect(selectLatestAnalyzableDigest(rows.slice(0, 1), true)).toBeUndefined();
+    expect(previousIsoCalendarDate("2026-01-01")).toBe("2025-12-31");
+  });
+
+  it("stops instead of analyzing stale Agent 1 output", async () => {
+    const db = await getDb();
+    const digest = await getLatestDigestForAnalysis(true);
+    expect(db).toBeTruthy();
+    expect(digest).toBeTruthy();
+    if (!db || !digest) return;
+    const result = await runContentAnalysis({
+      db,
+      digest,
+      reportDate: "2099-12-31",
+      enforceSequence: true,
+    });
+    expect(result.skipped).toBe("required-agent-1-digest-missing");
+    expect("expectedDigestDate" in result && result.expectedDigestDate).toBe("2099-12-30");
   });
 
   it("requires human review for every removal recommendation", () => {

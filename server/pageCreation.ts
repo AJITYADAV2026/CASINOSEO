@@ -1,7 +1,7 @@
 import { and, desc, eq } from "drizzle-orm";
 import { z } from "zod";
 import { categories, dailyDigests, digestStories, siteFindReports, stories, urlManifests } from "../drizzle/schema";
-import { contentAnalysisSchema } from "./contentAnalysis";
+import { contentAnalysisSchema, previousIsoCalendarDate } from "./contentAnalysis";
 import { getDb, getLatestSiteFindForPublishing } from "./db";
 
 const outcomes = ["created", "updated", "retained", "archived", "review-required"] as const;
@@ -50,14 +50,28 @@ export async function runPageCreation(options: {
   force?: boolean;
   manifestDate?: string;
   taskUid?: string | null;
+  enforceSequence?: boolean;
   db?: EditorialDb;
   siteFind?: SiteFindInput;
 } = {}) {
   const db = options.db ?? await getDb();
   if (!db) throw new Error("Database unavailable for Agent 3");
+  const manifestDate = options.manifestDate ?? formatIstDate();
+  const expectedDigestDate = previousIsoCalendarDate(manifestDate);
   const siteFind = options.siteFind ?? await getLatestSiteFindForPublishing(options.includeDraft ?? false);
   if (!siteFind) return { skipped: "no-publishable-site-find" as const };
-  const manifestDate = options.manifestDate ?? formatIstDate();
+  const enforceSequence = options.enforceSequence ?? options.siteFind === undefined;
+  if (enforceSequence && (siteFind.reportDate !== manifestDate || siteFind.sourceDigestDate !== expectedDigestDate || siteFind.status !== "completed")) {
+    return {
+      skipped: "required-agent-2-report-missing" as const,
+      manifestDate,
+      expectedReportDate: manifestDate,
+      expectedDigestDate,
+      latestReportDate: siteFind.reportDate,
+      latestSourceDigestDate: siteFind.sourceDigestDate,
+      latestReportStatus: siteFind.status,
+    };
+  }
   const [existing] = await db.select().from(urlManifests).where(eq(urlManifests.manifestDate, manifestDate)).limit(1);
   if (!options.force && existing && existing.sourceSiteFindId === siteFind.id && existing.sourceSiteFindUpdatedAt.getTime() >= siteFind.updatedAt.getTime()) {
     return { skipped: "already-current" as const, manifest: existing };

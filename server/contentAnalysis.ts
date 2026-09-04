@@ -181,11 +181,18 @@ function formatIstDate(date = new Date()) {
   return `${values.year}-${values.month}-${values.day}`;
 }
 
+export function previousIsoCalendarDate(dateString: string) {
+  const [year, month, day] = dateString.split("-").map(Number);
+  if (!year || !month || !day) throw new Error(`Invalid ISO calendar date: ${dateString}`);
+  return new Date(Date.UTC(year, month - 1, day - 1)).toISOString().slice(0, 10);
+}
+
 export async function runContentAnalysis(options: {
   includeDeveloping?: boolean;
   reportDate?: string;
   taskUid?: string | null;
   force?: boolean;
+  enforceSequence?: boolean;
   db?: EditorialDb;
   analyzer?: Analyzer;
   digest?: AnalyzableDigest;
@@ -194,9 +201,19 @@ export async function runContentAnalysis(options: {
 } = {}) {
   const db = options.db ?? await getDb();
   if (!db) throw new Error("Database unavailable for Agent 2");
+  const reportDate = options.reportDate ?? formatIstDate();
+  const expectedDigestDate = previousIsoCalendarDate(reportDate);
   const digest = options.digest ?? await getLatestDigestForAnalysis(options.includeDeveloping ?? false);
   if (!digest?.markdownArtifact) return { skipped: "no-analyzable-digest" as const };
-  const reportDate = options.reportDate ?? formatIstDate();
+  const enforceSequence = options.enforceSequence ?? options.digest === undefined;
+  if (enforceSequence && digest.digestDate !== expectedDigestDate) {
+    return {
+      skipped: "required-agent-1-digest-missing" as const,
+      reportDate,
+      expectedDigestDate,
+      latestDigestDate: digest.digestDate,
+    };
+  }
   const [existing] = await db.select().from(siteFindReports).where(eq(siteFindReports.reportDate, reportDate)).limit(1);
   if (!options.force && existing && existing.sourceDigestId === digest.id && existing.sourceDigestUpdatedAt.getTime() >= digest.updatedAt.getTime()) {
     return { skipped: "already-current" as const, report: existing };

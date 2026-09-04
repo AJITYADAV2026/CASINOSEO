@@ -10,8 +10,9 @@ import {
   storySources,
 } from "../drizzle/schema";
 import { getArchive, getDb, getDigestByDate, getHistoricalArchive, getHomepageContent } from "./db";
+import { notifyOwner } from "./_core/notification";
 import { sdk } from "./_core/sdk";
-import { runContentAnalysis } from "./contentAnalysis";
+import { previousIsoCalendarDate, runContentAnalysis } from "./contentAnalysis";
 import { runPageCreation } from "./pageCreation";
 
 const xml = (value: string) => value
@@ -104,6 +105,22 @@ export const digestPayloadSchema = z.object({
 export type DigestPayload = z.infer<typeof digestPayloadSchema>;
 type EditorialDb = NonNullable<Awaited<ReturnType<typeof getDb>>>;
 type PublicationJob = typeof publicationJobs.$inferSelect;
+
+function formatIstDate(date = new Date()) {
+  const parts = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Kolkata", year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(date);
+  const values = Object.fromEntries(parts.map(part => [part.type, part.value]));
+  return `${values.year}-${values.month}-${values.day}`;
+}
+
+export function assessAgent1Delivery(currentIstDate: string, digest?: { digestDate: string; status: string; markdownArtifact: string | null }) {
+  const expectedDigestDate = previousIsoCalendarDate(currentIstDate);
+  const delivered = digest?.digestDate === expectedDigestDate && digest.status === "published" && Boolean(digest.markdownArtifact?.trim());
+  return {
+    delivered,
+    expectedDigestDate,
+    reason: delivered ? "delivered" as const : "required-agent-1-digest-missing" as const,
+  };
+}
 
 export async function persistScheduledDigest(db: EditorialDb, job: PublicationJob, cronTaskUid: string, payload: DigestPayload) {
   await db.transaction(async tx => {
@@ -343,6 +360,65 @@ async function scheduledPageCreation(req: Request, res: Response) {
   }
 }
 
+async function scheduledAgent1Monitor(req: Request, res: Response) {
+  let taskUid: string | undefined;
+  try {
+    let user;
+    try {
+      user = await sdk.authenticateRequest(req);
+    } catch {
+      return res.status(403).json({ error: "cron-only" });
+    }
+    taskUid = user.taskUid;
+    if (!user.isCron || !taskUid) return res.status(403).json({ error: "cron-only" });
+
+    const db = await getDb();
+    if (!db) return res.status(503).json({ error: "database-unavailable" });
+    const [job] = await db.select().from(publicationJobs).where(eq(publicationJobs.scheduleCronTaskUid, taskUid)).limit(1);
+    if (!job || job.jobKey !== "casinoverse-agent-1-delivery-monitor") return res.json({ ok: true, skipped: "orphan" });
+
+    const currentIstDate = formatIstDate();
+    const expectedDigestDate = previousIsoCalendarDate(currentIstDate);
+    const [digest] = await db.select().from(dailyDigests).where(eq(dailyDigests.digestDate, expectedDigestDate)).limit(1);
+    const assessment = assessAgent1Delivery(currentIstDate, digest);
+
+    await db.update(publicationJobs).set({
+      status: "active",
+      lastRunAt: new Date(),
+      lastCompletedDigestDate: assessment.delivered ? assessment.expectedDigestDate : job.lastCompletedDigestDate,
+    }).where(eq(publicationJobs.id, job.id));
+
+    if (assessment.delivered) {
+      return res.json({ ok: true, status: "delivered", digestDate: assessment.expectedDigestDate });
+    }
+
+    const notificationSent = await notifyOwner({
+      title: `CasinoVerse Agent 1 missed ${assessment.expectedDigestDate}`,
+      content: `The required published research edition for ${assessment.expectedDigestDate} was not present by the 12:15 AM IST delivery check. Agent 2 must stop rather than analyze stale data. Inspect Agent 1 before resuming the sequence.`,
+    });
+    if (!notificationSent) {
+      return res.status(503).json({
+        error: "agent-1-digest-missing-and-owner-notification-failed",
+        expectedDigestDate: assessment.expectedDigestDate,
+      });
+    }
+    return res.json({
+      ok: true,
+      status: assessment.reason,
+      expectedDigestDate: assessment.expectedDigestDate,
+      ownerNotified: true,
+    });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Unknown Agent 1 delivery monitor error";
+    return res.status(500).json({
+      error: message,
+      stack: error instanceof Error ? error.stack : undefined,
+      context: { url: req.originalUrl, taskUid },
+      timestamp: new Date().toISOString(),
+    });
+  }
+}
+
 export function registerPublicationRoutes(app: Express) {
   app.get("/robots.txt", (_req, res) => {
     const origin = publicationOrigin();
@@ -388,6 +464,7 @@ export function registerPublicationRoutes(app: Express) {
   });
 
   app.post("/api/scheduled/daily-digest", scheduledDailyDigest);
+  app.post("/api/scheduled/agent-1-delivery-monitor", scheduledAgent1Monitor);
   app.post("/api/scheduled/content-analysis", scheduledContentAnalysis);
   app.post("/api/scheduled/page-creation", scheduledPageCreation);
 }

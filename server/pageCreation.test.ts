@@ -19,6 +19,23 @@ describe("Agent 3 page creation", () => {
     expect(selectLatestSiteFindForPublishing(rows.slice(2), true)).toBeUndefined();
   });
 
+  it("stops instead of processing stale Agent 2 output", async () => {
+    const db = await getDb();
+    expect(db).toBeTruthy();
+    if (!db) return;
+    const [siteFind] = await db.select().from(siteFindReports).orderBy(siteFindReports.reportDate).limit(1);
+    expect(siteFind).toBeTruthy();
+    if (!siteFind) return;
+    const result = await runPageCreation({
+      db,
+      siteFind,
+      manifestDate: "2099-12-31",
+      enforceSequence: true,
+    });
+    expect(result.skipped).toBe("required-agent-2-report-missing");
+    expect("expectedDigestDate" in result && result.expectedDigestDate).toBe("2099-12-30");
+  });
+
   it("renders permanent URLs, sitemap state, and an explicit no-indexing boundary", () => {
     const markdown = renderUrlManifest({
       manifestDate: "2026-09-03",
