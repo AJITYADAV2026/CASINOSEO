@@ -5,7 +5,7 @@
   "buildCommand": "pnpm vercel-build",
   "functions": {
     "server.ts": {
-      "includeFiles": ["public/**", "dist/server-ssr/**"],
+      "includeFiles": "{public/**,dist/server-ssr/**}",
       "maxDuration": 30
     }
   }
