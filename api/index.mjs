@@ -2408,14 +2408,15 @@ function composeHtml(template, appHtml, head, dehydratedState) {
   return template.replace("</body>", () => `${stateScript}</body>`).replace("<!--app-head-->", () => buildHeadTags(head)).replace("<!--app-html-->", () => appHtml);
 }
 function serveStatic(app2) {
-  const distCandidates = [
-    path.resolve(process.cwd(), "public"),
+  const publicCandidates = [
+    path.resolve(process.cwd(), "vercel-public"),
     path.resolve(process.cwd(), "dist", "public"),
+    path.resolve(process.cwd(), "public"),
     path.resolve(import.meta.dirname, "public"),
     path.resolve(import.meta.dirname, "../..", "dist", "public")
   ];
-  const distPath = distCandidates.find((candidate) => fs.existsSync(path.resolve(candidate, "index.html"))) ?? distCandidates[0];
-  if (!fs.existsSync(distPath)) console.error(`Could not find the build directory: ${distPath}`);
+  const publicPath = publicCandidates.find((candidate) => fs.existsSync(candidate)) ?? publicCandidates[0];
+  if (!fs.existsSync(publicPath)) console.error(`Could not find the public asset directory: ${publicPath}`);
   app2.use((req, res, next) => {
     if (req.path === "/index.html") return res.redirect(301, "/");
     if (req.path !== "/" && /\/+$/g.test(req.path)) {
@@ -2425,9 +2426,17 @@ function serveStatic(app2) {
     }
     next();
   });
-  app2.use(express2.static(distPath, { index: false, redirect: false }));
-  const templatePath = path.resolve(distPath, "index.html");
+  app2.use(express2.static(publicPath, { index: false, redirect: false }));
+  const templateCandidates = [
+    path.resolve(process.cwd(), "vercel-ssr", "index.html"),
+    path.resolve(process.cwd(), "dist", "public", "index.html"),
+    path.resolve(process.cwd(), "public", "index.html"),
+    path.resolve(import.meta.dirname, "index.html"),
+    path.resolve(import.meta.dirname, "../..", "dist", "public", "index.html")
+  ];
+  const templatePath = templateCandidates.find((candidate) => fs.existsSync(candidate)) ?? templateCandidates[0];
   const serverEntryCandidates = [
+    path.resolve(process.cwd(), "vercel-ssr", "server-ssr", "entry-server.js"),
     path.resolve(process.cwd(), "dist", "server-ssr", "entry-server.js"),
     path.resolve(import.meta.dirname, "server-ssr", "entry-server.js"),
     path.resolve(import.meta.dirname, "../..", "dist", "server-ssr", "entry-server.js")

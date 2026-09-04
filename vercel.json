@@ -3,9 +3,10 @@
   "framework": null,
   "installCommand": "pnpm install --frozen-lockfile",
   "buildCommand": "pnpm vercel-build",
+  "outputDirectory": "vercel-public",
   "functions": {
     "api/index.mjs": {
-      "includeFiles": "{public/**,dist/server-ssr/**}",
+      "includeFiles": "{vercel-public/**,vercel-ssr/**}",
       "maxDuration": 30
     }
   },

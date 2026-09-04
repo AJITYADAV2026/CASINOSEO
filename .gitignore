@@ -5,6 +5,8 @@
 # Build outputs
 dist/
 /public/
+/vercel-public/
+/vercel-ssr/
 build/
 *.dist
 
