@@ -56,7 +56,8 @@ var ENV = {
   ownerOpenId: process.env.OWNER_OPEN_ID ?? "",
   isProduction: process.env.NODE_ENV === "production",
   forgeApiUrl: process.env.BUILT_IN_FORGE_API_URL ?? "",
-  forgeApiKey: process.env.BUILT_IN_FORGE_API_KEY ?? ""
+  forgeApiKey: process.env.BUILT_IN_FORGE_API_KEY ?? "",
+  assetOrigin: process.env.MANUS_ASSET_ORIGIN ?? ""
 };
 
 // server/_core/notification.ts
@@ -2266,12 +2267,36 @@ function registerOAuthRoutes(app2) {
 function registerStorageProxy(app2) {
   app2.get("/manus-storage/*", async (req, res) => {
     const key = req.params[0];
-    if (!key) {
+    if (!key || key.includes("..") || !/^[A-Za-z0-9._/-]+$/.test(key)) {
       res.status(400).send("Missing storage key");
       return;
     }
     if (!ENV.forgeApiUrl || !ENV.forgeApiKey) {
-      res.status(500).send("Storage proxy not configured");
+      if (!ENV.assetOrigin) {
+        res.status(500).send("Storage proxy not configured");
+        return;
+      }
+      try {
+        const assetUrl = new URL(`/manus-storage/${key}`, ENV.assetOrigin);
+        const assetResp = await fetch(assetUrl, { redirect: "follow" });
+        if (!assetResp.ok) {
+          console.error(`[StorageProxy] public asset error: ${assetResp.status}`);
+          res.status(assetResp.status === 404 ? 404 : 502).send("Storage asset unavailable");
+          return;
+        }
+        const contentType = assetResp.headers.get("content-type");
+        const etag = assetResp.headers.get("etag");
+        const lastModified = assetResp.headers.get("last-modified");
+        if (contentType) res.set("Content-Type", contentType);
+        if (etag) res.set("ETag", etag);
+        if (lastModified) res.set("Last-Modified", lastModified);
+        res.set("Cache-Control", "public, max-age=86400, s-maxage=31536000, immutable");
+        res.set("X-Content-Type-Options", "nosniff");
+        res.status(200).send(Buffer.from(await assetResp.arrayBuffer()));
+      } catch (err) {
+        console.error("[StorageProxy] public asset fallback failed:", err);
+        res.status(502).send("Storage asset unavailable");
+      }
       return;
     }
     try {

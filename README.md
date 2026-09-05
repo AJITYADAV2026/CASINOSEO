@@ -38,6 +38,7 @@ Before running database-backed or authenticated features, configure the required
 | `VITE_FRONTEND_FORGE_API_KEY` | Browser integration authorization |
 | `CANONICAL_ORIGIN` | Public canonical website origin |
 | `SITE_NAME` | Publication name |
+| `MANUS_ASSET_ORIGIN` | Optional non-secret fallback origin for proxying existing `/manus-storage/*` publication images on external hosts without exporting Manus storage credentials |
 
 ## Quality Checks
 

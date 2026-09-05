@@ -196,3 +196,4 @@
 - [ ] Keep Manus hosting live as the rollback path and preserve Agents 1–3 plus the Agent 1 delivery monitor on their existing platform schedules unless a separately validated Vercel-safe migration is explicitly approved.
 - [ ] Save, sync, and verify the Vercel-compatible configuration in `AJITYADAV2026/CASINOSEO` before starting the Vercel deployment.
 - [ ] Fix the Vercel production routing bug that serves the compiled server bundle at `/` and fails `/api/index` because extensionless local ESM imports are not resolved; verify no source bundle is publicly exposed after redeployment.
+- [ ] Fix Vercel `/manus-storage/*` image responses currently returning HTTP 500 without exporting privileged Manus storage credentials; preserve the same image paths and verify every publication image loads on Vercel.
