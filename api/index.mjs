@@ -1,211 +1,59 @@
-// server/_core/app.ts
-import express from "express";
-import { createExpressMiddleware } from "@trpc/server/adapters/express";
+var __defProp = Object.defineProperty;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __esm = (fn, res) => function __init() {
+  return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])(fn = 0)), res;
+};
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
 
 // shared/const.ts
-var COOKIE_NAME = "app_session_id";
-var ONE_YEAR_MS = 1e3 * 60 * 60 * 24 * 365;
-var AXIOS_TIMEOUT_MS = 3e4;
-var UNAUTHED_ERR_MSG = "Please login (10001)";
-var NOT_ADMIN_ERR_MSG = "You do not have required permission (10002)";
-var OAUTH_STATE_COOKIE = "__Host-oauth_state";
-var decodeOAuthState = (state) => {
-  let decoded;
-  try {
-    decoded = atob(state);
-  } catch {
-    return { redirectUri: "" };
+var COOKIE_NAME, ONE_YEAR_MS, AXIOS_TIMEOUT_MS, UNAUTHED_ERR_MSG, NOT_ADMIN_ERR_MSG, OAUTH_STATE_COOKIE, decodeOAuthState;
+var init_const = __esm({
+  "shared/const.ts"() {
+    "use strict";
+    COOKIE_NAME = "app_session_id";
+    ONE_YEAR_MS = 1e3 * 60 * 60 * 24 * 365;
+    AXIOS_TIMEOUT_MS = 3e4;
+    UNAUTHED_ERR_MSG = "Please login (10001)";
+    NOT_ADMIN_ERR_MSG = "You do not have required permission (10002)";
+    OAUTH_STATE_COOKIE = "__Host-oauth_state";
+    decodeOAuthState = (state) => {
+      let decoded;
+      try {
+        decoded = atob(state);
+      } catch {
+        return { redirectUri: "" };
+      }
+      try {
+        const parsed = JSON.parse(decoded);
+        if (parsed && typeof parsed.redirectUri === "string") return parsed;
+      } catch {
+      }
+      return { redirectUri: decoded };
+    };
   }
-  try {
-    const parsed = JSON.parse(decoded);
-    if (parsed && typeof parsed.redirectUri === "string") return parsed;
-  } catch {
-  }
-  return { redirectUri: decoded };
-};
-
-// server/_core/cookies.ts
-function isSecureRequest(req) {
-  if (req.protocol === "https") return true;
-  const forwardedProto = req.headers["x-forwarded-proto"];
-  if (!forwardedProto) return false;
-  const protoList = Array.isArray(forwardedProto) ? forwardedProto : forwardedProto.split(",");
-  return protoList.some((proto) => proto.trim().toLowerCase() === "https");
-}
-function getSessionCookieOptions(req) {
-  return {
-    httpOnly: true,
-    path: "/",
-    sameSite: "none",
-    secure: isSecureRequest(req)
-  };
-}
-
-// server/_core/systemRouter.ts
-import { z } from "zod";
-
-// server/_core/notification.ts
-import { TRPCError } from "@trpc/server";
+});
 
 // server/_core/env.ts
-var ENV = {
-  appId: process.env.VITE_APP_ID ?? "",
-  cookieSecret: process.env.JWT_SECRET ?? "",
-  databaseUrl: process.env.DATABASE_URL ?? "",
-  oAuthServerUrl: process.env.OAUTH_SERVER_URL ?? "",
-  ownerOpenId: process.env.OWNER_OPEN_ID ?? "",
-  isProduction: process.env.NODE_ENV === "production",
-  forgeApiUrl: process.env.BUILT_IN_FORGE_API_URL ?? "",
-  forgeApiKey: process.env.BUILT_IN_FORGE_API_KEY ?? "",
-  assetOrigin: process.env.MANUS_ASSET_ORIGIN ?? ""
-};
-
-// server/_core/notification.ts
-var TITLE_MAX_LENGTH = 1200;
-var CONTENT_MAX_LENGTH = 2e4;
-var trimValue = (value) => value.trim();
-var isNonEmptyString = (value) => typeof value === "string" && value.trim().length > 0;
-var buildEndpointUrl = (baseUrl) => {
-  const normalizedBase = baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`;
-  return new URL(
-    "webdevtoken.v1.WebDevService/SendNotification",
-    normalizedBase
-  ).toString();
-};
-var validatePayload = (input) => {
-  if (!isNonEmptyString(input.title)) {
-    throw new TRPCError({
-      code: "BAD_REQUEST",
-      message: "Notification title is required."
-    });
-  }
-  if (!isNonEmptyString(input.content)) {
-    throw new TRPCError({
-      code: "BAD_REQUEST",
-      message: "Notification content is required."
-    });
-  }
-  const title = trimValue(input.title);
-  const content = trimValue(input.content);
-  if (title.length > TITLE_MAX_LENGTH) {
-    throw new TRPCError({
-      code: "BAD_REQUEST",
-      message: `Notification title must be at most ${TITLE_MAX_LENGTH} characters.`
-    });
-  }
-  if (content.length > CONTENT_MAX_LENGTH) {
-    throw new TRPCError({
-      code: "BAD_REQUEST",
-      message: `Notification content must be at most ${CONTENT_MAX_LENGTH} characters.`
-    });
-  }
-  return { title, content };
-};
-async function notifyOwner(payload) {
-  const { title, content } = validatePayload(payload);
-  if (!ENV.forgeApiUrl) {
-    throw new TRPCError({
-      code: "INTERNAL_SERVER_ERROR",
-      message: "Notification service URL is not configured."
-    });
-  }
-  if (!ENV.forgeApiKey) {
-    throw new TRPCError({
-      code: "INTERNAL_SERVER_ERROR",
-      message: "Notification service API key is not configured."
-    });
-  }
-  const endpoint = buildEndpointUrl(ENV.forgeApiUrl);
-  try {
-    const response = await fetch(endpoint, {
-      method: "POST",
-      headers: {
-        accept: "application/json",
-        authorization: `Bearer ${ENV.forgeApiKey}`,
-        "content-type": "application/json",
-        "connect-protocol-version": "1"
-      },
-      body: JSON.stringify({ title, content })
-    });
-    if (!response.ok) {
-      const detail = await response.text().catch(() => "");
-      console.warn(
-        `[Notification] Failed to notify owner (${response.status} ${response.statusText})${detail ? `: ${detail}` : ""}`
-      );
-      return false;
-    }
-    return true;
-  } catch (error) {
-    console.warn("[Notification] Error calling notification service:", error);
-    return false;
-  }
-}
-
-// server/_core/trpc.ts
-import { initTRPC, TRPCError as TRPCError2 } from "@trpc/server";
-import superjson from "superjson";
-var t = initTRPC.context().create({
-  transformer: superjson
-});
-var router = t.router;
-var publicProcedure = t.procedure;
-var requireUser = t.middleware(async (opts) => {
-  const { ctx, next } = opts;
-  if (!ctx.user) {
-    throw new TRPCError2({ code: "UNAUTHORIZED", message: UNAUTHED_ERR_MSG });
-  }
-  return next({
-    ctx: {
-      ...ctx,
-      user: ctx.user
-    }
-  });
-});
-var protectedProcedure = t.procedure.use(requireUser);
-var adminProcedure = t.procedure.use(
-  t.middleware(async (opts) => {
-    const { ctx, next } = opts;
-    if (!ctx.user || ctx.user.role !== "admin") {
-      throw new TRPCError2({ code: "FORBIDDEN", message: NOT_ADMIN_ERR_MSG });
-    }
-    return next({
-      ctx: {
-        ...ctx,
-        user: ctx.user
-      }
-    });
-  })
-);
-
-// server/_core/systemRouter.ts
-var systemRouter = router({
-  health: publicProcedure.input(
-    z.object({
-      timestamp: z.number().min(0, "timestamp cannot be negative")
-    })
-  ).query(() => ({
-    ok: true
-  })),
-  notifyOwner: adminProcedure.input(
-    z.object({
-      title: z.string().min(1, "title is required"),
-      content: z.string().min(1, "content is required")
-    })
-  ).mutation(async ({ input }) => {
-    const delivered = await notifyOwner(input);
-    return {
-      success: delivered
+var ENV;
+var init_env = __esm({
+  "server/_core/env.ts"() {
+    "use strict";
+    ENV = {
+      appId: process.env.VITE_APP_ID ?? "",
+      cookieSecret: process.env.JWT_SECRET ?? "",
+      databaseUrl: process.env.DATABASE_URL ?? "",
+      oAuthServerUrl: process.env.OAUTH_SERVER_URL ?? "",
+      ownerOpenId: process.env.OWNER_OPEN_ID ?? "",
+      isProduction: process.env.NODE_ENV === "production",
+      forgeApiUrl: process.env.BUILT_IN_FORGE_API_URL ?? "",
+      forgeApiKey: process.env.BUILT_IN_FORGE_API_KEY ?? "",
+      assetOrigin: process.env.MANUS_ASSET_ORIGIN ?? ""
     };
-  })
+  }
 });
-
-// server/routers/editorial.ts
-import { z as z2 } from "zod";
-
-// server/db.ts
-import { createHash } from "node:crypto";
-import { and, desc, eq, inArray, like, or } from "drizzle-orm";
-import { drizzle } from "drizzle-orm/mysql2";
 
 // drizzle/schema.ts
 import {
@@ -222,297 +70,305 @@ import {
   uniqueIndex,
   varchar
 } from "drizzle-orm/mysql-core";
-var users = mysqlTable("users", {
-  /**
-   * Surrogate primary key. Auto-incremented numeric value managed by the database.
-   * Use this for relations between tables.
-   */
-  id: int("id").autoincrement().primaryKey(),
-  /** Manus OAuth identifier (openId) returned from the OAuth callback. Unique per user. */
-  openId: varchar("openId", { length: 64 }).notNull().unique(),
-  name: text("name"),
-  email: varchar("email", { length: 320 }),
-  loginMethod: varchar("loginMethod", { length: 64 }),
-  role: mysqlEnum("role", ["user", "admin"]).default("user").notNull(),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
-  lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull()
+var users, categories, stories, storySources, sourceCatalog, historicalRecords, supportResources, dailyDigests, digestStories, publicationJobs, siteFindReports, urlManifests, newsletterSubscribers, editorialInquiries;
+var init_schema = __esm({
+  "drizzle/schema.ts"() {
+    "use strict";
+    users = mysqlTable("users", {
+      /**
+       * Surrogate primary key. Auto-incremented numeric value managed by the database.
+       * Use this for relations between tables.
+       */
+      id: int("id").autoincrement().primaryKey(),
+      /** Manus OAuth identifier (openId) returned from the OAuth callback. Unique per user. */
+      openId: varchar("openId", { length: 64 }).notNull().unique(),
+      name: text("name"),
+      email: varchar("email", { length: 320 }),
+      loginMethod: varchar("loginMethod", { length: 64 }),
+      role: mysqlEnum("role", ["user", "admin"]).default("user").notNull(),
+      createdAt: timestamp("createdAt").defaultNow().notNull(),
+      updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+      lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull()
+    });
+    categories = mysqlTable("categories", {
+      id: int("id").autoincrement().primaryKey(),
+      slug: varchar("slug", { length: 96 }).notNull().unique(),
+      name: varchar("name", { length: 120 }).notNull(),
+      description: text("description").notNull(),
+      accent: varchar("accent", { length: 16 }).default("#C9A45C").notNull(),
+      createdAt: timestamp("createdAt").defaultNow().notNull(),
+      updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
+    });
+    stories = mysqlTable(
+      "stories",
+      {
+        id: int("id").autoincrement().primaryKey(),
+        slug: varchar("slug", { length: 180 }).notNull().unique(),
+        title: varchar("title", { length: 280 }).notNull(),
+        dek: text("dek").notNull(),
+        body: text("body").notNull(),
+        contentType: mysqlEnum("contentType", ["news", "analysis", "guide", "culture", "video"]).default("news").notNull(),
+        status: mysqlEnum("status", ["draft", "developing", "published", "archived"]).default("draft").notNull(),
+        categoryId: int("categoryId").notNull(),
+        authorName: varchar("authorName", { length: 160 }).default("CasinoVerse Research Desk").notNull(),
+        readingMinutes: int("readingMinutes").default(4).notNull(),
+        featuredImageUrl: text("featuredImageUrl"),
+        featuredImageAlt: varchar("featuredImageAlt", { length: 280 }),
+        isLead: boolean("isLead").default(false).notNull(),
+        isFeatured: boolean("isFeatured").default(false).notNull(),
+        publishedAt: timestamp("publishedAt"),
+        modifiedAt: timestamp("modifiedAt"),
+        createdAt: timestamp("createdAt").defaultNow().notNull(),
+        updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
+      },
+      (table) => [
+        index("stories_category_idx").on(table.categoryId),
+        index("stories_status_published_idx").on(table.status, table.publishedAt),
+        index("stories_content_type_idx").on(table.contentType)
+      ]
+    );
+    storySources = mysqlTable(
+      "story_sources",
+      {
+        id: int("id").autoincrement().primaryKey(),
+        storyId: int("storyId").notNull(),
+        publisher: varchar("publisher", { length: 180 }).notNull(),
+        sourceTitle: text("sourceTitle").notNull(),
+        sourceUrl: text("sourceUrl").notNull(),
+        sourcePublishedAt: timestamp("sourcePublishedAt"),
+        accessedAt: timestamp("accessedAt").defaultNow().notNull(),
+        sourceType: mysqlEnum("sourceType", ["official", "regulator", "filing", "trade", "news", "research"]).default("news").notNull(),
+        createdAt: timestamp("createdAt").defaultNow().notNull()
+      },
+      (table) => [index("story_sources_story_idx").on(table.storyId)]
+    );
+    sourceCatalog = mysqlTable(
+      "source_catalog",
+      {
+        id: int("id").autoincrement().primaryKey(),
+        slug: varchar("slug", { length: 180 }).notNull().unique(),
+        name: varchar("name", { length: 220 }).notNull(),
+        publicationLabel: varchar("publicationLabel", { length: 220 }),
+        description: text("description").notNull(),
+        sourceType: mysqlEnum("sourceType", ["official", "regulator", "research", "journalism", "standards", "industry", "education", "health"]).default("research").notNull(),
+        originalUrl: text("originalUrl").notNull(),
+        accessedAt: timestamp("accessedAt").defaultNow().notNull(),
+        status: mysqlEnum("status", ["active", "archived"]).default("active").notNull(),
+        createdAt: timestamp("createdAt").defaultNow().notNull(),
+        updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
+      },
+      (table) => [index("source_catalog_type_idx").on(table.sourceType), index("source_catalog_status_idx").on(table.status)]
+    );
+    historicalRecords = mysqlTable(
+      "historical_records",
+      {
+        id: int("id").autoincrement().primaryKey(),
+        slug: varchar("slug", { length: 220 }).notNull().unique(),
+        eventYear: int("eventYear").notNull(),
+        eventDate: date("eventDate", { mode: "string" }),
+        datePrecision: mysqlEnum("datePrecision", ["exact", "month", "year"]).default("year").notNull(),
+        title: varchar("title", { length: 280 }).notNull(),
+        desk: mysqlEnum("desk", [
+          "industry_and_regulation",
+          "operations_and_technology",
+          "games_and_game_literacy",
+          "places_architecture_destinations",
+          "culture_and_media",
+          "responsible_play_and_harm"
+        ]).notNull(),
+        jurisdiction: varchar("jurisdiction", { length: 180 }).notNull(),
+        summary: text("summary").notNull(),
+        significance: text("significance").notNull(),
+        sourceCatalogId: int("sourceCatalogId"),
+        sourceName: varchar("sourceName", { length: 220 }).notNull(),
+        sourceTitle: text("sourceTitle").notNull(),
+        sourceUrl: text("sourceUrl").notNull(),
+        sourcePublishedDate: date("sourcePublishedDate", { mode: "string" }),
+        sourceType: mysqlEnum("sourceType", ["official", "regulator", "legislation", "research", "trade", "news", "filing"]).default("research").notNull(),
+        confidence: mysqlEnum("confidence", ["high", "medium"]).default("high").notNull(),
+        verificationStatus: mysqlEnum("verificationStatus", ["verified", "review_needed", "rejected"]).default("verified").notNull(),
+        cutoffLabel: varchar("cutoffLabel", { length: 80 }).default("through-2026-09-03").notNull(),
+        isPublished: boolean("isPublished").default(true).notNull(),
+        accessedAt: timestamp("accessedAt").defaultNow().notNull(),
+        createdAt: timestamp("createdAt").defaultNow().notNull(),
+        updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
+      },
+      (table) => [
+        index("historical_records_year_idx").on(table.eventYear, table.eventDate),
+        index("historical_records_desk_idx").on(table.desk, table.eventYear),
+        index("historical_records_source_idx").on(table.sourceCatalogId),
+        index("historical_records_publish_idx").on(table.isPublished, table.verificationStatus)
+      ]
+    );
+    supportResources = mysqlTable(
+      "support_resources",
+      {
+        id: int("id").autoincrement().primaryKey(),
+        slug: varchar("slug", { length: 180 }).notNull().unique(),
+        name: varchar("name", { length: 220 }).notNull(),
+        jurisdiction: varchar("jurisdiction", { length: 180 }).notNull(),
+        serviceType: mysqlEnum("serviceType", ["helpline", "counselling", "self_exclusion", "financial_blocking", "emergency", "information"]).default("information").notNull(),
+        summary: text("summary").notNull(),
+        phone: varchar("phone", { length: 80 }),
+        contactInstructions: text("contactInstructions").notNull(),
+        originalUrl: text("originalUrl"),
+        sortOrder: int("sortOrder").default(0).notNull(),
+        isActive: boolean("isActive").default(true).notNull(),
+        verifiedAt: timestamp("verifiedAt").defaultNow().notNull(),
+        createdAt: timestamp("createdAt").defaultNow().notNull(),
+        updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
+      },
+      (table) => [index("support_resources_jurisdiction_idx").on(table.jurisdiction), index("support_resources_active_idx").on(table.isActive, table.sortOrder)]
+    );
+    dailyDigests = mysqlTable(
+      "daily_digests",
+      {
+        id: int("id").autoincrement().primaryKey(),
+        digestDate: date("digestDate", { mode: "string" }).notNull(),
+        slug: varchar("slug", { length: 180 }).notNull().unique(),
+        title: varchar("title", { length: 280 }).notNull(),
+        summary: text("summary").notNull(),
+        body: text("body").notNull(),
+        markdownArtifact: mediumtext("markdownArtifact"),
+        status: mysqlEnum("status", ["developing", "published", "archived"]).default("developing").notNull(),
+        scheduleCronTaskUid: varchar("schedule_cron_task_uid", { length: 65 }),
+        publishedAt: timestamp("publishedAt"),
+        modifiedAt: timestamp("modifiedAt"),
+        createdAt: timestamp("createdAt").defaultNow().notNull(),
+        updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
+      },
+      (table) => [
+        uniqueIndex("daily_digests_date_idx").on(table.digestDate),
+        uniqueIndex("daily_digests_cron_uid_idx").on(table.scheduleCronTaskUid),
+        index("daily_digests_status_idx").on(table.status, table.digestDate)
+      ]
+    );
+    digestStories = mysqlTable(
+      "digest_stories",
+      {
+        digestId: int("digestId").notNull(),
+        storyId: int("storyId").notNull(),
+        position: int("position").default(0).notNull()
+      },
+      (table) => [
+        primaryKey({ columns: [table.digestId, table.storyId] }),
+        index("digest_stories_story_idx").on(table.storyId),
+        index("digest_stories_position_idx").on(table.digestId, table.position)
+      ]
+    );
+    publicationJobs = mysqlTable(
+      "publication_jobs",
+      {
+        id: int("id").autoincrement().primaryKey(),
+        jobKey: varchar("jobKey", { length: 96 }).notNull().unique(),
+        scheduleCronTaskUid: varchar("schedule_cron_task_uid", { length: 65 }),
+        status: mysqlEnum("status", ["pending_deploy", "active", "paused"]).default("pending_deploy").notNull(),
+        lastCompletedDigestDate: date("lastCompletedDigestDate", { mode: "string" }),
+        lastRunAt: timestamp("lastRunAt"),
+        createdAt: timestamp("createdAt").defaultNow().notNull(),
+        updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
+      },
+      (table) => [uniqueIndex("publication_jobs_cron_uid_idx").on(table.scheduleCronTaskUid)]
+    );
+    siteFindReports = mysqlTable(
+      "site_find_reports",
+      {
+        id: int("id").autoincrement().primaryKey(),
+        reportDate: date("reportDate", { mode: "string" }).notNull(),
+        sourceDigestId: int("sourceDigestId").notNull(),
+        sourceDigestDate: date("sourceDigestDate", { mode: "string" }).notNull(),
+        sourceDigestUpdatedAt: timestamp("sourceDigestUpdatedAt").notNull(),
+        status: mysqlEnum("status", ["draft", "completed", "failed"]).default("completed").notNull(),
+        modelId: varchar("modelId", { length: 96 }).notNull(),
+        executiveSummary: text("executiveSummary").notNull(),
+        decisionsJson: mediumtext("decisionsJson").notNull(),
+        markdownArtifact: mediumtext("markdownArtifact").notNull(),
+        addCount: int("addCount").default(0).notNull(),
+        updateCount: int("updateCount").default(0).notNull(),
+        retainCount: int("retainCount").default(0).notNull(),
+        archiveCount: int("archiveCount").default(0).notNull(),
+        removeCount: int("removeCount").default(0).notNull(),
+        scheduleCronTaskUid: varchar("schedule_cron_task_uid", { length: 65 }),
+        analyzedAt: timestamp("analyzedAt").defaultNow().notNull(),
+        errorMessage: text("errorMessage"),
+        createdAt: timestamp("createdAt").defaultNow().notNull(),
+        updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
+      },
+      (table) => [
+        uniqueIndex("site_find_report_date_idx").on(table.reportDate),
+        index("site_find_source_digest_idx").on(table.sourceDigestId),
+        index("site_find_source_date_idx").on(table.sourceDigestDate),
+        index("site_find_cron_uid_idx").on(table.scheduleCronTaskUid)
+      ]
+    );
+    urlManifests = mysqlTable(
+      "url_manifests",
+      {
+        id: int("id").autoincrement().primaryKey(),
+        manifestDate: date("manifestDate", { mode: "string" }).notNull(),
+        sourceSiteFindId: int("sourceSiteFindId").notNull(),
+        sourceSiteFindUpdatedAt: timestamp("sourceSiteFindUpdatedAt").notNull(),
+        sourceReportDate: date("sourceReportDate", { mode: "string" }).notNull(),
+        status: mysqlEnum("status", ["completed", "partial", "failed"]).default("completed").notNull(),
+        actionsJson: mediumtext("actionsJson").notNull(),
+        markdownArtifact: mediumtext("markdownArtifact").notNull(),
+        createdCount: int("createdCount").default(0).notNull(),
+        updatedCount: int("updatedCount").default(0).notNull(),
+        retainedCount: int("retainedCount").default(0).notNull(),
+        archivedCount: int("archivedCount").default(0).notNull(),
+        reviewCount: int("reviewCount").default(0).notNull(),
+        scheduleCronTaskUid: varchar("schedule_cron_task_uid", { length: 65 }),
+        processedAt: timestamp("processedAt").defaultNow().notNull(),
+        errorMessage: text("errorMessage"),
+        createdAt: timestamp("createdAt").defaultNow().notNull(),
+        updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
+      },
+      (table) => [
+        uniqueIndex("url_manifest_date_idx").on(table.manifestDate),
+        index("url_manifest_source_report_idx").on(table.sourceSiteFindId),
+        index("url_manifest_source_date_idx").on(table.sourceReportDate),
+        index("url_manifest_cron_uid_idx").on(table.scheduleCronTaskUid)
+      ]
+    );
+    newsletterSubscribers = mysqlTable(
+      "newsletter_subscribers",
+      {
+        id: int("id").autoincrement().primaryKey(),
+        email: varchar("email", { length: 320 }).notNull(),
+        status: mysqlEnum("status", ["active", "unsubscribed"]).default("active").notNull(),
+        consentAt: timestamp("consentAt").defaultNow().notNull(),
+        source: varchar("source", { length: 96 }).default("homepage-editorial-briefing").notNull(),
+        createdAt: timestamp("createdAt").defaultNow().notNull(),
+        updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
+      },
+      (table) => [uniqueIndex("newsletter_subscribers_email_idx").on(table.email)]
+    );
+    editorialInquiries = mysqlTable(
+      "editorial_inquiries",
+      {
+        id: int("id").autoincrement().primaryKey(),
+        name: varchar("name", { length: 120 }).notNull(),
+        email: varchar("email", { length: 320 }).notNull(),
+        topic: mysqlEnum("topic", ["correction", "privacy", "newsletter", "general"]).default("general").notNull(),
+        message: text("message").notNull(),
+        dedupeKey: varchar("dedupeKey", { length: 64 }).notNull(),
+        consentAt: timestamp("consentAt").defaultNow().notNull(),
+        status: mysqlEnum("status", ["new", "reviewed", "resolved", "spam"]).default("new").notNull(),
+        createdAt: timestamp("createdAt").defaultNow().notNull(),
+        updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
+      },
+      (table) => [
+        uniqueIndex("editorial_inquiries_dedupe_idx").on(table.dedupeKey),
+        index("editorial_inquiries_status_idx").on(table.status, table.createdAt)
+      ]
+    );
+  }
 });
-var categories = mysqlTable("categories", {
-  id: int("id").autoincrement().primaryKey(),
-  slug: varchar("slug", { length: 96 }).notNull().unique(),
-  name: varchar("name", { length: 120 }).notNull(),
-  description: text("description").notNull(),
-  accent: varchar("accent", { length: 16 }).default("#C9A45C").notNull(),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
-});
-var stories = mysqlTable(
-  "stories",
-  {
-    id: int("id").autoincrement().primaryKey(),
-    slug: varchar("slug", { length: 180 }).notNull().unique(),
-    title: varchar("title", { length: 280 }).notNull(),
-    dek: text("dek").notNull(),
-    body: text("body").notNull(),
-    contentType: mysqlEnum("contentType", ["news", "analysis", "guide", "culture", "video"]).default("news").notNull(),
-    status: mysqlEnum("status", ["draft", "developing", "published", "archived"]).default("draft").notNull(),
-    categoryId: int("categoryId").notNull(),
-    authorName: varchar("authorName", { length: 160 }).default("CasinoVerse Research Desk").notNull(),
-    readingMinutes: int("readingMinutes").default(4).notNull(),
-    featuredImageUrl: text("featuredImageUrl"),
-    featuredImageAlt: varchar("featuredImageAlt", { length: 280 }),
-    isLead: boolean("isLead").default(false).notNull(),
-    isFeatured: boolean("isFeatured").default(false).notNull(),
-    publishedAt: timestamp("publishedAt"),
-    modifiedAt: timestamp("modifiedAt"),
-    createdAt: timestamp("createdAt").defaultNow().notNull(),
-    updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
-  },
-  (table) => [
-    index("stories_category_idx").on(table.categoryId),
-    index("stories_status_published_idx").on(table.status, table.publishedAt),
-    index("stories_content_type_idx").on(table.contentType)
-  ]
-);
-var storySources = mysqlTable(
-  "story_sources",
-  {
-    id: int("id").autoincrement().primaryKey(),
-    storyId: int("storyId").notNull(),
-    publisher: varchar("publisher", { length: 180 }).notNull(),
-    sourceTitle: text("sourceTitle").notNull(),
-    sourceUrl: text("sourceUrl").notNull(),
-    sourcePublishedAt: timestamp("sourcePublishedAt"),
-    accessedAt: timestamp("accessedAt").defaultNow().notNull(),
-    sourceType: mysqlEnum("sourceType", ["official", "regulator", "filing", "trade", "news", "research"]).default("news").notNull(),
-    createdAt: timestamp("createdAt").defaultNow().notNull()
-  },
-  (table) => [index("story_sources_story_idx").on(table.storyId)]
-);
-var sourceCatalog = mysqlTable(
-  "source_catalog",
-  {
-    id: int("id").autoincrement().primaryKey(),
-    slug: varchar("slug", { length: 180 }).notNull().unique(),
-    name: varchar("name", { length: 220 }).notNull(),
-    publicationLabel: varchar("publicationLabel", { length: 220 }),
-    description: text("description").notNull(),
-    sourceType: mysqlEnum("sourceType", ["official", "regulator", "research", "journalism", "standards", "industry", "education", "health"]).default("research").notNull(),
-    originalUrl: text("originalUrl").notNull(),
-    accessedAt: timestamp("accessedAt").defaultNow().notNull(),
-    status: mysqlEnum("status", ["active", "archived"]).default("active").notNull(),
-    createdAt: timestamp("createdAt").defaultNow().notNull(),
-    updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
-  },
-  (table) => [index("source_catalog_type_idx").on(table.sourceType), index("source_catalog_status_idx").on(table.status)]
-);
-var historicalRecords = mysqlTable(
-  "historical_records",
-  {
-    id: int("id").autoincrement().primaryKey(),
-    slug: varchar("slug", { length: 220 }).notNull().unique(),
-    eventYear: int("eventYear").notNull(),
-    eventDate: date("eventDate", { mode: "string" }),
-    datePrecision: mysqlEnum("datePrecision", ["exact", "month", "year"]).default("year").notNull(),
-    title: varchar("title", { length: 280 }).notNull(),
-    desk: mysqlEnum("desk", [
-      "industry_and_regulation",
-      "operations_and_technology",
-      "games_and_game_literacy",
-      "places_architecture_destinations",
-      "culture_and_media",
-      "responsible_play_and_harm"
-    ]).notNull(),
-    jurisdiction: varchar("jurisdiction", { length: 180 }).notNull(),
-    summary: text("summary").notNull(),
-    significance: text("significance").notNull(),
-    sourceCatalogId: int("sourceCatalogId"),
-    sourceName: varchar("sourceName", { length: 220 }).notNull(),
-    sourceTitle: text("sourceTitle").notNull(),
-    sourceUrl: text("sourceUrl").notNull(),
-    sourcePublishedDate: date("sourcePublishedDate", { mode: "string" }),
-    sourceType: mysqlEnum("sourceType", ["official", "regulator", "legislation", "research", "trade", "news", "filing"]).default("research").notNull(),
-    confidence: mysqlEnum("confidence", ["high", "medium"]).default("high").notNull(),
-    verificationStatus: mysqlEnum("verificationStatus", ["verified", "review_needed", "rejected"]).default("verified").notNull(),
-    cutoffLabel: varchar("cutoffLabel", { length: 80 }).default("through-2026-09-03").notNull(),
-    isPublished: boolean("isPublished").default(true).notNull(),
-    accessedAt: timestamp("accessedAt").defaultNow().notNull(),
-    createdAt: timestamp("createdAt").defaultNow().notNull(),
-    updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
-  },
-  (table) => [
-    index("historical_records_year_idx").on(table.eventYear, table.eventDate),
-    index("historical_records_desk_idx").on(table.desk, table.eventYear),
-    index("historical_records_source_idx").on(table.sourceCatalogId),
-    index("historical_records_publish_idx").on(table.isPublished, table.verificationStatus)
-  ]
-);
-var supportResources = mysqlTable(
-  "support_resources",
-  {
-    id: int("id").autoincrement().primaryKey(),
-    slug: varchar("slug", { length: 180 }).notNull().unique(),
-    name: varchar("name", { length: 220 }).notNull(),
-    jurisdiction: varchar("jurisdiction", { length: 180 }).notNull(),
-    serviceType: mysqlEnum("serviceType", ["helpline", "counselling", "self_exclusion", "financial_blocking", "emergency", "information"]).default("information").notNull(),
-    summary: text("summary").notNull(),
-    phone: varchar("phone", { length: 80 }),
-    contactInstructions: text("contactInstructions").notNull(),
-    originalUrl: text("originalUrl"),
-    sortOrder: int("sortOrder").default(0).notNull(),
-    isActive: boolean("isActive").default(true).notNull(),
-    verifiedAt: timestamp("verifiedAt").defaultNow().notNull(),
-    createdAt: timestamp("createdAt").defaultNow().notNull(),
-    updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
-  },
-  (table) => [index("support_resources_jurisdiction_idx").on(table.jurisdiction), index("support_resources_active_idx").on(table.isActive, table.sortOrder)]
-);
-var dailyDigests = mysqlTable(
-  "daily_digests",
-  {
-    id: int("id").autoincrement().primaryKey(),
-    digestDate: date("digestDate", { mode: "string" }).notNull(),
-    slug: varchar("slug", { length: 180 }).notNull().unique(),
-    title: varchar("title", { length: 280 }).notNull(),
-    summary: text("summary").notNull(),
-    body: text("body").notNull(),
-    markdownArtifact: mediumtext("markdownArtifact"),
-    status: mysqlEnum("status", ["developing", "published", "archived"]).default("developing").notNull(),
-    scheduleCronTaskUid: varchar("schedule_cron_task_uid", { length: 65 }),
-    publishedAt: timestamp("publishedAt"),
-    modifiedAt: timestamp("modifiedAt"),
-    createdAt: timestamp("createdAt").defaultNow().notNull(),
-    updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
-  },
-  (table) => [
-    uniqueIndex("daily_digests_date_idx").on(table.digestDate),
-    uniqueIndex("daily_digests_cron_uid_idx").on(table.scheduleCronTaskUid),
-    index("daily_digests_status_idx").on(table.status, table.digestDate)
-  ]
-);
-var digestStories = mysqlTable(
-  "digest_stories",
-  {
-    digestId: int("digestId").notNull(),
-    storyId: int("storyId").notNull(),
-    position: int("position").default(0).notNull()
-  },
-  (table) => [
-    primaryKey({ columns: [table.digestId, table.storyId] }),
-    index("digest_stories_story_idx").on(table.storyId),
-    index("digest_stories_position_idx").on(table.digestId, table.position)
-  ]
-);
-var publicationJobs = mysqlTable(
-  "publication_jobs",
-  {
-    id: int("id").autoincrement().primaryKey(),
-    jobKey: varchar("jobKey", { length: 96 }).notNull().unique(),
-    scheduleCronTaskUid: varchar("schedule_cron_task_uid", { length: 65 }),
-    status: mysqlEnum("status", ["pending_deploy", "active", "paused"]).default("pending_deploy").notNull(),
-    lastCompletedDigestDate: date("lastCompletedDigestDate", { mode: "string" }),
-    lastRunAt: timestamp("lastRunAt"),
-    createdAt: timestamp("createdAt").defaultNow().notNull(),
-    updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
-  },
-  (table) => [uniqueIndex("publication_jobs_cron_uid_idx").on(table.scheduleCronTaskUid)]
-);
-var siteFindReports = mysqlTable(
-  "site_find_reports",
-  {
-    id: int("id").autoincrement().primaryKey(),
-    reportDate: date("reportDate", { mode: "string" }).notNull(),
-    sourceDigestId: int("sourceDigestId").notNull(),
-    sourceDigestDate: date("sourceDigestDate", { mode: "string" }).notNull(),
-    sourceDigestUpdatedAt: timestamp("sourceDigestUpdatedAt").notNull(),
-    status: mysqlEnum("status", ["draft", "completed", "failed"]).default("completed").notNull(),
-    modelId: varchar("modelId", { length: 96 }).notNull(),
-    executiveSummary: text("executiveSummary").notNull(),
-    decisionsJson: mediumtext("decisionsJson").notNull(),
-    markdownArtifact: mediumtext("markdownArtifact").notNull(),
-    addCount: int("addCount").default(0).notNull(),
-    updateCount: int("updateCount").default(0).notNull(),
-    retainCount: int("retainCount").default(0).notNull(),
-    archiveCount: int("archiveCount").default(0).notNull(),
-    removeCount: int("removeCount").default(0).notNull(),
-    scheduleCronTaskUid: varchar("schedule_cron_task_uid", { length: 65 }),
-    analyzedAt: timestamp("analyzedAt").defaultNow().notNull(),
-    errorMessage: text("errorMessage"),
-    createdAt: timestamp("createdAt").defaultNow().notNull(),
-    updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
-  },
-  (table) => [
-    uniqueIndex("site_find_report_date_idx").on(table.reportDate),
-    index("site_find_source_digest_idx").on(table.sourceDigestId),
-    index("site_find_source_date_idx").on(table.sourceDigestDate),
-    index("site_find_cron_uid_idx").on(table.scheduleCronTaskUid)
-  ]
-);
-var urlManifests = mysqlTable(
-  "url_manifests",
-  {
-    id: int("id").autoincrement().primaryKey(),
-    manifestDate: date("manifestDate", { mode: "string" }).notNull(),
-    sourceSiteFindId: int("sourceSiteFindId").notNull(),
-    sourceSiteFindUpdatedAt: timestamp("sourceSiteFindUpdatedAt").notNull(),
-    sourceReportDate: date("sourceReportDate", { mode: "string" }).notNull(),
-    status: mysqlEnum("status", ["completed", "partial", "failed"]).default("completed").notNull(),
-    actionsJson: mediumtext("actionsJson").notNull(),
-    markdownArtifact: mediumtext("markdownArtifact").notNull(),
-    createdCount: int("createdCount").default(0).notNull(),
-    updatedCount: int("updatedCount").default(0).notNull(),
-    retainedCount: int("retainedCount").default(0).notNull(),
-    archivedCount: int("archivedCount").default(0).notNull(),
-    reviewCount: int("reviewCount").default(0).notNull(),
-    scheduleCronTaskUid: varchar("schedule_cron_task_uid", { length: 65 }),
-    processedAt: timestamp("processedAt").defaultNow().notNull(),
-    errorMessage: text("errorMessage"),
-    createdAt: timestamp("createdAt").defaultNow().notNull(),
-    updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
-  },
-  (table) => [
-    uniqueIndex("url_manifest_date_idx").on(table.manifestDate),
-    index("url_manifest_source_report_idx").on(table.sourceSiteFindId),
-    index("url_manifest_source_date_idx").on(table.sourceReportDate),
-    index("url_manifest_cron_uid_idx").on(table.scheduleCronTaskUid)
-  ]
-);
-var newsletterSubscribers = mysqlTable(
-  "newsletter_subscribers",
-  {
-    id: int("id").autoincrement().primaryKey(),
-    email: varchar("email", { length: 320 }).notNull(),
-    status: mysqlEnum("status", ["active", "unsubscribed"]).default("active").notNull(),
-    consentAt: timestamp("consentAt").defaultNow().notNull(),
-    source: varchar("source", { length: 96 }).default("homepage-editorial-briefing").notNull(),
-    createdAt: timestamp("createdAt").defaultNow().notNull(),
-    updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
-  },
-  (table) => [uniqueIndex("newsletter_subscribers_email_idx").on(table.email)]
-);
-var editorialInquiries = mysqlTable(
-  "editorial_inquiries",
-  {
-    id: int("id").autoincrement().primaryKey(),
-    name: varchar("name", { length: 120 }).notNull(),
-    email: varchar("email", { length: 320 }).notNull(),
-    topic: mysqlEnum("topic", ["correction", "privacy", "newsletter", "general"]).default("general").notNull(),
-    message: text("message").notNull(),
-    dedupeKey: varchar("dedupeKey", { length: 64 }).notNull(),
-    consentAt: timestamp("consentAt").defaultNow().notNull(),
-    status: mysqlEnum("status", ["new", "reviewed", "resolved", "spam"]).default("new").notNull(),
-    createdAt: timestamp("createdAt").defaultNow().notNull(),
-    updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull()
-  },
-  (table) => [
-    uniqueIndex("editorial_inquiries_dedupe_idx").on(table.dedupeKey),
-    index("editorial_inquiries_status_idx").on(table.status, table.createdAt)
-  ]
-);
 
 // server/db.ts
-var _db = null;
+import { createHash } from "node:crypto";
+import { and, desc, eq, inArray, like, or } from "drizzle-orm";
+import { drizzle } from "drizzle-orm/mysql2";
 async function getDb() {
   if (!_db && process.env.DATABASE_URL) {
     try {
@@ -581,7 +437,6 @@ async function getUserByOpenId(openId) {
   const result = await db.select().from(users).where(eq(users.openId, openId)).limit(1);
   return result.length > 0 ? result[0] : void 0;
 }
-var publicStoryStatuses = ["published", "developing"];
 async function getHomepageContent() {
   const db = await getDb();
   if (!db) return { categories: [], stories: [], digests: [] };
@@ -752,8 +607,466 @@ async function getLatestSiteFindForPublishing(includeDraft = false) {
   const rows = await db.select().from(siteFindReports).where(inArray(siteFindReports.status, allowedStatuses)).orderBy(desc(siteFindReports.reportDate), desc(siteFindReports.updatedAt)).limit(20);
   return selectLatestSiteFindForPublishing(rows, includeDraft);
 }
+var _db, publicStoryStatuses;
+var init_db = __esm({
+  "server/db.ts"() {
+    "use strict";
+    init_schema();
+    init_env();
+    _db = null;
+    publicStoryStatuses = ["published", "developing"];
+  }
+});
+
+// shared/_core/errors.ts
+var HttpError, ForbiddenError;
+var init_errors = __esm({
+  "shared/_core/errors.ts"() {
+    "use strict";
+    HttpError = class extends Error {
+      constructor(statusCode, message) {
+        super(message);
+        this.statusCode = statusCode;
+        this.name = "HttpError";
+      }
+    };
+    ForbiddenError = (msg) => new HttpError(403, msg);
+  }
+});
+
+// server/_core/sdk.ts
+var sdk_exports = {};
+__export(sdk_exports, {
+  sdk: () => sdk
+});
+import axios from "axios";
+import { parse as parseCookieHeader } from "cookie";
+import { SignJWT, jwtVerify } from "jose";
+function buildCronUser(userInfo) {
+  const now = /* @__PURE__ */ new Date();
+  return {
+    id: -1,
+    openId: userInfo.openId,
+    name: userInfo.name || "Manus Scheduled Task",
+    email: null,
+    loginMethod: null,
+    role: "user",
+    createdAt: now,
+    updatedAt: now,
+    lastSignedIn: now,
+    taskUid: userInfo.taskUid ?? void 0,
+    isCron: true
+  };
+}
+var isNonEmptyString2, EXCHANGE_TOKEN_PATH, GET_USER_INFO_PATH, GET_USER_INFO_WITH_JWT_PATH, OAuthService, createOAuthHttpClient, SDKServer, CRON_OPEN_ID_PREFIX, sdk;
+var init_sdk = __esm({
+  "server/_core/sdk.ts"() {
+    "use strict";
+    init_const();
+    init_errors();
+    init_db();
+    init_env();
+    isNonEmptyString2 = (value) => typeof value === "string" && value.length > 0;
+    EXCHANGE_TOKEN_PATH = `/webdev.v1.WebDevAuthPublicService/ExchangeToken`;
+    GET_USER_INFO_PATH = `/webdev.v1.WebDevAuthPublicService/GetUserInfo`;
+    GET_USER_INFO_WITH_JWT_PATH = `/webdev.v1.WebDevAuthPublicService/GetUserInfoWithJwt`;
+    OAuthService = class {
+      constructor(client) {
+        this.client = client;
+        console.log("[OAuth] Initialized with baseURL:", ENV.oAuthServerUrl);
+        if (!ENV.oAuthServerUrl) {
+          console.error(
+            "[OAuth] ERROR: OAUTH_SERVER_URL is not configured! Set OAUTH_SERVER_URL environment variable."
+          );
+        }
+      }
+      decodeState(state) {
+        return decodeOAuthState(state).redirectUri;
+      }
+      async getTokenByCode(code, state) {
+        const payload = {
+          clientId: ENV.appId,
+          grantType: "authorization_code",
+          code,
+          redirectUri: this.decodeState(state)
+        };
+        const { data } = await this.client.post(
+          EXCHANGE_TOKEN_PATH,
+          payload
+        );
+        return data;
+      }
+      async getUserInfoByToken(token) {
+        const { data } = await this.client.post(
+          GET_USER_INFO_PATH,
+          {
+            accessToken: token.accessToken
+          }
+        );
+        return data;
+      }
+    };
+    createOAuthHttpClient = () => axios.create({
+      baseURL: ENV.oAuthServerUrl,
+      timeout: AXIOS_TIMEOUT_MS
+    });
+    SDKServer = class {
+      client;
+      oauthService;
+      constructor(client = createOAuthHttpClient()) {
+        this.client = client;
+        this.oauthService = new OAuthService(this.client);
+      }
+      deriveLoginMethod(platforms, fallback) {
+        if (fallback && fallback.length > 0) return fallback;
+        if (!Array.isArray(platforms) || platforms.length === 0) return null;
+        const set = new Set(
+          platforms.filter((p) => typeof p === "string")
+        );
+        if (set.has("REGISTERED_PLATFORM_EMAIL")) return "email";
+        if (set.has("REGISTERED_PLATFORM_GOOGLE")) return "google";
+        if (set.has("REGISTERED_PLATFORM_APPLE")) return "apple";
+        if (set.has("REGISTERED_PLATFORM_MICROSOFT") || set.has("REGISTERED_PLATFORM_AZURE"))
+          return "microsoft";
+        if (set.has("REGISTERED_PLATFORM_GITHUB")) return "github";
+        const first = Array.from(set)[0];
+        return first ? first.toLowerCase() : null;
+      }
+      /**
+       * Exchange OAuth authorization code for access token
+       * @example
+       * const tokenResponse = await sdk.exchangeCodeForToken(code, state);
+       */
+      async exchangeCodeForToken(code, state) {
+        return this.oauthService.getTokenByCode(code, state);
+      }
+      /**
+       * Get user information using access token
+       * @example
+       * const userInfo = await sdk.getUserInfo(tokenResponse.accessToken);
+       */
+      async getUserInfo(accessToken) {
+        const data = await this.oauthService.getUserInfoByToken({
+          accessToken
+        });
+        const loginMethod = this.deriveLoginMethod(
+          data?.platforms,
+          data?.platform ?? data.platform ?? null
+        );
+        return {
+          ...data,
+          platform: loginMethod,
+          loginMethod
+        };
+      }
+      parseCookies(cookieHeader) {
+        if (!cookieHeader) {
+          return /* @__PURE__ */ new Map();
+        }
+        const parsed = parseCookieHeader(cookieHeader);
+        return new Map(Object.entries(parsed));
+      }
+      getSessionSecret() {
+        const secret = ENV.cookieSecret;
+        return new TextEncoder().encode(secret);
+      }
+      /**
+       * Create a session token for a Manus user openId
+       * @example
+       * const sessionToken = await sdk.createSessionToken(userInfo.openId);
+       */
+      async createSessionToken(openId, options = {}) {
+        return this.signSession(
+          {
+            openId,
+            appId: ENV.appId,
+            name: options.name || ""
+          },
+          options
+        );
+      }
+      async signSession(payload, options = {}) {
+        const issuedAt = Date.now();
+        const expiresInMs = options.expiresInMs ?? ONE_YEAR_MS;
+        const expirationSeconds = Math.floor((issuedAt + expiresInMs) / 1e3);
+        const secretKey = this.getSessionSecret();
+        return new SignJWT({
+          openId: payload.openId,
+          appId: payload.appId,
+          name: payload.name
+        }).setProtectedHeader({ alg: "HS256", typ: "JWT" }).setExpirationTime(expirationSeconds).sign(secretKey);
+      }
+      async verifySession(cookieValue) {
+        if (!cookieValue) {
+          console.warn("[Auth] Missing session cookie");
+          return null;
+        }
+        try {
+          const secretKey = this.getSessionSecret();
+          const { payload } = await jwtVerify(cookieValue, secretKey, {
+            algorithms: ["HS256"]
+          });
+          const { openId, appId, name } = payload;
+          if (!isNonEmptyString2(openId) || !isNonEmptyString2(appId) || !isNonEmptyString2(name)) {
+            console.warn("[Auth] Session payload missing required fields");
+            return null;
+          }
+          return {
+            openId,
+            appId,
+            name
+          };
+        } catch (error) {
+          console.warn("[Auth] Session verification failed", String(error));
+          return null;
+        }
+      }
+      async getUserInfoWithJwt(jwtToken) {
+        const payload = {
+          jwtToken,
+          projectId: ENV.appId
+        };
+        const { data } = await this.client.post(
+          GET_USER_INFO_WITH_JWT_PATH,
+          payload
+        );
+        const loginMethod = this.deriveLoginMethod(
+          data?.platforms,
+          data?.platform ?? data.platform ?? null
+        );
+        return {
+          ...data,
+          platform: loginMethod,
+          loginMethod
+        };
+      }
+      async authenticateRequest(req) {
+        const cookies = this.parseCookies(req.headers.cookie);
+        let sessionToken = cookies.get(COOKIE_NAME);
+        if (!sessionToken) {
+          const authHeader = req.headers.authorization;
+          if (typeof authHeader === "string" && authHeader.startsWith("Bearer ")) {
+            sessionToken = authHeader.slice(7);
+          }
+        }
+        const session = await this.verifySession(sessionToken);
+        if (!session) {
+          throw ForbiddenError("Invalid session cookie");
+        }
+        if (session.openId.startsWith(CRON_OPEN_ID_PREFIX)) {
+          const userInfo = await this.getUserInfoWithJwt(sessionToken ?? "");
+          const taskUid = userInfo.taskUid ?? null;
+          if (!taskUid) {
+            throw ForbiddenError("Cron session missing task_uid");
+          }
+          return buildCronUser(userInfo);
+        }
+        const sessionUserId = session.openId;
+        const signedInAt = /* @__PURE__ */ new Date();
+        let user = await getUserByOpenId(sessionUserId);
+        if (!user) {
+          try {
+            const userInfo = await this.getUserInfoWithJwt(sessionToken ?? "");
+            await upsertUser({
+              openId: userInfo.openId,
+              name: userInfo.name || null,
+              email: userInfo.email ?? null,
+              loginMethod: userInfo.loginMethod ?? userInfo.platform ?? null,
+              lastSignedIn: signedInAt
+            });
+            user = await getUserByOpenId(userInfo.openId);
+          } catch (error) {
+            console.error("[Auth] Failed to sync user from OAuth:", error);
+            throw ForbiddenError("Failed to sync user info");
+          }
+        }
+        if (!user) {
+          throw ForbiddenError("User not found");
+        }
+        await upsertUser({
+          openId: user.openId,
+          lastSignedIn: signedInAt
+        });
+        return user;
+      }
+    };
+    CRON_OPEN_ID_PREFIX = "cron_";
+    sdk = new SDKServer();
+  }
+});
+
+// server/_core/app.ts
+import express from "express";
+import { createExpressMiddleware } from "@trpc/server/adapters/express";
+
+// server/routers.ts
+init_const();
+
+// server/_core/cookies.ts
+function isSecureRequest(req) {
+  if (req.protocol === "https") return true;
+  const forwardedProto = req.headers["x-forwarded-proto"];
+  if (!forwardedProto) return false;
+  const protoList = Array.isArray(forwardedProto) ? forwardedProto : forwardedProto.split(",");
+  return protoList.some((proto) => proto.trim().toLowerCase() === "https");
+}
+function getSessionCookieOptions(req) {
+  return {
+    httpOnly: true,
+    path: "/",
+    sameSite: "none",
+    secure: isSecureRequest(req)
+  };
+}
+
+// server/_core/systemRouter.ts
+import { z } from "zod";
+
+// server/_core/notification.ts
+init_env();
+import { TRPCError } from "@trpc/server";
+var TITLE_MAX_LENGTH = 1200;
+var CONTENT_MAX_LENGTH = 2e4;
+var trimValue = (value) => value.trim();
+var isNonEmptyString = (value) => typeof value === "string" && value.trim().length > 0;
+var buildEndpointUrl = (baseUrl) => {
+  const normalizedBase = baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`;
+  return new URL(
+    "webdevtoken.v1.WebDevService/SendNotification",
+    normalizedBase
+  ).toString();
+};
+var validatePayload = (input) => {
+  if (!isNonEmptyString(input.title)) {
+    throw new TRPCError({
+      code: "BAD_REQUEST",
+      message: "Notification title is required."
+    });
+  }
+  if (!isNonEmptyString(input.content)) {
+    throw new TRPCError({
+      code: "BAD_REQUEST",
+      message: "Notification content is required."
+    });
+  }
+  const title = trimValue(input.title);
+  const content = trimValue(input.content);
+  if (title.length > TITLE_MAX_LENGTH) {
+    throw new TRPCError({
+      code: "BAD_REQUEST",
+      message: `Notification title must be at most ${TITLE_MAX_LENGTH} characters.`
+    });
+  }
+  if (content.length > CONTENT_MAX_LENGTH) {
+    throw new TRPCError({
+      code: "BAD_REQUEST",
+      message: `Notification content must be at most ${CONTENT_MAX_LENGTH} characters.`
+    });
+  }
+  return { title, content };
+};
+async function notifyOwner(payload) {
+  const { title, content } = validatePayload(payload);
+  if (!ENV.forgeApiUrl) {
+    throw new TRPCError({
+      code: "INTERNAL_SERVER_ERROR",
+      message: "Notification service URL is not configured."
+    });
+  }
+  if (!ENV.forgeApiKey) {
+    throw new TRPCError({
+      code: "INTERNAL_SERVER_ERROR",
+      message: "Notification service API key is not configured."
+    });
+  }
+  const endpoint = buildEndpointUrl(ENV.forgeApiUrl);
+  try {
+    const response = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        authorization: `Bearer ${ENV.forgeApiKey}`,
+        "content-type": "application/json",
+        "connect-protocol-version": "1"
+      },
+      body: JSON.stringify({ title, content })
+    });
+    if (!response.ok) {
+      const detail = await response.text().catch(() => "");
+      console.warn(
+        `[Notification] Failed to notify owner (${response.status} ${response.statusText})${detail ? `: ${detail}` : ""}`
+      );
+      return false;
+    }
+    return true;
+  } catch (error) {
+    console.warn("[Notification] Error calling notification service:", error);
+    return false;
+  }
+}
+
+// server/_core/trpc.ts
+init_const();
+import { initTRPC, TRPCError as TRPCError2 } from "@trpc/server";
+import superjson from "superjson";
+var t = initTRPC.context().create({
+  transformer: superjson
+});
+var router = t.router;
+var publicProcedure = t.procedure;
+var requireUser = t.middleware(async (opts) => {
+  const { ctx, next } = opts;
+  if (!ctx.user) {
+    throw new TRPCError2({ code: "UNAUTHORIZED", message: UNAUTHED_ERR_MSG });
+  }
+  return next({
+    ctx: {
+      ...ctx,
+      user: ctx.user
+    }
+  });
+});
+var protectedProcedure = t.procedure.use(requireUser);
+var adminProcedure = t.procedure.use(
+  t.middleware(async (opts) => {
+    const { ctx, next } = opts;
+    if (!ctx.user || ctx.user.role !== "admin") {
+      throw new TRPCError2({ code: "FORBIDDEN", message: NOT_ADMIN_ERR_MSG });
+    }
+    return next({
+      ctx: {
+        ...ctx,
+        user: ctx.user
+      }
+    });
+  })
+);
+
+// server/_core/systemRouter.ts
+var systemRouter = router({
+  health: publicProcedure.input(
+    z.object({
+      timestamp: z.number().min(0, "timestamp cannot be negative")
+    })
+  ).query(() => ({
+    ok: true
+  })),
+  notifyOwner: adminProcedure.input(
+    z.object({
+      title: z.string().min(1, "title is required"),
+      content: z.string().min(1, "content is required")
+    })
+  ).mutation(async ({ input }) => {
+    const delivered = await notifyOwner(input);
+    return {
+      success: delivered
+    };
+  })
+});
 
 // server/routers/editorial.ts
+init_db();
+import { z as z2 } from "zod";
 var editorialRouter = router({
   homepage: publicProcedure.query(() => getHomepageContent()),
   storyBySlug: publicProcedure.input(z2.object({ slug: z2.string().min(1).max(180) })).query(({ input }) => getStoryBySlug(input.slug)),
@@ -805,271 +1118,20 @@ var appRouter = router({
 });
 
 // server/publicationRoutes.ts
+init_schema();
+init_db();
 import { and as and4, eq as eq4 } from "drizzle-orm";
 import { z as z5 } from "zod";
-
-// shared/_core/errors.ts
-var HttpError = class extends Error {
-  constructor(statusCode, message) {
-    super(message);
-    this.statusCode = statusCode;
-    this.name = "HttpError";
-  }
-};
-var ForbiddenError = (msg) => new HttpError(403, msg);
-
-// server/_core/sdk.ts
-import axios from "axios";
-import { parse as parseCookieHeader } from "cookie";
-import { SignJWT, jwtVerify } from "jose";
-var isNonEmptyString2 = (value) => typeof value === "string" && value.length > 0;
-var EXCHANGE_TOKEN_PATH = `/webdev.v1.WebDevAuthPublicService/ExchangeToken`;
-var GET_USER_INFO_PATH = `/webdev.v1.WebDevAuthPublicService/GetUserInfo`;
-var GET_USER_INFO_WITH_JWT_PATH = `/webdev.v1.WebDevAuthPublicService/GetUserInfoWithJwt`;
-var OAuthService = class {
-  constructor(client) {
-    this.client = client;
-    console.log("[OAuth] Initialized with baseURL:", ENV.oAuthServerUrl);
-    if (!ENV.oAuthServerUrl) {
-      console.error(
-        "[OAuth] ERROR: OAUTH_SERVER_URL is not configured! Set OAUTH_SERVER_URL environment variable."
-      );
-    }
-  }
-  decodeState(state) {
-    return decodeOAuthState(state).redirectUri;
-  }
-  async getTokenByCode(code, state) {
-    const payload = {
-      clientId: ENV.appId,
-      grantType: "authorization_code",
-      code,
-      redirectUri: this.decodeState(state)
-    };
-    const { data } = await this.client.post(
-      EXCHANGE_TOKEN_PATH,
-      payload
-    );
-    return data;
-  }
-  async getUserInfoByToken(token) {
-    const { data } = await this.client.post(
-      GET_USER_INFO_PATH,
-      {
-        accessToken: token.accessToken
-      }
-    );
-    return data;
-  }
-};
-var createOAuthHttpClient = () => axios.create({
-  baseURL: ENV.oAuthServerUrl,
-  timeout: AXIOS_TIMEOUT_MS
-});
-var SDKServer = class {
-  client;
-  oauthService;
-  constructor(client = createOAuthHttpClient()) {
-    this.client = client;
-    this.oauthService = new OAuthService(this.client);
-  }
-  deriveLoginMethod(platforms, fallback) {
-    if (fallback && fallback.length > 0) return fallback;
-    if (!Array.isArray(platforms) || platforms.length === 0) return null;
-    const set = new Set(
-      platforms.filter((p) => typeof p === "string")
-    );
-    if (set.has("REGISTERED_PLATFORM_EMAIL")) return "email";
-    if (set.has("REGISTERED_PLATFORM_GOOGLE")) return "google";
-    if (set.has("REGISTERED_PLATFORM_APPLE")) return "apple";
-    if (set.has("REGISTERED_PLATFORM_MICROSOFT") || set.has("REGISTERED_PLATFORM_AZURE"))
-      return "microsoft";
-    if (set.has("REGISTERED_PLATFORM_GITHUB")) return "github";
-    const first = Array.from(set)[0];
-    return first ? first.toLowerCase() : null;
-  }
-  /**
-   * Exchange OAuth authorization code for access token
-   * @example
-   * const tokenResponse = await sdk.exchangeCodeForToken(code, state);
-   */
-  async exchangeCodeForToken(code, state) {
-    return this.oauthService.getTokenByCode(code, state);
-  }
-  /**
-   * Get user information using access token
-   * @example
-   * const userInfo = await sdk.getUserInfo(tokenResponse.accessToken);
-   */
-  async getUserInfo(accessToken) {
-    const data = await this.oauthService.getUserInfoByToken({
-      accessToken
-    });
-    const loginMethod = this.deriveLoginMethod(
-      data?.platforms,
-      data?.platform ?? data.platform ?? null
-    );
-    return {
-      ...data,
-      platform: loginMethod,
-      loginMethod
-    };
-  }
-  parseCookies(cookieHeader) {
-    if (!cookieHeader) {
-      return /* @__PURE__ */ new Map();
-    }
-    const parsed = parseCookieHeader(cookieHeader);
-    return new Map(Object.entries(parsed));
-  }
-  getSessionSecret() {
-    const secret = ENV.cookieSecret;
-    return new TextEncoder().encode(secret);
-  }
-  /**
-   * Create a session token for a Manus user openId
-   * @example
-   * const sessionToken = await sdk.createSessionToken(userInfo.openId);
-   */
-  async createSessionToken(openId, options = {}) {
-    return this.signSession(
-      {
-        openId,
-        appId: ENV.appId,
-        name: options.name || ""
-      },
-      options
-    );
-  }
-  async signSession(payload, options = {}) {
-    const issuedAt = Date.now();
-    const expiresInMs = options.expiresInMs ?? ONE_YEAR_MS;
-    const expirationSeconds = Math.floor((issuedAt + expiresInMs) / 1e3);
-    const secretKey = this.getSessionSecret();
-    return new SignJWT({
-      openId: payload.openId,
-      appId: payload.appId,
-      name: payload.name
-    }).setProtectedHeader({ alg: "HS256", typ: "JWT" }).setExpirationTime(expirationSeconds).sign(secretKey);
-  }
-  async verifySession(cookieValue) {
-    if (!cookieValue) {
-      console.warn("[Auth] Missing session cookie");
-      return null;
-    }
-    try {
-      const secretKey = this.getSessionSecret();
-      const { payload } = await jwtVerify(cookieValue, secretKey, {
-        algorithms: ["HS256"]
-      });
-      const { openId, appId, name } = payload;
-      if (!isNonEmptyString2(openId) || !isNonEmptyString2(appId) || !isNonEmptyString2(name)) {
-        console.warn("[Auth] Session payload missing required fields");
-        return null;
-      }
-      return {
-        openId,
-        appId,
-        name
-      };
-    } catch (error) {
-      console.warn("[Auth] Session verification failed", String(error));
-      return null;
-    }
-  }
-  async getUserInfoWithJwt(jwtToken) {
-    const payload = {
-      jwtToken,
-      projectId: ENV.appId
-    };
-    const { data } = await this.client.post(
-      GET_USER_INFO_WITH_JWT_PATH,
-      payload
-    );
-    const loginMethod = this.deriveLoginMethod(
-      data?.platforms,
-      data?.platform ?? data.platform ?? null
-    );
-    return {
-      ...data,
-      platform: loginMethod,
-      loginMethod
-    };
-  }
-  async authenticateRequest(req) {
-    const cookies = this.parseCookies(req.headers.cookie);
-    let sessionToken = cookies.get(COOKIE_NAME);
-    if (!sessionToken) {
-      const authHeader = req.headers.authorization;
-      if (typeof authHeader === "string" && authHeader.startsWith("Bearer ")) {
-        sessionToken = authHeader.slice(7);
-      }
-    }
-    const session = await this.verifySession(sessionToken);
-    if (!session) {
-      throw ForbiddenError("Invalid session cookie");
-    }
-    if (session.openId.startsWith(CRON_OPEN_ID_PREFIX)) {
-      const userInfo = await this.getUserInfoWithJwt(sessionToken ?? "");
-      const taskUid = userInfo.taskUid ?? null;
-      if (!taskUid) {
-        throw ForbiddenError("Cron session missing task_uid");
-      }
-      return buildCronUser(userInfo);
-    }
-    const sessionUserId = session.openId;
-    const signedInAt = /* @__PURE__ */ new Date();
-    let user = await getUserByOpenId(sessionUserId);
-    if (!user) {
-      try {
-        const userInfo = await this.getUserInfoWithJwt(sessionToken ?? "");
-        await upsertUser({
-          openId: userInfo.openId,
-          name: userInfo.name || null,
-          email: userInfo.email ?? null,
-          loginMethod: userInfo.loginMethod ?? userInfo.platform ?? null,
-          lastSignedIn: signedInAt
-        });
-        user = await getUserByOpenId(userInfo.openId);
-      } catch (error) {
-        console.error("[Auth] Failed to sync user from OAuth:", error);
-        throw ForbiddenError("Failed to sync user info");
-      }
-    }
-    if (!user) {
-      throw ForbiddenError("User not found");
-    }
-    await upsertUser({
-      openId: user.openId,
-      lastSignedIn: signedInAt
-    });
-    return user;
-  }
-};
-var CRON_OPEN_ID_PREFIX = "cron_";
-function buildCronUser(userInfo) {
-  const now = /* @__PURE__ */ new Date();
-  return {
-    id: -1,
-    openId: userInfo.openId,
-    name: userInfo.name || "Manus Scheduled Task",
-    email: null,
-    loginMethod: null,
-    role: "user",
-    createdAt: now,
-    updatedAt: now,
-    lastSignedIn: now,
-    taskUid: userInfo.taskUid ?? void 0,
-    isCron: true
-  };
-}
-var sdk = new SDKServer();
+init_sdk();
 
 // server/contentAnalysis.ts
+init_schema();
+init_db();
 import { and as and2, desc as desc2, eq as eq2 } from "drizzle-orm";
 import { z as z3 } from "zod";
 
 // server/_core/llm.ts
+init_env();
 var ensureArray = (value) => Array.isArray(value) ? value : [value];
 var normalizeContentPart = (part) => {
   if (typeof part === "string") {
@@ -1577,8 +1639,10 @@ async function runContentAnalysis(options = {}) {
 }
 
 // server/pageCreation.ts
+init_schema();
 import { and as and3, desc as desc3, eq as eq3 } from "drizzle-orm";
 import { z as z4 } from "zod";
+init_db();
 var outcomes = ["created", "updated", "retained", "archived", "review-required"];
 var pageActionSchema = z4.object({
   decision: z4.enum(["add", "update", "retain", "archive", "remove"]),
@@ -2200,12 +2264,25 @@ Disallow: /search${sitemap}
 }
 
 // server/_core/context.ts
+init_const();
+function hasAuthenticationMaterial(req) {
+  const authorization = req.headers.authorization;
+  if (typeof authorization === "string" && authorization.startsWith("Bearer ")) {
+    return true;
+  }
+  const cookieHeader = req.headers.cookie;
+  if (typeof cookieHeader !== "string") return false;
+  return cookieHeader.split(";").some((cookie) => cookie.trim().startsWith(`${COOKIE_NAME}=`));
+}
 async function createContext(opts) {
   let user = null;
-  try {
-    user = await sdk.authenticateRequest(opts.req);
-  } catch (error) {
-    user = null;
+  if (hasAuthenticationMaterial(opts.req)) {
+    try {
+      const { sdk: sdk2 } = await Promise.resolve().then(() => (init_sdk(), sdk_exports));
+      user = await sdk2.authenticateRequest(opts.req);
+    } catch (error) {
+      user = null;
+    }
   }
   return {
     req: opts.req,
@@ -2215,6 +2292,8 @@ async function createContext(opts) {
 }
 
 // server/_core/oauth.ts
+init_const();
+init_db();
 import { parse as parseCookieHeader2 } from "cookie";
 function getQueryParam(req, key) {
   const value = req.query[key];
@@ -2236,8 +2315,9 @@ function registerOAuthRoutes(app2) {
     }
     res.clearCookie(OAUTH_STATE_COOKIE, { path: "/", secure: true, sameSite: "none" });
     try {
-      const tokenResponse = await sdk.exchangeCodeForToken(code, state);
-      const userInfo = await sdk.getUserInfo(tokenResponse.accessToken);
+      const { sdk: sdk2 } = await Promise.resolve().then(() => (init_sdk(), sdk_exports));
+      const tokenResponse = await sdk2.exchangeCodeForToken(code, state);
+      const userInfo = await sdk2.getUserInfo(tokenResponse.accessToken);
       if (!userInfo.openId) {
         res.status(400).json({ error: "openId missing from user info" });
         return;
@@ -2249,7 +2329,7 @@ function registerOAuthRoutes(app2) {
         loginMethod: userInfo.loginMethod ?? userInfo.platform ?? null,
         lastSignedIn: /* @__PURE__ */ new Date()
       });
-      const sessionToken = await sdk.createSessionToken(userInfo.openId, {
+      const sessionToken = await sdk2.createSessionToken(userInfo.openId, {
         name: userInfo.name || "",
         expiresInMs: ONE_YEAR_MS
       });
@@ -2264,6 +2344,7 @@ function registerOAuthRoutes(app2) {
 }
 
 // server/_core/storageProxy.ts
+init_env();
 function registerStorageProxy(app2) {
   app2.get("/manus-storage/*", async (req, res) => {
     const key = req.params[0];
