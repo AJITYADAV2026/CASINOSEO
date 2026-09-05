@@ -1,6 +1,7 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { createCasinoVerseApp } from "../server/_core/app";
 import { serveStatic } from "../server/_core/staticSsr";
+import { installVercelQuery } from "./query";
 
 const app = createCasinoVerseApp();
 let ready: Promise<void> | null = null;
@@ -11,6 +12,7 @@ function ensureReady() {
 }
 
 export default async function handler(req: IncomingMessage, res: ServerResponse) {
+  installVercelQuery(req);
   await ensureReady();
   return app(req, res);
 }

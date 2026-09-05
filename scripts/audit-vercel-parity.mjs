@@ -45,23 +45,32 @@ function normalizePath(url) {
 }
 
 async function fetchResource(url, options = {}) {
-  const response = await fetch(url, {
-    redirect: "manual",
-    signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
-    headers: {
-      "user-agent": "CasinoVerse production parity audit/1.0",
-      ...(options.headers || {}),
-    },
-  });
-  const body = Buffer.from(await response.arrayBuffer());
-  return {
-    url,
-    status: response.status,
-    contentType: response.headers.get("content-type") || "",
-    location: response.headers.get("location"),
-    body,
-    text: body.toString("utf8"),
-  };
+  let lastError;
+  for (let attempt = 1; attempt <= 2; attempt += 1) {
+    try {
+      const response = await fetch(url, {
+        redirect: "manual",
+        signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+        headers: {
+          "user-agent": "CasinoVerse production parity audit/1.0",
+          ...(options.headers || {}),
+        },
+      });
+      const body = Buffer.from(await response.arrayBuffer());
+      return {
+        url,
+        status: response.status,
+        contentType: response.headers.get("content-type") || "",
+        location: response.headers.get("location"),
+        body,
+        text: body.toString("utf8"),
+      };
+    } catch (error) {
+      lastError = error;
+      if (attempt === 1) await new Promise(resolve => setTimeout(resolve, 500));
+    }
+  }
+  throw lastError;
 }
 
 function sitemapPaths(xml) {
@@ -124,7 +133,11 @@ async function mapWithConcurrency(items, concurrency, task) {
       try {
         output[index] = await task(items[index], index);
       } catch (error) {
-        output[index] = { error: error instanceof Error ? error.message : String(error) };
+        const item = items[index];
+        output[index] = {
+          ...(typeof item === "string" ? { path: item } : item),
+          error: error instanceof Error ? error.message : String(error),
+        };
       }
     }
   }
