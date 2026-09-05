@@ -197,11 +197,11 @@
 - [x] Save, sync, and verify the Vercel-compatible configuration in `AJITYADAV2026/CASINOSEO` before starting the Vercel deployment.
 - [x] Fix the Vercel production routing bug that serves the compiled server bundle at `/` and fails `/api/index` because extensionless local ESM imports are not resolved; verify no source bundle is publicly exposed after redeployment.
 - [x] Fix Vercel `/manus-storage/*` image responses currently returning HTTP 500 without exporting privileged Manus storage credentials; preserve the same image paths and verify every publication image loads on Vercel.
-- [ ] Verify the current `casinoseo.vercel.app` production deployment is Ready and linked to the latest `AJITYADAV2026/CASINOSEO` main-branch commit.
-- [ ] Crawl every URL in the Vercel sitemap and compare status, title, primary heading, internal-link behavior, and meaningful article content with the corresponding Manus route.
-- [ ] Discover every HTML, CSS, JavaScript, and publication-image asset referenced across the Vercel site and verify correct HTTP status and content type with no failed or broken images.
-- [ ] Prove the Vercel site is dynamic by validating live database-backed Blog, historical archive, source library, support directory, sitemap, filters, navigation, and hydration behavior without inserting test data.
-- [ ] Inspect Vercel runtime/build state and browser behavior for redirects, exceptions, hydration mismatches, exposed server code, consent regressions, or failed network resources; repair every verified defect.
-- [ ] Remove the Vercel runtime’s repeated missing-`OAUTH_SERVER_URL` error and Node `url.parse()` deprecation warning without exporting unnecessary Manus OAuth credentials or weakening public database-backed behavior.
-- [ ] Re-run complete tests, TypeScript, production builds, all-route smoke checks, responsive visual checks, and Manus Agent 1–3 schedule safeguards after any repair.
-- [ ] Save, sync to GitHub first, and verify any required Vercel redeployment while keeping Manus hosting available and Agent 4 paused.
+- [x] Verify the current `casinoseo.vercel.app` production deployment is Ready and linked to the latest `AJITYADAV2026/CASINOSEO` main-branch commit.
+- [x] Crawl every URL in the Vercel sitemap and compare status, title, primary heading, internal-link behavior, and meaningful article content with the corresponding Manus route.
+- [x] Discover every HTML, CSS, JavaScript, and publication-image asset referenced across the Vercel site and verify correct HTTP status and content type with no failed or broken images.
+- [x] Prove the Vercel site is dynamic by validating live database-backed Blog, historical archive, source library, support directory, sitemap, filters, navigation, and hydration behavior without inserting test data.
+- [x] Inspect Vercel runtime/build state and browser behavior for redirects, exceptions, hydration mismatches, exposed server code, consent regressions, or failed network resources; repair every verified defect.
+- [x] Remove the Vercel runtime’s repeated missing-`OAUTH_SERVER_URL` error and Node `url.parse()` deprecation warning without exporting unnecessary Manus OAuth credentials or weakening public database-backed behavior.
+- [x] Re-run complete tests, TypeScript, production builds, all-route smoke checks, responsive visual checks, and Manus Agent 1–3 schedule safeguards after any repair.
+- [x] Save, sync to GitHub first, and verify any required Vercel redeployment while keeping Manus hosting available and Agent 4 paused.
