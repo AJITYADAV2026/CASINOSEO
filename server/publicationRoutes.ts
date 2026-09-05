@@ -11,7 +11,6 @@ import {
 } from "../drizzle/schema";
 import { getArchive, getDb, getDigestByDate, getHistoricalArchive, getHomepageContent } from "./db";
 import { notifyOwner } from "./_core/notification";
-import { sdk } from "./_core/sdk";
 import { previousIsoCalendarDate, runContentAnalysis } from "./contentAnalysis";
 import { runPageCreation } from "./pageCreation";
 
@@ -211,6 +210,7 @@ async function scheduledDailyDigest(req: Request, res: Response) {
   try {
     let user;
     try {
+      const { sdk } = await import("./_core/sdk");
       user = await sdk.authenticateRequest(req);
     } catch {
       return res.status(403).json({ error: "cron-only" });
@@ -246,6 +246,7 @@ async function scheduledContentAnalysis(req: Request, res: Response) {
   try {
     let user;
     try {
+      const { sdk } = await import("./_core/sdk");
       user = await sdk.authenticateRequest(req);
     } catch {
       return res.status(403).json({ error: "cron-only" });
@@ -305,6 +306,7 @@ async function scheduledPageCreation(req: Request, res: Response) {
   try {
     let user;
     try {
+      const { sdk } = await import("./_core/sdk");
       user = await sdk.authenticateRequest(req);
     } catch {
       return res.status(403).json({ error: "cron-only" });
@@ -365,6 +367,7 @@ async function scheduledAgent1Monitor(req: Request, res: Response) {
   try {
     let user;
     try {
+      const { sdk } = await import("./_core/sdk");
       user = await sdk.authenticateRequest(req);
     } catch {
       return res.status(403).json({ error: "cron-only" });

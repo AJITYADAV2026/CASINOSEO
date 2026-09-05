@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { Request } from "express";
+import { readFileSync } from "node:fs";
 import { hasAuthenticationMaterial } from "./_core/context";
 
 function requestWithHeaders(headers: Request["headers"]): Request {
@@ -33,5 +34,14 @@ describe("lazy authentication initialization", () => {
         requestWithHeaders({ cookie: "other=value", authorization: "Basic encoded" }),
       ),
     ).toBe(false);
+  });
+
+  it("keeps scheduled-route authentication behind dynamic imports", () => {
+    const publicationRoutes = readFileSync(
+      new URL("./publicationRoutes.ts", import.meta.url),
+      "utf8",
+    );
+    expect(publicationRoutes).not.toContain('import { sdk } from "./_core/sdk"');
+    expect(publicationRoutes.match(/await import\("\.\/_core\/sdk"\)/g)).toHaveLength(4);
   });
 });

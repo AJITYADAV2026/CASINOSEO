@@ -1122,7 +1122,6 @@ init_schema();
 init_db();
 import { and as and4, eq as eq4 } from "drizzle-orm";
 import { z as z5 } from "zod";
-init_sdk();
 
 // server/contentAnalysis.ts
 init_schema();
@@ -2025,7 +2024,8 @@ async function scheduledDailyDigest(req, res) {
   try {
     let user;
     try {
-      user = await sdk.authenticateRequest(req);
+      const { sdk: sdk2 } = await Promise.resolve().then(() => (init_sdk(), sdk_exports));
+      user = await sdk2.authenticateRequest(req);
     } catch {
       return res.status(403).json({ error: "cron-only" });
     }
@@ -2056,7 +2056,8 @@ async function scheduledContentAnalysis(req, res) {
   try {
     let user;
     try {
-      user = await sdk.authenticateRequest(req);
+      const { sdk: sdk2 } = await Promise.resolve().then(() => (init_sdk(), sdk_exports));
+      user = await sdk2.authenticateRequest(req);
     } catch {
       return res.status(403).json({ error: "cron-only" });
     }
@@ -2112,7 +2113,8 @@ async function scheduledPageCreation(req, res) {
   try {
     let user;
     try {
-      user = await sdk.authenticateRequest(req);
+      const { sdk: sdk2 } = await Promise.resolve().then(() => (init_sdk(), sdk_exports));
+      user = await sdk2.authenticateRequest(req);
     } catch {
       return res.status(403).json({ error: "cron-only" });
     }
@@ -2169,7 +2171,8 @@ async function scheduledAgent1Monitor(req, res) {
   try {
     let user;
     try {
-      user = await sdk.authenticateRequest(req);
+      const { sdk: sdk2 } = await Promise.resolve().then(() => (init_sdk(), sdk_exports));
+      user = await sdk2.authenticateRequest(req);
     } catch {
       return res.status(403).json({ error: "cron-only" });
     }
