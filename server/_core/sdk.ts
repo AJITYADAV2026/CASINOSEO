@@ -1,6 +1,5 @@
 import { AXIOS_TIMEOUT_MS, COOKIE_NAME, ONE_YEAR_MS, decodeOAuthState } from "@shared/const";
 import { ForbiddenError } from "@shared/_core/errors";
-import axios, { type AxiosInstance } from "axios";
 import { parse as parseCookieHeader } from "cookie";
 import type { Request } from "express";
 import { SignJWT, jwtVerify } from "jose";
@@ -29,7 +28,7 @@ const GET_USER_INFO_PATH = `/webdev.v1.WebDevAuthPublicService/GetUserInfo`;
 const GET_USER_INFO_WITH_JWT_PATH = `/webdev.v1.WebDevAuthPublicService/GetUserInfoWithJwt`;
 
 class OAuthService {
-  constructor(private client: ReturnType<typeof axios.create>) {
+  constructor(private client: OAuthHttpClient) {
     console.log("[OAuth] Initialized with baseURL:", ENV.oAuthServerUrl);
     if (!ENV.oAuthServerUrl) {
       console.error(
@@ -75,17 +74,41 @@ class OAuthService {
   }
 }
 
-const createOAuthHttpClient = (): AxiosInstance =>
-  axios.create({
-    baseURL: ENV.oAuthServerUrl,
-    timeout: AXIOS_TIMEOUT_MS,
-  });
+export type OAuthHttpClient = {
+  post<T>(path: string, payload: unknown): Promise<{ data: T }>;
+};
+
+export const createOAuthHttpClient = (
+  baseUrl = ENV.oAuthServerUrl,
+): OAuthHttpClient => ({
+  async post<T>(path: string, payload: unknown): Promise<{ data: T }> {
+    if (!baseUrl) {
+      throw new Error("OAUTH_SERVER_URL is not configured");
+    }
+
+    const response = await fetch(new URL(path, `${baseUrl.replace(/\/+$/, "")}/`), {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+      signal: AbortSignal.timeout(AXIOS_TIMEOUT_MS),
+    });
+
+    if (!response.ok) {
+      const detail = (await response.text().catch(() => "")).slice(0, 500);
+      throw new Error(
+        `OAuth request failed with HTTP ${response.status}${detail ? `: ${detail}` : ""}`,
+      );
+    }
+
+    return { data: await response.json() as T };
+  },
+});
 
 class SDKServer {
-  private readonly client: AxiosInstance;
+  private readonly client: OAuthHttpClient;
   private readonly oauthService: OAuthService;
 
-  constructor(client: AxiosInstance = createOAuthHttpClient()) {
+  constructor(client: OAuthHttpClient = createOAuthHttpClient()) {
     this.client = client;
     this.oauthService = new OAuthService(this.client);
   }

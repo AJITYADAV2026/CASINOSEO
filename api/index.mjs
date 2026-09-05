@@ -637,9 +637,9 @@ var init_errors = __esm({
 // server/_core/sdk.ts
 var sdk_exports = {};
 __export(sdk_exports, {
+  createOAuthHttpClient: () => createOAuthHttpClient,
   sdk: () => sdk
 });
-import axios from "axios";
 import { parse as parseCookieHeader } from "cookie";
 import { SignJWT, jwtVerify } from "jose";
 function buildCronUser(userInfo) {
@@ -706,9 +706,25 @@ var init_sdk = __esm({
         return data;
       }
     };
-    createOAuthHttpClient = () => axios.create({
-      baseURL: ENV.oAuthServerUrl,
-      timeout: AXIOS_TIMEOUT_MS
+    createOAuthHttpClient = (baseUrl = ENV.oAuthServerUrl) => ({
+      async post(path2, payload) {
+        if (!baseUrl) {
+          throw new Error("OAUTH_SERVER_URL is not configured");
+        }
+        const response = await fetch(new URL(path2, `${baseUrl.replace(/\/+$/, "")}/`), {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+          signal: AbortSignal.timeout(AXIOS_TIMEOUT_MS)
+        });
+        if (!response.ok) {
+          const detail = (await response.text().catch(() => "")).slice(0, 500);
+          throw new Error(
+            `OAuth request failed with HTTP ${response.status}${detail ? `: ${detail}` : ""}`
+          );
+        }
+        return { data: await response.json() };
+      }
     });
     SDKServer = class {
       client;
