@@ -192,8 +192,8 @@
 - [x] Complete and verify the `AJITYADAV2026/CASINOSEO` GitHub push before creating, importing, configuring, or deploying any Vercel project.
 - [x] Prepare Vercel-compatible build and runtime configuration for the same CasinoVerse SSR application without weakening HTML output, database access, internal links, consent gating, or responsible-content safeguards.
 - [x] Map all mandatory Vercel environment variables and external database or storage dependencies without committing secret values to GitHub.
-- [ ] Deploy the same GitHub-backed CasinoVerse website to Vercel and validate representative SSR pages, article routes, historical archive, source library, support directory, sitemap, consent behavior, and real 404 responses.
-- [ ] Keep Manus hosting live as the rollback path and preserve Agents 1–3 plus the Agent 1 delivery monitor on their existing platform schedules unless a separately validated Vercel-safe migration is explicitly approved.
-- [ ] Save, sync, and verify the Vercel-compatible configuration in `AJITYADAV2026/CASINOSEO` before starting the Vercel deployment.
-- [ ] Fix the Vercel production routing bug that serves the compiled server bundle at `/` and fails `/api/index` because extensionless local ESM imports are not resolved; verify no source bundle is publicly exposed after redeployment.
-- [ ] Fix Vercel `/manus-storage/*` image responses currently returning HTTP 500 without exporting privileged Manus storage credentials; preserve the same image paths and verify every publication image loads on Vercel.
+- [x] Deploy the same GitHub-backed CasinoVerse website to Vercel and validate representative SSR pages, article routes, historical archive, source library, support directory, sitemap, consent behavior, and real 404 responses.
+- [x] Keep Manus hosting live as the rollback path and preserve Agents 1–3 plus the Agent 1 delivery monitor on their existing platform schedules unless a separately validated Vercel-safe migration is explicitly approved.
+- [x] Save, sync, and verify the Vercel-compatible configuration in `AJITYADAV2026/CASINOSEO` before starting the Vercel deployment.
+- [x] Fix the Vercel production routing bug that serves the compiled server bundle at `/` and fails `/api/index` because extensionless local ESM imports are not resolved; verify no source bundle is publicly exposed after redeployment.
+- [x] Fix Vercel `/manus-storage/*` image responses currently returning HTTP 500 without exporting privileged Manus storage credentials; preserve the same image paths and verify every publication image loads on Vercel.
