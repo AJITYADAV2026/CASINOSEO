@@ -207,6 +207,6 @@
 - [x] Save, sync to GitHub first, and verify any required Vercel redeployment while keeping Manus hosting available and Agent 4 paused.
 - [x] Reconfirm that the requested `casino SEO` repository maps to the existing canonical GitHub repository `AJITYADAV2026/CASINOSEO`, avoiding a duplicate repository with an inconsistent name.
 - [x] Re-audit repository completeness, tracked-file coverage, working-tree state, and secret exclusions before publishing any new verification commit.
-- [ ] Push the complete website to GitHub first and verify local and remote `main` branch SHAs match exactly.
-- [ ] Confirm the connected Vercel project automatically deploys that exact GitHub SHA and the stable production alias remains Ready.
-- [ ] Re-run the production parity and runtime checks, then record and deliver the verified GitHub-first workflow.
+- [x] Push the complete website to GitHub first and verify local and remote `main` branch SHAs match exactly.
+- [x] Confirm the connected Vercel project automatically deploys that exact GitHub SHA and the stable production alias remains Ready.
+- [x] Re-run the production parity and runtime checks, then record and deliver the verified GitHub-first workflow.
