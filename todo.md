@@ -205,3 +205,8 @@
 - [x] Remove the Vercel runtime’s repeated missing-`OAUTH_SERVER_URL` error and Node `url.parse()` deprecation warning without exporting unnecessary Manus OAuth credentials or weakening public database-backed behavior.
 - [x] Re-run complete tests, TypeScript, production builds, all-route smoke checks, responsive visual checks, and Manus Agent 1–3 schedule safeguards after any repair.
 - [x] Save, sync to GitHub first, and verify any required Vercel redeployment while keeping Manus hosting available and Agent 4 paused.
+- [x] Reconfirm that the requested `casino SEO` repository maps to the existing canonical GitHub repository `AJITYADAV2026/CASINOSEO`, avoiding a duplicate repository with an inconsistent name.
+- [x] Re-audit repository completeness, tracked-file coverage, working-tree state, and secret exclusions before publishing any new verification commit.
+- [ ] Push the complete website to GitHub first and verify local and remote `main` branch SHAs match exactly.
+- [ ] Confirm the connected Vercel project automatically deploys that exact GitHub SHA and the stable production alias remains Ready.
+- [ ] Re-run the production parity and runtime checks, then record and deliver the verified GitHub-first workflow.
