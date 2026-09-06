@@ -210,3 +210,8 @@
 - [x] Push the complete website to GitHub first and verify local and remote `main` branch SHAs match exactly.
 - [x] Confirm the connected Vercel project automatically deploys that exact GitHub SHA and the stable production alias remains Ready.
 - [x] Re-run the production parity and runtime checks, then record and deliver the verified GitHub-first workflow.
+- [x] Consolidate the user-supplied Agent 1 playbook by removing the duplicated instruction block while preserving every stricter timing, sourcing, persistence, payload, failure, and reporting requirement.
+- [x] Compare the consolidated playbook with the active isolated 12:01 AM IST Agent 1 schedule and determine whether an update is required. The active playbook already matches the authoritative version exactly.
+- [x] Update only Agent 1’s active schedule configuration if any required instruction is missing, without triggering Agent 1 or changing its timing, connectors, or isolated execution mode. No update was required, so no schedule mutation occurred.
+- [x] Verify Agents 2 and 3 remain separate at 2:00 AM and 2:30 AM IST, the delivery monitor remains at 12:15 AM IST, and Agent 4 remains absent or paused.
+- [x] Record the final Agent 1 configuration outcome without claiming any scheduled execution occurred during this review.
