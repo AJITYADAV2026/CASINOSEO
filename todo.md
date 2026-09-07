@@ -223,3 +223,6 @@
 - [x] Verify daily schedules for Agent 1, Agent 2, Agent 3, and the Agent 1 delivery monitor remain persistent and correctly separated in IST.
 - [x] Verify the latest automated GitHub push reaches `AJITYADAV2026/CASINOSEO` `main`, the matching Vercel deployment becomes Ready, and production pages, images, SSR, dynamic data, and runtime logs remain healthy.
 - [x] Document today’s file/artifact status, any recovery performed, GitHub/Vercel publication status, and exact remaining operational caveats without fabricating agent success.
+- [x] Reconfirm the user’s repeated Agent 1 text consolidates to the existing authoritative duplicate-free playbook without losing the stricter execution-start and delay-reporting requirements.
+- [x] Compare the active isolated Agent 1 schedule and playbook byte for byte with the authoritative file, updating only if a real mismatch exists and never triggering a run. The playbook matched exactly; the schedule was corrected from a misinterpreted 6:31 PM IST value to `0 1 0 * * *` in the task’s `Asia/Calcutta` timezone, which the platform now reports as 60 seconds after midnight.
+- [x] Verify the 12:15 AM monitor, 2:00 AM Agent 2, and 2:30 AM Agent 3 remain separate while Agent 4 remains paused, then report configuration truthfully.

@@ -7,6 +7,8 @@ The user-supplied text contained the complete isolated Agent 1 playbook followed
 
 A byte-for-byte comparison confirmed that the active Agent 1 schedule’s `playbook` field exactly matches the saved authoritative file. The active schedule remains enabled, uses isolated new-task execution, and targets **12:01 AM IST**. Because no instruction was missing, the schedule was not mutated.
 
+> **Correction recorded 7 September 2026:** A later field-level audit showed that the then-stored cron `0 31 18 * * *` was being interpreted in the task’s own `Asia/Calcutta` timezone, which meant 6:31 PM IST rather than the intended 12:01 AM. The active task has now been corrected to `0 1 0 * * *`, which the platform reports as 60 seconds after midnight. The playbook itself remained an exact match.
+
 | Workflow | Verified time | State | Review action |
 | --- | --- | --- | --- |
 | Agent 1 daily research | 12:01 AM IST | Active; isolated new-task execution | Inspected only; not changed or triggered |
