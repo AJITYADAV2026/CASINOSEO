@@ -221,5 +221,5 @@
 - [x] Design a secure post-Agent-3 GitHub publication mechanism that does not embed GitHub credentials in the website runtime, preserves GitHub as source of truth, and lets Vercel deploy automatically.
 - [x] Implement and test any required pipeline, callback, export, or publication changes with idempotency, fail-closed sequencing, clear execution logs, and no Agent 4 indexing.
 - [x] Verify daily schedules for Agent 1, Agent 2, Agent 3, and the Agent 1 delivery monitor remain persistent and correctly separated in IST.
-- [ ] Verify the latest automated GitHub push reaches `AJITYADAV2026/CASINOSEO` `main`, the matching Vercel deployment becomes Ready, and production pages, images, SSR, dynamic data, and runtime logs remain healthy.
-- [ ] Document today’s file/artifact status, any recovery performed, GitHub/Vercel publication status, and exact remaining operational caveats without fabricating agent success.
+- [x] Verify the latest automated GitHub push reaches `AJITYADAV2026/CASINOSEO` `main`, the matching Vercel deployment becomes Ready, and production pages, images, SSR, dynamic data, and runtime logs remain healthy.
+- [x] Document today’s file/artifact status, any recovery performed, GitHub/Vercel publication status, and exact remaining operational caveats without fabricating agent success.

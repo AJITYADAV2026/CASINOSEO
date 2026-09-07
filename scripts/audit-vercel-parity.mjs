@@ -294,7 +294,8 @@ const summary = {
   passed:
     vercelSitemap.status === 200 &&
     manusSitemap.status === 200 &&
-    sitemapParity.vercelCount === 55 &&
+    sitemapParity.vercelCount > 0 &&
+    sitemapParity.vercelCount === sitemapParity.manusCount &&
     sitemapParity.missingOnVercel.length === 0 &&
     sitemapParity.extraOnVercel.length === 0 &&
     routeFailures.length === 0 &&

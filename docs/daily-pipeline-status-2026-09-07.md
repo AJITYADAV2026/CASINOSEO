@@ -1,6 +1,6 @@
 # CasinoVerse Daily Pipeline Status — 7 September 2026 IST
 
-**Status:** Recovery completed; GitHub publisher operational; final stable-canonical Vercel redeployment pending  
+**Status:** Recovery, GitHub publication, Vercel deployment, and production verification completed  
 **Author:** Manus AI
 
 ## Evidence-led status
@@ -33,7 +33,9 @@ The repository workflow `.github/workflows/daily-content-publication.yml` is sch
 
 Manual verification run [34117040348](https://github.com/AJITYADAV2026/CASINOSEO/actions/runs/34117040348) completed successfully on commit `4e948f5fceea9cc717e2c4f33e6fbe6b10eb02d4`. Every workflow step passed. Because today’s recovered artifacts were already included in that commit, the idempotency guard correctly reported “No new durable artifacts; nothing to commit” instead of creating a duplicate commit.
 
-The Vercel deployment for commit `4e948f5fceea9cc717e2c4f33e6fbe6b10eb02d4` reached Ready status. A smoke check then found that Vercel’s sitemap still used its Git branch hostname rather than the stable `casinoseo.vercel.app` alias. The non-secret production `CANONICAL_ORIGIN` setting was corrected to `https://casinoseo.vercel.app`; the next GitHub-first commit will trigger the required clean redeployment and final verification.
+The first Vercel deployment for commit `4e948f5fceea9cc717e2c4f33e6fbe6b10eb02d4` reached Ready status. A smoke check found that its sitemap still used the Git branch hostname rather than the stable public alias. The non-secret production `CANONICAL_ORIGIN` setting was corrected to `https://casinoseo.vercel.app`, then checkpoint `5dedd855417410cda28fd74b2a2a6c0a363a9937` was pushed to GitHub first. Vercel automatically built that exact commit and reported success.
+
+The stable Vercel alias now emits `https://casinoseo.vercel.app` in article canonical tags and all 57 sitemap locations. The final production parity crawl passed with **57 routes**, **48 total assets**, **43 publication images**, **17 historical records**, **35 source records**, **5 support records**, and **3 Macau search results**. The new regulation story returned complete SSR HTML, its image returned `image/webp`, all private source paths returned genuine 404 responses, and the fresh Vercel error-log query returned no entries.
 
 ## Preserved safeguards
 
