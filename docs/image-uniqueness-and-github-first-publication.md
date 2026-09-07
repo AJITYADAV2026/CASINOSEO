@@ -29,3 +29,15 @@ The publisher now validates each artifact’s date linkage and terminal status b
 After the push, the workflow reads the Vercel commit status for the exact published SHA. It succeeds only when the connected Vercel project reports a successful deployment for that commit; a Vercel failure, error, or ten-minute timeout fails the workflow visibly.
 
 The publisher never invokes Agent 1, Agent 2, Agent 3, Agent 4, Search Console, IndexNow, or any indexing-submission endpoint. Agent 4 remains paused.
+
+## Verification — 8 September 2026 IST
+
+The database audit found **15 image-bearing public stories and 15 distinct featured-image URLs**. The combined static page, hero, expanded-content, and gallery registries contain no repeated URL assignments. The repeated generic story fallback was removed. A failed generated Guides visual was replaced with a unique project-owned SVG and verified in the rendered desktop page.
+
+The full automated suite passed **142 tests across 24 files**, followed by TypeScript validation and the complete Vercel production build. The source uniqueness scan found no repeated non-test static asset URLs.
+
+Checkpoint `44376cc18c2a1945010b0bd7f6ae3d91613c8b80` was pushed to `AJITYADAV2026/CASINOSEO` `main` before deployment. Vercel automatically deployed that exact GitHub SHA as production deployment `dpl_AY2ptBTW3XFhvGbegfMLYYF7hDCX`, attached the stable `https://casinoseo.vercel.app` alias, and reported a successful commit status.
+
+The production parity crawl passed across **38 routes**, **49 assets**, and **44 publication images** with no route, asset, dynamic-data, or source-exposure failures. Fresh Vercel error logs were empty.
+
+Manual workflow run `34164959426` verified the fail-closed daily gate against the live system. The 8 September Agent 1, Agent 2, and Agent 3 artifacts were not present, so the workflow stayed in the complete-chain polling step. The verification run was then cancelled; the commit, push, and Vercel steps remained skipped, and GitHub `main` stayed on `44376cc`. This is intentional: a configured or attempted agent run is not treated as completed output, and no stale daily update is published.
