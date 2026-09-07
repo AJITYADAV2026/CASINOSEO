@@ -223,14 +223,22 @@ const assetResults = await mapWithConcurrency(assetEntries, 8, async asset => {
 const assetFailures = assetResults.filter(asset => asset.error || asset.status !== 200 || !asset.validContentType || asset.bytes === 0);
 
 const byPath = Object.fromEntries(routePairs.filter(route => !route.error).map(route => [route.path, route]));
-const historyText = stripTags(byPath["/history/archive"]?.vercelHtml || "");
 const sourcesText = stripTags(byPath["/sources"]?.vercelHtml || "");
-const historyMatch = historyText.match(/(\d+)\s+of\s+(\d+)\s+records/i);
 const sourcesMatch = sourcesText.match(/(\d+)\s+active internal records/i);
 const supportCount = (byPath["/support"]?.vercelHtml.match(/class=["'][^"']*support-directory-card/g) || []).length;
 const search = await fetchResource(`${VERCEL_ORIGIN}/search?q=Macau`);
 const searchText = stripTags(search.text);
 const searchCountMatch = searchText.match(/(\d+)\s+stories\s+for\s+[“\"]\s*Macau\s*[”\"]/i);
+const removedSurfacePaths = ["/vlogs", "/history/archive", "/history/archive/2020-nevada-casino-shutdown"];
+const removedSurfaceResults = await mapWithConcurrency(removedSurfacePaths, 3, async path => {
+  const response = await fetchResource(`${VERCEL_ORIGIN}${path}`);
+  return {
+    path,
+    status: response.status,
+    contentType: response.contentType,
+    noindex: /<meta\s+name=["']robots["']\s+content=["'][^"']*noindex/i.test(response.text),
+  };
+});
 const articlePath = vercelPaths.find(path => path.startsWith("/articles/"));
 const imageAsset = assetResults.find(asset => asset.kind === "image" && asset.url.includes("/manus-storage/"));
 
@@ -256,7 +264,6 @@ const dynamicEvidence = {
   homepageArticleLinks: new Set(attrValues(byPath["/"]?.vercelHtml || "", "a", "href").filter(href => href.startsWith("/articles/"))).size,
   representativeArticle: articlePath,
   representativeArticleStatus: articlePath ? byPath[articlePath]?.vercelStatus : undefined,
-  historicalRecordsVisible: historyMatch ? Number(historyMatch[2]) : 0,
   sourceRecordsVisible: sourcesMatch ? Number(sourcesMatch[1]) : 0,
   supportRecordsVisible: supportCount,
   searchQuery: "Macau",
@@ -264,11 +271,11 @@ const dynamicEvidence = {
   searchResultsVisible: searchCountMatch ? Number(searchCountMatch[1]) : 0,
   sitemapStatus: vercelSitemap.status,
   sitemapRoutes: vercelPaths.length,
+  removedSurfaces: removedSurfaceResults,
   representativeImage: imageAsset ? { url: imageAsset.url, status: imageAsset.status, contentType: imageAsset.contentType } : null,
 };
 
 const expectedDynamicEvidence = {
-  historicalRecordsVisible: 17,
   sourceRecordsVisible: 35,
   supportRecordsVisible: 5,
   searchResultsVisible: 3,
@@ -302,6 +309,8 @@ const summary = {
     assetFailures.length === 0 &&
     dynamicFailures.length === 0 &&
     search.status === 200 &&
+    removedSurfacePaths.every(path => !vercelPaths.includes(path)) &&
+    removedSurfaceResults.every(result => !result.error && result.status === 404 && result.noindex) &&
     exposureResults.every(result => !result.error && result.status === 404 && !result.containsServerMarker),
 };
 

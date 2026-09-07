@@ -34,4 +34,12 @@ describe("Vercel deployment contract", () => {
     expect(read("vercel/entry.ts")).toContain("createCasinoVerseApp");
     expect(read("vercel/entry.ts")).toContain("server/_core/staticSsr");
   });
+
+  it("keeps the production parity audit aligned with intentionally removed public sections", () => {
+    const audit = read("scripts/audit-vercel-parity.mjs");
+    expect(audit).toContain('const removedSurfacePaths = ["/vlogs", "/history/archive", "/history/archive/2020-nevada-casino-shutdown"]');
+    expect(audit).toContain("result.status === 404 && result.noindex");
+    expect(audit).toContain("!vercelPaths.includes(path)");
+    expect(audit).not.toContain("historicalRecordsVisible: 17");
+  });
 });

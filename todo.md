@@ -233,5 +233,5 @@
 - [x] Deepen every remaining public page one by one without changing the approved header or hero design, keeping the site article-led, informational, internally linked, and fully server-rendered.
 - [x] Update regression tests for removed routes, navigation, sitemaps, SSR content depth, metadata, internal-only links, accessibility, and consent-gated analytics.
 - [x] Run the full test suite, TypeScript, Vercel build, sitemap crawl, route-depth audit, responsive visual checks, and runtime-log inspection after the changes.
-- [ ] Save a checkpoint, push the complete update to `AJITYADAV2026/CASINOSEO` first, verify the matching automatic Vercel deployment, and confirm production no longer exposes historical or Vlogs sections.
+- [x] Save a checkpoint, push the complete update to `AJITYADAV2026/CASINOSEO` first, verify the matching automatic Vercel deployment, and confirm production no longer exposes historical or Vlogs sections.
 - [x] Remove both `Research` and `Sources` from the primary desktop and mobile header navigation shown in the user’s reference image, then verify header spacing and active-state behavior remain correct without changing the established visual design.

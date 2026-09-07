@@ -1,7 +1,7 @@
 # CasinoVerse Content Removal and Page-Depth Verification
 
 **Date:** 7 September 2026  
-**Status:** Local implementation and validation completed; GitHub/Vercel publication pending
+**Status:** Implementation, GitHub publication, Vercel deployment, and production verification completed
 
 ## Scope completed
 
@@ -19,7 +19,7 @@ Each retained page receives three detailed explanatory modules, a three-point re
 
 | Check | Result |
 | --- | --- |
-| Automated tests | 24 files, 138 tests passed |
+| Automated tests | 24 files, 139 tests passed |
 | TypeScript | `pnpm check` passed |
 | Vercel production build | Passed |
 | Local sitemap crawl | 38 retained routes, 0 failures |
@@ -29,5 +29,11 @@ Each retained page receives three detailed explanatory modules, a three-point re
 | Desktop visual review | Home, Articles, History, Sources, and both removed routes reviewed |
 | Mobile visual review | Home, Articles, and removed Vlogs route reviewed |
 | Fresh runtime logs | No browser, server, hydration, or network errors after final changes |
+
+## Production publication
+
+Checkpoint `10068e1b2a61315d1afc02bb5c65b4bbe03a9d67` was pushed to `AJITYADAV2026/CASINOSEO` `main` before deployment. Vercel automatically built that exact GitHub SHA as production deployment `dpl_6d6TTH2fTvXXknhWKpJJF5yHY5Z1` and attached the stable `https://casinoseo.vercel.app` alias.
+
+The production parity crawl passed across **38 retained routes**, **47 referenced assets**, and **42 publication images**, with no route or asset failures. The Vlogs route, historical archive route, and a representative historical detail route all returned genuine 404 HTML with `noindex`; none appeared in the sitemap. Database-backed evidence remained healthy with 35 source records, five support records, and three Macau search results. Private server paths returned 404 and the fresh Vercel error-log query returned no entries.
 
 No Agent schedules were changed, Agent 4 remains paused, and no indexing or Search Console action was performed.
