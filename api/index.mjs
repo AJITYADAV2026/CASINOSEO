@@ -1667,7 +1667,7 @@ async function runContentAnalysis(options = {}) {
 
 // server/pageCreation.ts
 init_schema();
-import { and as and3, desc as desc3, eq as eq3 } from "drizzle-orm";
+import { and as and3, desc as desc3, eq as eq3, ne, or as or2 } from "drizzle-orm";
 import { z as z4 } from "zod";
 init_db();
 var outcomes = ["created", "updated", "retained", "archived", "review-required"];
@@ -1833,6 +1833,37 @@ async function runPageCreation(options = {}) {
         continue;
       }
       const targetStatus = siteFind.status === "completed" ? "published" : "developing";
+      if (!resolved.story.featuredImageUrl || !resolved.story.featuredImageAlt) {
+        actions2.push(pageActionSchema.parse({
+          decision: decision.action,
+          outcome: "review-required",
+          title: resolved.story.title,
+          storySlug: resolved.story.slug,
+          canonicalUrl: `${origin()}/articles/${resolved.story.slug}`,
+          pageStatus: resolved.story.status,
+          sitemapIncluded: resolved.story.status === "published",
+          note: "Publication stopped because this story does not have its own featured image and accessible alt description."
+        }));
+        continue;
+      }
+      const [imageConflict] = await tx.select({ id: stories.id, slug: stories.slug }).from(stories).where(and3(
+        eq3(stories.featuredImageUrl, resolved.story.featuredImageUrl),
+        ne(stories.id, resolved.story.id),
+        or2(eq3(stories.status, "published"), eq3(stories.status, "developing"))
+      )).limit(1);
+      if (imageConflict) {
+        actions2.push(pageActionSchema.parse({
+          decision: decision.action,
+          outcome: "review-required",
+          title: resolved.story.title,
+          storySlug: resolved.story.slug,
+          canonicalUrl: `${origin()}/articles/${resolved.story.slug}`,
+          pageStatus: resolved.story.status,
+          sitemapIncluded: resolved.story.status === "published",
+          note: `Publication stopped because the featured image is already assigned to /articles/${imageConflict.slug}.`
+        }));
+        continue;
+      }
       await tx.update(stories).set({
         status: targetStatus,
         modifiedAt: /* @__PURE__ */ new Date(),

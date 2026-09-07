@@ -1,5 +1,5 @@
 import express from "express";
-import { eq } from "drizzle-orm";
+import { eq, ne } from "drizzle-orm";
 import { describe, expect, it } from "vitest";
 import { siteFindReports, stories, urlManifests } from "../drizzle/schema";
 import { contentAnalysisSchema } from "./contentAnalysis";
@@ -184,6 +184,66 @@ describe("Agent 3 page creation", () => {
 
     const [rolledBack] = await db.select().from(urlManifests).where(eq(urlManifests.manifestDate, "2037-12-30")).limit(1);
     expect(rolledBack).toBeUndefined();
+  }, 30_000);
+
+  it("fails closed when Agent 3 would publish a featured image already used by another public story", async () => {
+    const db = await getDb();
+    expect(db).toBeTruthy();
+    if (!db) return;
+    const [siteFind] = await db.select().from(siteFindReports).orderBy(siteFindReports.reportDate).limit(1);
+    if (!siteFind) return;
+    const digest = await getDigestByDate(siteFind.sourceDigestDate);
+    if (!digest?.stories[0]) return;
+    const sourceItem = digest.stories[0];
+    const candidates = await db.select().from(stories).where(ne(stories.status, "archived"));
+    const conflictStory = candidates.find(item => item.id !== sourceItem.story.id && item.featuredImageUrl);
+    expect(conflictStory?.featuredImageUrl).toBeTruthy();
+    if (!conflictStory?.featuredImageUrl) return;
+    const analysis = contentAnalysisSchema.parse({
+      executiveSummary: "Verify duplicate featured images stop publication.",
+      sourceAssessment: "The sourced story is complete but its image assignment conflicts with another public story.",
+      decisions: [{
+        action: "add",
+        proposedTitle: sourceItem.story.title,
+        existingSlug: sourceItem.story.slug,
+        categorySlug: sourceItem.category.slug,
+        contentType: sourceItem.story.contentType,
+        priority: "high",
+        rationale: "Attempt publication only if the story has a distinct visual assignment.",
+        evidence: ["Durable Agent 1 story record."],
+        confidence: 0.95,
+        requiresHumanReview: false,
+      }],
+      warnings: [],
+    });
+    const syntheticSiteFind = {
+      ...siteFind,
+      reportDate: "2037-12-28",
+      status: "completed" as const,
+      decisionsJson: JSON.stringify(analysis),
+      updatedAt: new Date("2037-12-28T02:00:00Z"),
+    };
+    const rollback = new Error("ROLLBACK_AGENT_3_IMAGE_CONFLICT_TEST");
+
+    await expect(db.transaction(async tx => {
+      await tx.update(stories).set({
+        status: "draft",
+        featuredImageUrl: conflictStory.featuredImageUrl,
+      }).where(eq(stories.id, sourceItem.story.id));
+      const result = await runPageCreation({
+        db: tx as unknown as NonNullable<Awaited<ReturnType<typeof getDb>>>,
+        siteFind: syntheticSiteFind,
+        manifestDate: "2037-12-28",
+        taskUid: "agent-3-image-conflict-test",
+        force: true,
+      });
+      expect("manifest" in result && result.manifest?.reviewCount).toBe(1);
+      expect("actions" in result && result.actions?.[0]?.outcome).toBe("review-required");
+      expect("actions" in result && result.actions?.[0]?.note).toContain("featured image is already assigned");
+      const [blocked] = await tx.select().from(stories).where(eq(stories.id, sourceItem.story.id)).limit(1);
+      expect(blocked?.status).toBe("draft");
+      throw rollback;
+    })).rejects.toBe(rollback);
   }, 30_000);
 
   it("registers only the Agent 3 scheduler endpoint and no indexing-submission route", () => {

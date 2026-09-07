@@ -9,6 +9,8 @@ on:
 
 permissions:
   contents: write
+  statuses: read
+  deployments: read
 
 concurrency:
   group: casinoverse-daily-content-publication
@@ -62,6 +64,15 @@ jobs:
             exit 1
           fi
 
+          grep -Fqx "digestDate: \"$digest_date\"" "publication-artifacts/research/$digest_date.md"
+          grep -Fqx 'status: "published"' "publication-artifacts/research/$digest_date.md"
+          grep -Fqx "reportDate: \"$today\"" "publication-artifacts/site-find/SITE FIND $today.md"
+          grep -Fqx "sourceDigestDate: \"$digest_date\"" "publication-artifacts/site-find/SITE FIND $today.md"
+          grep -Fqx 'status: "completed"' "publication-artifacts/site-find/SITE FIND $today.md"
+          grep -Fqx "manifestDate: \"$today\"" "publication-artifacts/url-manifests/URL+$today.md"
+          grep -Fqx "sourceSiteFindDate: \"$today\"" "publication-artifacts/url-manifests/URL+$today.md"
+          grep -Fqx 'status: "completed"' "publication-artifacts/url-manifests/URL+$today.md"
+
           curl --fail --silent --show-error \
             "$PUBLICATION_ORIGIN/sitemap.xml" \
             --output publication-artifacts/sitemap.xml
@@ -79,6 +90,7 @@ jobs:
           EOF
 
       - name: Commit and push only real daily changes
+        id: publish
         run: |
           set -euo pipefail
           export TZ=Asia/Kolkata
@@ -90,8 +102,38 @@ jobs:
 
           if git diff --cached --quiet; then
             echo "No new durable artifacts; nothing to commit."
+            echo "published_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
           git commit -m "Automated daily content update: $today"
           git push origin HEAD:main
+          echo "published_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Verify Vercel deployed the exact GitHub commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PUBLISHED_SHA: ${{ steps.publish.outputs.published_sha }}
+        run: |
+          set -euo pipefail
+
+          for attempt in $(seq 1 30); do
+            status_json="$(gh api "repos/$GITHUB_REPOSITORY/commits/$PUBLISHED_SHA/status")"
+            vercel_state="$(jq -r '[.statuses[] | select(.context == "Vercel")][0].state // "pending"' <<<"$status_json")"
+            vercel_target="$(jq -r '[.statuses[] | select(.context == "Vercel")][0].target_url // ""' <<<"$status_json")"
+
+            if [[ "$vercel_state" == "success" && "$vercel_target" == https://vercel.com/* ]]; then
+              echo "Vercel successfully deployed GitHub commit $PUBLISHED_SHA."
+              exit 0
+            fi
+            if [[ "$vercel_state" == "failure" || "$vercel_state" == "error" ]]; then
+              echo "Vercel reported $vercel_state for GitHub commit $PUBLISHED_SHA."
+              exit 1
+            fi
+
+            echo "Waiting for Vercel deployment of $PUBLISHED_SHA (attempt $attempt/30)."
+            sleep 20
+          done
+
+          echo "Vercel did not confirm deployment of GitHub commit $PUBLISHED_SHA within 10 minutes."
+          exit 1

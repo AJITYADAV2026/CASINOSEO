@@ -235,3 +235,9 @@
 - [x] Run the full test suite, TypeScript, Vercel build, sitemap crawl, route-depth audit, responsive visual checks, and runtime-log inspection after the changes.
 - [x] Save a checkpoint, push the complete update to `AJITYADAV2026/CASINOSEO` first, verify the matching automatic Vercel deployment, and confirm production no longer exposes historical or Vlogs sections.
 - [x] Remove both `Research` and `Sources` from the primary desktop and mobile header navigation shown in the user’s reference image, then verify header spacing and active-state behavior remain correct without changing the established visual design.
+- [x] Audit every currently published page and story image assignment across database records, expanded page assets, homepage/editorial cards, gallery entries, and production HTML to identify exact repeated image URLs or accidental duplicate visual assignments.
+- [x] Add a permanent automated uniqueness gate that fails tests or publication when two distinct public editorial records reuse the same featured image URL, while allowing an article’s own image to appear consistently on its listing and detail views.
+- [x] Add a fail-closed Agent 3 validation so newly created or updated stories cannot publish a featured image URL already assigned to another public story unless they are updating that same story.
+- [ ] Verify the scheduled post-Agent-3 repository publisher waits for same-day completed Agent 1, Agent 2, and Agent 3 durable artifacts, commits only real site/artifact changes to GitHub `main`, and never triggers Agents or Agent 4.
+- [ ] Verify the connected Vercel project automatically deploys the exact GitHub commit produced after a completed site update, with production route, image, SSR, sitemap, and runtime-log checks passing.
+- [ ] Document the image-uniqueness contract and GitHub-first deployment sequence, preserving separate agent schedules and paused indexing.

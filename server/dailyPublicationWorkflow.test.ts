@@ -23,6 +23,10 @@ describe("daily GitHub-first publication workflow", () => {
     expect(workflow).toContain("URL+$today.md");
     expect(workflow).toContain('if [[ "$ready" != "true" ]]');
     expect(workflow).toContain("refusing to commit stale or partial output");
+    expect(workflow).toContain('grep -Fqx \'status: "published"\'');
+    expect(workflow.match(/grep -Fqx 'status: "completed"'/g)).toHaveLength(2);
+    expect(workflow).toContain('sourceDigestDate: \\"$digest_date\\"');
+    expect(workflow).toContain('sourceSiteFindDate: \\"$today\\"');
   });
 
   it("commits the sitemap snapshot and pushes main only after complete artifacts exist", () => {
@@ -30,6 +34,16 @@ describe("daily GitHub-first publication workflow", () => {
     expect(workflow).toContain("git add publication-artifacts");
     expect(workflow).toContain('git commit -m "Automated daily content update: $today"');
     expect(workflow).toContain("git push origin HEAD:main");
+    expect(workflow).toContain('published_sha=$(git rev-parse HEAD)');
+  });
+
+  it("waits for Vercel to deploy the exact GitHub commit and fails if deployment does not succeed", () => {
+    expect(workflow).toContain("Verify Vercel deployed the exact GitHub commit");
+    expect(workflow).toContain('PUBLISHED_SHA: ${{ steps.publish.outputs.published_sha }}');
+    expect(workflow).toContain('commits/$PUBLISHED_SHA/status');
+    expect(workflow).toContain('select(.context == "Vercel")');
+    expect(workflow).toContain('vercel_state" == "success"');
+    expect(workflow).toContain("Vercel did not confirm deployment");
   });
 
   it("does not trigger any agent, callback, Search Console action, or indexing step", () => {

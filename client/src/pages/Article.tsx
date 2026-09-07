@@ -4,7 +4,7 @@ import { Link, useParams } from "wouter";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Seo } from "@/components/Seo";
 import { StoryCard, type StoryCardData } from "@/components/StoryCard";
-import { bodyParagraphs, formatDate, STORY_FALLBACK_IMAGE } from "@/lib/site";
+import { bodyParagraphs, formatDate } from "@/lib/site";
 import { trpc } from "@/lib/trpc";
 
 export default function Article() {
@@ -15,9 +15,7 @@ export default function Article() {
     if (!data) return undefined;
     const origin = typeof window === "undefined" ? "" : window.location.origin;
     const canonical = `${origin}/articles/${data.story.slug}`;
-    const image = data.story.featuredImageUrl
-      ? `${origin}${data.story.featuredImageUrl}`
-      : `${origin}${STORY_FALLBACK_IMAGE}`;
+    const image = data.story.featuredImageUrl ? `${origin}${data.story.featuredImageUrl}` : null;
     return {
       "@context": "https://schema.org",
       "@type": data.story.contentType === "news" ? "NewsArticle" : "Article",
@@ -26,7 +24,7 @@ export default function Article() {
       datePublished: data.story.publishedAt?.toISOString(),
       dateModified: (data.story.modifiedAt || data.story.publishedAt)?.toISOString(),
       mainEntityOfPage: canonical,
-      image: [image],
+      ...(image ? { image: [image] } : {}),
       articleSection: data.category.name,
       author: { "@type": "Organization", name: data.story.authorName },
       publisher: { "@type": "Organization", name: "CasinoVerse", url: origin },

@@ -3,7 +3,7 @@ import { Link, useParams } from "wouter";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Seo } from "@/components/Seo";
 import { StoryCard, type StoryCardData } from "@/components/StoryCard";
-import { formatDate, STORY_FALLBACK_IMAGE } from "@/lib/site";
+import { formatDate } from "@/lib/site";
 import { trpc } from "@/lib/trpc";
 import { internalReferencePath } from "@/lib/internalSources";
 
@@ -31,7 +31,7 @@ export default function Category() {
 
   return (
     <>
-      <Seo title={data.category.name} description={data.category.description} path={`/category/${data.category.slug}`} image={lead?.story.featuredImageUrl || STORY_FALLBACK_IMAGE} />
+      <Seo title={data.category.name} description={data.category.description} path={`/category/${data.category.slug}`} image={lead?.story.featuredImageUrl || undefined} />
       <header className="category-header border-b border-gold/15">
         <div className="container py-14 md:py-24">
           <Link href="/" className="inline-flex items-center gap-2 text-sm text-ivory/45 hover:text-gold-light"><ArrowLeft className="h-4 w-4" /> Back to the latest edition</Link>
@@ -59,7 +59,7 @@ export default function Category() {
           {lead ? (
             <div className="grid gap-8 lg:grid-cols-[1.4fr_.7fr]">
               <article className="group">
-                <Link href={`/articles/${lead.story.slug}`} className="image-frame aspect-[16/9] rounded-[28px] border border-gold/15"><img src={lead.story.featuredImageUrl || STORY_FALLBACK_IMAGE} alt={lead.story.featuredImageAlt || lead.story.title} /></Link>
+                {lead.story.featuredImageUrl && <Link href={`/articles/${lead.story.slug}`} className="image-frame aspect-[16/9] rounded-[28px] border border-gold/15"><img src={lead.story.featuredImageUrl} alt={lead.story.featuredImageAlt || lead.story.title} /></Link>}
                 <div className="mt-7 flex flex-wrap items-center gap-3"><span className="eyebrow" style={{ color: data.category.accent }}>Latest in {data.category.name}</span>{lead.story.status === "developing" && <span className="status-dot">Developing</span>}</div>
                 <Link href={`/articles/${lead.story.slug}`}><h2 className="mt-4 max-w-4xl font-display text-4xl leading-[.98] text-ivory group-hover:text-gold-light md:text-6xl">{lead.story.title}</h2></Link>
                 <p className="mt-5 max-w-3xl text-base leading-7 text-ivory/55">{lead.story.dek}</p>

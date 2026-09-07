@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import { ArrowUpRight, Clock3, FileText } from "lucide-react";
-import { formatDate, STORY_FALLBACK_IMAGE } from "@/lib/site";
+import { formatDate } from "@/lib/site";
 
 export type StoryCardData = {
   story: {
@@ -45,10 +45,10 @@ export function StoryCard({ item, variant = "standard" }: { item: StoryCardData;
 
   if (variant === "horizontal") {
     return (
-      <article className="story-card group grid overflow-hidden sm:grid-cols-[180px_1fr]">
-        <Link href={`/articles/${story.slug}`} className="image-frame min-h-44 sm:min-h-full">
-          <img src={story.featuredImageUrl || STORY_FALLBACK_IMAGE} alt={story.featuredImageAlt || "CasinoVerse editorial research image"} />
-        </Link>
+      <article className={`story-card group grid overflow-hidden ${story.featuredImageUrl ? "sm:grid-cols-[180px_1fr]" : ""}`}>
+        {story.featuredImageUrl && <Link href={`/articles/${story.slug}`} className="image-frame min-h-44 sm:min-h-full">
+          <img src={story.featuredImageUrl} alt={story.featuredImageAlt || story.title} />
+        </Link>}
         <div className="p-5">
           <div className="flex flex-wrap items-center gap-2"><span className="format-label"><FormatIcon className="h-3 w-3" />{format}</span><span className="eyebrow" style={{ color: category.accent }}>{category.name}</span></div>
           <Link href={`/articles/${story.slug}`}><h3 className="mt-2 font-display text-2xl leading-tight text-ivory group-hover:text-gold-light">{story.title}</h3></Link>
@@ -61,9 +61,9 @@ export function StoryCard({ item, variant = "standard" }: { item: StoryCardData;
 
   return (
     <article className="story-card group overflow-hidden">
-      <Link href={`/articles/${story.slug}`} className="image-frame aspect-[3/2]">
-        <img src={story.featuredImageUrl || STORY_FALLBACK_IMAGE} alt={story.featuredImageAlt || "CasinoVerse editorial research image"} />
-      </Link>
+      {story.featuredImageUrl && <Link href={`/articles/${story.slug}`} className="image-frame aspect-[3/2]">
+        <img src={story.featuredImageUrl} alt={story.featuredImageAlt || story.title} />
+      </Link>}
       <div className="p-6">
         <div className="flex items-center justify-between gap-4">
           <div className="flex flex-wrap items-center gap-2"><span className="format-label"><FormatIcon className="h-3 w-3" />{format}</span><span className="eyebrow" style={{ color: category.accent }}>{category.name}</span></div>
