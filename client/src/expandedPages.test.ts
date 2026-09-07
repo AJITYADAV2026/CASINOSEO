@@ -22,26 +22,27 @@ describe("expanded editorial content", () => {
 
   it("keeps the navigation and homepage article-led", () => {
     const shell = read("client/src/components/SiteShell.tsx");
-    ["Blog", "Casino floor", "Industry", "Places & design", "Research", "Vlog"].forEach(label => expect(shell).toContain(label));
+    ["Blog", "Casino floor", "Industry", "Places & design"].forEach(label => expect(shell).toContain(label));
+    const primaryBlock = shell.slice(shell.indexOf("const primaryNavigation"), shell.indexOf("const secondaryNavigation"));
+    expect(primaryBlock).not.toContain('"Research"');
+    expect(primaryBlock).not.toContain('"Sources"');
     ["Games", "History", "Culture", "Destinations", "Facts", "Gallery", "Guides", "Responsible"].forEach(label => expect(shell).toContain(label));
     const home = read("client/src/pages/Home.tsx");
-    ["The opening table", "Inside the house", "Rules of play", "The casino floor", "Industry & rules", "Places & design", "The research vault"].forEach(label => expect(home).toContain(label));
+    ["The opening table", "Inside the house", "Rules of play", "The casino floor", "Industry & rules", "Places & design", "The evidence desk"].forEach(label => expect(home).toContain(label));
     expect(home).toContain("Editorial briefing");
     expect(home).toContain("The Blog in your inbox");
     expect(home).toContain("No bonuses, betting offers, or affiliate promotions");
   });
 
-  it("labels written editorial work as Blog and reserves Vlog for genuine video", () => {
+  it("keeps the public publication Blog-led and removes the Vlogs surface", () => {
     const articles = read("client/src/pages/Articles.tsx");
     expect(articles).toContain('<Seo title="Blog"');
     expect(articles).toContain('<span className="format-label">Blog</span>');
 
     const article = read("client/src/pages/Article.tsx");
-    expect(article).toContain('data.story.contentType === "video" ? "Vlog" : "Blog"');
-
-    const vlogs = read("client/src/pages/Vlogs.tsx");
-    expect(vlogs).toContain("No published episodes");
-    expect(vlogs).toContain("Captions and transcripts");
+    expect(article).toContain('<span className="format-label">Blog</span>');
+    expect(fs.existsSync(path.join(root, "client/src/pages/Vlogs.tsx"))).toBe(false);
+    expect(read("client/src/App.tsx")).not.toContain('/vlogs');
   });
 
   it("restores Gallery focus to the originating card after the lightbox closes", () => {
@@ -51,11 +52,11 @@ describe("expanded editorial content", () => {
     expect(gallery).toContain("lastTriggerRef.current?.focus()");
   });
 
-  it("keeps all twenty new image assignments unique", () => {
+  it("keeps all remaining expanded image assignments unique", () => {
     const values = Object.values(EXPANDED_IMAGES);
-    expect(values).toHaveLength(20);
+    expect(values).toHaveLength(19);
     expect(new Set(values).size).toBe(values.length);
-    ["articles", "history", "culture", "destinations", "vlogs", "facts", "gallery", "poker", "blackjack", "roulette", "baccarat", "slots"].forEach(key => {
+    ["articles", "history", "culture", "destinations", "facts", "gallery", "poker", "blackjack", "roulette", "baccarat", "slots"].forEach(key => {
       expect(EXPANDED_IMAGES[key as keyof typeof EXPANDED_IMAGES]).toContain("cv-casino-editorial-");
     });
   });

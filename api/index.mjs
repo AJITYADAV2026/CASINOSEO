@@ -1899,10 +1899,8 @@ function buildSitemapDocument(origin2, data) {
     "/games/slots",
     "/guides",
     "/history",
-    "/history/archive",
     "/culture",
     "/destinations",
-    "/vlogs",
     "/facts",
     "/gallery",
     "/sources",
@@ -1917,8 +1915,7 @@ function buildSitemapDocument(origin2, data) {
     ...staticPaths.map((path2) => ({ path: path2, modified: void 0 })),
     ...data.categories.map((category) => ({ path: `/category/${category.slug}`, modified: category.updatedAt })),
     ...data.stories.filter((item) => item.story.status === "published").map((item) => ({ path: `/articles/${item.story.slug}`, modified: item.story.modifiedAt ?? item.story.publishedAt ?? void 0 })),
-    ...data.digests.filter((digest) => digest.status !== "developing").map((digest) => ({ path: `/archive/${digest.digestDate}`, modified: digest.modifiedAt ?? digest.publishedAt ?? void 0 })),
-    ...(data.historicalRecords ?? []).map((record) => ({ path: `/history/archive/${record.slug}`, modified: record.updatedAt }))
+    ...data.digests.filter((digest) => digest.status !== "developing").map((digest) => ({ path: `/archive/${digest.digestDate}`, modified: digest.modifiedAt ?? digest.publishedAt ?? void 0 }))
   ];
   const body = urls.map((item) => `<url><loc>${xml(origin2 + item.path)}</loc>${item.modified ? `<lastmod>${item.modified.toISOString()}</lastmod>` : ""}</url>`).join("");
   return `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${body}</urlset>`;
@@ -2262,8 +2259,8 @@ Disallow: /search${sitemap}
   app2.get("/sitemap.xml", async (_req, res) => {
     const origin2 = publicationOrigin();
     if (!origin2) return res.status(503).type("text/plain").send("CANONICAL_ORIGIN is not configured");
-    const [{ categories: categoryRows, stories: storyRows }, digests, historicalRecords2] = await Promise.all([getHomepageContent(), getArchive(), getHistoricalArchive()]);
-    res.set("Cache-Control", "public, max-age=900").type("application/xml").send(buildSitemapDocument(origin2, { categories: categoryRows, stories: storyRows, digests, historicalRecords: historicalRecords2 }));
+    const [{ categories: categoryRows, stories: storyRows }, digests] = await Promise.all([getHomepageContent(), getArchive()]);
+    res.set("Cache-Control", "public, max-age=900").type("application/xml").send(buildSitemapDocument(origin2, { categories: categoryRows, stories: storyRows, digests }));
   });
   app2.get("/news-sitemap.xml", async (_req, res) => {
     const origin2 = publicationOrigin();

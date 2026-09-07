@@ -12,34 +12,36 @@ const read = (relative: string) => fs.readFileSync(path.join(root, relative), "u
 describe("expanded multi-page publication", () => {
   it("registers every expanded route and article-led page", () => {
     const app = read("client/src/App.tsx");
-    const routes = ["/articles", "/games/:slug", "/history", "/culture", "/destinations", "/vlogs", "/facts", "/gallery", "/privacy", "/disclaimer", "/terms"];
+    const routes = ["/articles", "/games/:slug", "/history", "/culture", "/destinations", "/facts", "/gallery", "/privacy", "/disclaimer", "/terms"];
     routes.forEach(route => expect(app).toContain(`path={\"${route}\"}`));
+    expect(app).not.toContain('path={"/vlogs"}');
+    expect(app).not.toContain('path={"/history/archive"}');
   });
 
   it("includes every expanded public route in the dynamic sitemap", () => {
     const xml = buildSitemapDocument("https://example.test", { categories: [], stories: [], digests: [] });
-    const routes = ["/articles", "/games/poker", "/games/blackjack", "/games/roulette", "/games/baccarat", "/games/slots", "/history", "/culture", "/destinations", "/vlogs", "/facts", "/gallery", "/privacy", "/disclaimer", "/terms"];
+    const routes = ["/articles", "/games/poker", "/games/blackjack", "/games/roulette", "/games/baccarat", "/games/slots", "/history", "/culture", "/destinations", "/facts", "/gallery", "/privacy", "/disclaimer", "/terms"];
     routes.forEach(route => expect(xml).toContain(`<loc>https://example.test${route}</loc>`));
     expect(xml).not.toContain("/search</loc>");
+    expect(xml).not.toContain("/vlogs</loc>");
+    expect(xml).not.toContain("/history/archive");
   });
 
   it("uses distinct expanded hero and gallery assets", () => {
     const assets = read("client/src/lib/expandedContent.ts");
     const values = [...assets.matchAll(/:\s*"(\/manus-storage\/[^"]+)"/g)].map(match => match[1]);
-    expect(values).toHaveLength(20);
+    expect(values).toHaveLength(19);
     expect(new Set(values).size).toBe(values.length);
   });
 
   it("keeps every expanded page informative and source-visible", () => {
-    const pages = ["Articles", "GameDetail", "History", "Culture", "Destinations", "Vlogs", "Facts", "Gallery"];
+    const pages = ["Articles", "GameDetail", "History", "Culture", "Destinations", "Facts", "Gallery"];
     pages.forEach(page => {
       const source = read(`client/src/pages/${page}.tsx`);
       expect(source).toContain("<h1");
       expect(source).toContain("ResearchReferences");
     });
-    const vlogs = read("client/src/pages/Vlogs.tsx");
-    expect(vlogs).toContain("has not published original video episodes yet");
-    expect(vlogs).not.toMatch(/views|subscribers/i);
+    expect(fs.existsSync(path.join(root, "client/src/pages/Vlogs.tsx"))).toBe(false);
     const gallery = read("client/src/pages/Gallery.tsx");
     expect(gallery.match(/Editorial illustration/g)?.length).toBeGreaterThanOrEqual(3);
   });
@@ -62,8 +64,6 @@ describe("expanded multi-page publication", () => {
     const destinations = read("client/src/pages/Destinations.tsx");
     ["Las Vegas", "Macau", "Monte Carlo", "Singapore", "Atlantic City", "Related reporting"].forEach(value => expect(destinations).toContain(value));
 
-    const vlogs = read("client/src/pages/Vlogs.tsx");
-    ["Video desk", "Planned formats", "No published episodes", "Captions and transcripts", "Source disclosure"].forEach(value => expect(vlogs).toContain(value));
   });
 
   it("implements gallery filtering and an accessible controlled lightbox", () => {

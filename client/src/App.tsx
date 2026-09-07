@@ -20,7 +20,6 @@ import GameDetail from "./pages/GameDetail";
 import History from "./pages/History";
 import Culture from "./pages/Culture";
 import Destinations from "./pages/Destinations";
-import Vlogs from "./pages/Vlogs";
 import Facts from "./pages/Facts";
 import Gallery from "./pages/Gallery";
 import { Disclaimer, Privacy, Terms } from "./pages/LegalPages";
@@ -28,8 +27,6 @@ import Sources from "./pages/Sources";
 import SourceDetail from "./pages/SourceDetail";
 import StorySource from "./pages/StorySource";
 import Support from "./pages/Support";
-import HistoricalArchive from "./pages/HistoricalArchive";
-import HistoricalRecord from "./pages/HistoricalRecord";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -44,12 +41,9 @@ function Router() {
         <Route path={"/archive/:date"} component={Digest} />
         <Route path={"/games"} component={Games} />
         <Route path={"/games/:slug"} component={GameDetail} />
-        <Route path={"/history/archive/:slug"} component={HistoricalRecord} />
-        <Route path={"/history/archive"} component={HistoricalArchive} />
         <Route path={"/history"} component={History} />
         <Route path={"/culture"} component={Culture} />
         <Route path={"/destinations"} component={Destinations} />
-        <Route path={"/vlogs"} component={Vlogs} />
         <Route path={"/facts"} component={Facts} />
         <Route path={"/gallery"} component={Gallery} />
         <Route path={"/sources/story/:id"} component={StorySource} />

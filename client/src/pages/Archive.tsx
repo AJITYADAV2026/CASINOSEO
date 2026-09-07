@@ -25,7 +25,7 @@ export default function Archive() {
             <FileText className="h-6 w-6 text-gold" />
             <h2 className="mt-4 font-display text-2xl text-ivory">How the archive works</h2>
             <p className="mt-3 text-sm leading-6 text-ivory/50">Completed editions are marked Published. The current calendar day remains Developing until its research window closes and may receive additional verified stories.</p>
-            <Link href="/history/archive" className="mt-5 inline-flex items-center gap-2 text-sm text-gold-light">Open the 2010–2026 baseline <ArrowRight className="h-4 w-4" /></Link>
+            <p className="mt-5 border-t border-white/10 pt-5 text-sm leading-6 text-ivory/48">Each file records its research window, story status, source trail, and revision state. A missing upstream file stops downstream publication rather than allowing stale material to pass.</p>
           </div>
         </div>
       </header>

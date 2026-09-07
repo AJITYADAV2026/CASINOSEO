@@ -34,27 +34,22 @@ describe("CasinoVerse historical coverage", () => {
     });
   });
 
-  it("registers the archive and detail routes as internal article-first pages", () => {
+  it("retains historical records without exposing the removed public archive routes", () => {
     const app = read("client/src/App.tsx");
-    const archive = read("client/src/pages/HistoricalArchive.tsx");
-    const detail = read("client/src/pages/HistoricalRecord.tsx");
-    expect(app).toContain('path={"/history/archive"}');
-    expect(app).toContain('path={"/history/archive/:slug"}');
-    expect(archive).toContain("one sourced milestone for every calendar year");
-    expect(archive).toContain("Original publisher addresses are preserved as non-clickable provenance");
-    expect(detail).toContain("It is not an external navigation link");
-    expect(detail).not.toMatch(/<a[^>]+href=.?https?:\/\//i);
+    expect(app).not.toContain('path={"/history/archive"}');
+    expect(app).not.toContain('path={"/history/archive/:slug"}');
+    expect(fs.existsSync(path.join(root, "client/src/pages/HistoricalArchive.tsx"))).toBe(false);
+    expect(fs.existsSync(path.join(root, "client/src/pages/HistoricalRecord.tsx"))).toBe(false);
   });
 
-  it("includes the archive and verified milestone URLs in the site-owned sitemap", async () => {
+  it("excludes the removed archive and milestone URLs from the site-owned sitemap", async () => {
     const records = await getHistoricalArchive();
     const xml = buildSitemapDocument("https://example.test", {
       categories: [],
       stories: [],
       digests: [],
-      historicalRecords: records,
     });
-    expect(xml).toContain("<loc>https://example.test/history/archive</loc>");
-    records.forEach(record => expect(xml).toContain(`<loc>https://example.test/history/archive/${record.slug}</loc>`));
+    expect(xml).not.toContain("<loc>https://example.test/history/archive</loc>");
+    records.forEach(record => expect(xml).not.toContain(`<loc>https://example.test/history/archive/${record.slug}</loc>`));
   });
 });

@@ -3,7 +3,6 @@ export const EXPANDED_IMAGES = {
   history: "/manus-storage/cv-casino-editorial-history_ccc4b2ef.jpg",
   culture: "/manus-storage/cv-casino-editorial-culture_5603c3fa.jpg",
   destinations: "/manus-storage/cv-casino-editorial-destinations_5218f6fb.jpg",
-  vlogs: "/manus-storage/cv-casino-editorial-vlog_2990aa9a.jpg",
   facts: "/manus-storage/cv-casino-editorial-facts_992a1d46.jpg",
   gallery: "/manus-storage/cv-casino-editorial-gallery_1b96ffcc.jpg",
   poker: "/manus-storage/cv-casino-editorial-poker_d038178d.jpg",

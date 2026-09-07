@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { ArrowUpRight, Clapperboard, Clock3, FileText } from "lucide-react";
+import { ArrowUpRight, Clock3, FileText } from "lucide-react";
 import { formatDate, STORY_FALLBACK_IMAGE } from "@/lib/site";
 
 export type StoryCardData = {
@@ -22,9 +22,8 @@ export type StoryCardData = {
 
 export function StoryCard({ item, variant = "standard" }: { item: StoryCardData; variant?: "standard" | "compact" | "horizontal" }) {
   const { story, category } = item;
-  const isVlog = story.contentType === "video";
-  const FormatIcon = isVlog ? Clapperboard : FileText;
-  const format = isVlog ? "Vlog" : "Blog";
+  const FormatIcon = FileText;
+  const format = "Blog";
   if (variant === "compact") {
     return (
       <article className="group border-t border-white/12 py-5 first:border-t-0">

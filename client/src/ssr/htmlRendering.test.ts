@@ -140,10 +140,8 @@ describe("CasinoVerse HTML-first rendering", () => {
     ["/games/poker", "Poker"],
     ["/guides", "Curiosity"],
     ["/history", "How casinos became institutions"],
-    ["/history/archive", "2010"],
     ["/culture", "Casino culture beyond the gaming floor"],
     ["/destinations", "Five destinations, five different systems"],
-    ["/vlogs", "A transparent studio"],
     ["/facts", "Interesting does not mean context-free"],
     ["/gallery", "Images that explain"],
     ["/responsible-entertainment", "Keep the game"],
@@ -158,24 +156,26 @@ describe("CasinoVerse HTML-first rendering", () => {
     const result = await htmlFor(url);
     expect(result.head.notFound).not.toBe(true);
     expect(result.document).toContain('<div id="root">');
-    expect(result.document).toContain(needle);
-    expect(result.document).toContain("window.__RQ_STATE__");
+      expect(result.document).toContain(needle);
+      expect(result.document).toContain("How to use this page");
+      expect(result.document).toContain("All links stay inside CasinoVerse");
+      expect(result.document).toContain("window.__RQ_STATE__");
     expect(result.document.match(/<title>/g)).toHaveLength(1);
     expect(result.document.match(/rel="canonical"/g)).toHaveLength(1);
   });
 
-  it("renders complete dynamic article, digest, source, and history records before hydration", async () => {
+  it("renders complete dynamic article, digest, and source records before hydration", async () => {
     const cases = [
       [`/articles/${story.story.slug}`, story.story.body],
       [`/archive/${digest.digest.digestDate}`, digest.digest.title],
       [`/sources/${source.slug}`, source.description],
       ["/sources/story/1", story.sources[0].sourceTitle],
-      [`/history/archive/${historicalRecord.slug}`, historicalRecord.significance],
     ];
     for (const [url, needle] of cases) {
       const result = await htmlFor(url);
       expect(result.head.notFound, url).not.toBe(true);
       expect(result.document, url).toContain(needle);
+      expect(result.document, url).toContain("How to use this page");
       expect(result.document, url).toContain("window.__RQ_STATE__");
     }
   });
@@ -185,5 +185,13 @@ describe("CasinoVerse HTML-first rendering", () => {
     expect(result.head.notFound).toBe(true);
     expect(result.document).toContain("Page not found");
     expect(result.document).toContain('name="robots" content="noindex, follow"');
+  });
+
+  it.each(["/history/archive", `/history/archive/${historicalRecord.slug}`, "/vlogs"])("returns genuine noindex HTML for removed route %s", async url => {
+    const result = await htmlFor(url);
+    expect(result.head.notFound).toBe(true);
+    expect(result.document).toContain("Page not found");
+    expect(result.document).toContain('name="robots" content="noindex, follow"');
+    expect(result.document).not.toContain('rel="canonical" href="https://casinonews-flgw988r.manus.space/history/archive');
   });
 });

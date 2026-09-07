@@ -2,20 +2,18 @@ import { BookOpenText, ChevronRight, Menu, Search, ShieldCheck } from "lucide-re
 import { Link, useLocation } from "wouter";
 import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { CookieConsent, openCookieSettings } from "@/components/CookieConsent";
+import { PageDepth } from "@/components/PageDepth";
 
 const primaryNavigation = [
   ["Blog", "/articles", "Latest reporting"],
   ["Casino floor", "/games", "Games and mechanics"],
   ["Industry", "/category/market-intelligence", "Business and operations"],
   ["Places & design", "/destinations", "Resorts and culture"],
-  ["Research", "/archive", "Dated source files"],
-  ["Vlog", "/vlogs", "Genuine video only"],
 ] as const;
 
 const secondaryNavigation = [
   ["Games", "/games"],
   ["History", "/history"],
-  ["2010–2026", "/history/archive"],
   ["Culture", "/culture"],
   ["Destinations", "/destinations"],
   ["Facts", "/facts"],
@@ -109,7 +107,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
         </div>
       </header>
 
-      <main id="main-content">{children}</main>
+      <main id="main-content">{children}<PageDepth pathname={location} /></main>
 
       <footer className="casino-footer border-t border-gold/15 bg-[#0a0908]">
         <div className="casino-footer-rule" aria-hidden="true" />
@@ -122,8 +120,8 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
             <p className="mt-5 max-w-xs text-sm leading-6 text-ivory/55">Independent reporting from the casino floor to the regulatory file: games, operations, design, destinations, history, and harm.</p>
             <div className="mt-6 flex flex-wrap gap-2" aria-label="Publication principles"><span className="footer-chip">Source-led</span><span className="footer-chip">No wagering</span></div>
           </div>
-          <FooterGroup title="Editorial" links={[["Blog", "/articles"], ["Floor report", "/games"], ["Daily research", "/archive"], ["Vlog studio", "/vlogs"], ["Casino facts", "/facts"]]} />
-          <FooterGroup title="Casino world" links={[["Game laboratory", "/games"], ["History", "/history"], ["2010–2026 timeline", "/history/archive"], ["Culture & design", "/culture"], ["Destinations", "/destinations"], ["Visual gallery", "/gallery"]]} />
+          <FooterGroup title="Editorial" links={[["Blog", "/articles"], ["Floor report", "/games"], ["Daily research", "/archive"], ["Source library", "/sources"], ["Casino facts", "/facts"]]} />
+          <FooterGroup title="Casino world" links={[["Game laboratory", "/games"], ["History", "/history"], ["Culture & design", "/culture"], ["Destinations", "/destinations"], ["Visual gallery", "/gallery"]]} />
           <FooterGroup title="Publication" links={[["About CasinoVerse", "/about"], ["Editorial standards", "/about#standards"], ["Source library", "/sources"], ["Guides", "/guides"], ["Privacy", "/privacy"], ["Disclaimer", "/disclaimer"], ["Terms", "/terms"], ["Contact", "/about#contact"]]} />
           <div>
             <h2 className="eyebrow">Responsible play desk</h2>

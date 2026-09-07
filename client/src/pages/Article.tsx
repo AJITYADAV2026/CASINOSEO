@@ -60,7 +60,7 @@ export default function Article() {
           <div className="container py-12 md:py-20">
             <Link href={`/category/${data.category.slug}`} className="inline-flex items-center gap-2 text-sm text-ivory/50 hover:text-gold-light"><ArrowLeft className="h-4 w-4" /> Back to {data.category.name}</Link>
             <div className="mt-10 flex flex-wrap items-center gap-3">
-              <span className="format-label">{data.story.contentType === "video" ? "Vlog" : "Blog"}</span>
+              <span className="format-label">Blog</span>
               <span className="eyebrow" style={{ color: data.category.accent }}>{data.category.name}</span>
               {data.story.status === "developing" && <span className="status-dot">Developing story</span>}
             </div>

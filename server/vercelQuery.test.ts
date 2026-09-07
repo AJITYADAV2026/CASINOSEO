@@ -22,7 +22,7 @@ describe("Vercel request query shim", () => {
   });
 
   it("installs an empty query object for requests without a query string", () => {
-    const req = { url: "/history/archive" } as IncomingMessage;
+    const req = { url: "/history" } as IncomingMessage;
     installVercelQuery(req);
     expect((req as IncomingMessage & { query: Record<string, string> }).query).toEqual({});
   });
