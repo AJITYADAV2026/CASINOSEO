@@ -215,3 +215,11 @@
 - [x] Update only Agent 1’s active schedule configuration if any required instruction is missing, without triggering Agent 1 or changing its timing, connectors, or isolated execution mode. No update was required, so no schedule mutation occurred.
 - [x] Verify Agents 2 and 3 remain separate at 2:00 AM and 2:30 AM IST, the delivery monitor remains at 12:15 AM IST, and Agent 4 remains absent or paused.
 - [x] Record the final Agent 1 configuration outcome without claiming any scheduled execution occurred during this review.
+- [x] Determine the current IST date and audit today’s durable Agent 1 digest, Agent 2 Site Find report, Agent 3 URL manifest, dynamic sitemap state, and execution logs without treating schedule configuration as proof of execution.
+- [x] If any required stage is genuinely missing or failed, recover only the missing stage in strict Agent 1 → Agent 2 → Agent 3 order, requiring same-day durable upstream output and never running agents concurrently.
+- [x] Reconcile the user’s requested dated filenames with the existing database-backed durable artifact routes and dynamic sitemap architecture without replacing crawlable dynamic behavior with fragile local files.
+- [x] Design a secure post-Agent-3 GitHub publication mechanism that does not embed GitHub credentials in the website runtime, preserves GitHub as source of truth, and lets Vercel deploy automatically.
+- [x] Implement and test any required pipeline, callback, export, or publication changes with idempotency, fail-closed sequencing, clear execution logs, and no Agent 4 indexing.
+- [x] Verify daily schedules for Agent 1, Agent 2, Agent 3, and the Agent 1 delivery monitor remain persistent and correctly separated in IST.
+- [ ] Verify the latest automated GitHub push reaches `AJITYADAV2026/CASINOSEO` `main`, the matching Vercel deployment becomes Ready, and production pages, images, SSR, dynamic data, and runtime logs remain healthy.
+- [ ] Document today’s file/artifact status, any recovery performed, GitHub/Vercel publication status, and exact remaining operational caveats without fabricating agent success.

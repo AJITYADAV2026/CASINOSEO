@@ -9,7 +9,15 @@ import {
   stories,
   storySources,
 } from "../drizzle/schema";
-import { getArchive, getDb, getDigestByDate, getHistoricalArchive, getHomepageContent } from "./db";
+import {
+  getArchive,
+  getDb,
+  getDigestByDate,
+  getHistoricalArchive,
+  getHomepageContent,
+  getSiteFindReportByDate,
+  getUrlManifestByDate,
+} from "./db";
 import { notifyOwner } from "./_core/notification";
 import { previousIsoCalendarDate, runContentAnalysis } from "./contentAnalysis";
 import { runPageCreation } from "./pageCreation";
@@ -464,6 +472,30 @@ export function registerPublicationRoutes(app: Express) {
       .set("Content-Disposition", `inline; filename="CasinoVerse-${date.data}.md"`)
       .type("text/markdown; charset=utf-8")
       .send(data.digest.markdownArtifact);
+  });
+
+  app.get("/site-find/:date.md", async (req, res) => {
+    const date = z.string().regex(/^\d{4}-\d{2}-\d{2}$/).safeParse(req.params.date);
+    if (!date.success) return res.status(404).type("text/plain").send("Site Find report not found");
+    const report = await getSiteFindReportByDate(date.data);
+    if (!report?.markdownArtifact) return res.status(404).type("text/plain").send("Site Find report not found");
+    return res
+      .set("Cache-Control", report.status === "completed" ? "public, max-age=900" : "no-cache")
+      .set("Content-Disposition", `inline; filename="SITE FIND ${date.data}.md"`)
+      .type("text/markdown; charset=utf-8")
+      .send(report.markdownArtifact);
+  });
+
+  app.get("/url-manifests/:date.md", async (req, res) => {
+    const date = z.string().regex(/^\d{4}-\d{2}-\d{2}$/).safeParse(req.params.date);
+    if (!date.success) return res.status(404).type("text/plain").send("URL manifest not found");
+    const manifest = await getUrlManifestByDate(date.data);
+    if (!manifest?.markdownArtifact) return res.status(404).type("text/plain").send("URL manifest not found");
+    return res
+      .set("Cache-Control", manifest.status === "completed" ? "public, max-age=900" : "no-cache")
+      .set("Content-Disposition", `inline; filename="URL+${date.data}.md"`)
+      .type("text/markdown; charset=utf-8")
+      .send(manifest.markdownArtifact);
   });
 
   app.post("/api/scheduled/daily-digest", scheduledDailyDigest);

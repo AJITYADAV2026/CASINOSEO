@@ -2,7 +2,7 @@ import { eq } from "drizzle-orm";
 import { describe, expect, it } from "vitest";
 import { dailyDigests, publicationJobs, stories, storySources } from "../drizzle/schema";
 import { getDb } from "./db";
-import { digestPayloadSchema, persistScheduledDigest } from "./publicationRoutes";
+import { digestPayloadSchema, persistScheduledDigest, registerPublicationRoutes } from "./publicationRoutes";
 
 const basePayload = {
   digestDate: "2026-09-03",
@@ -80,4 +80,27 @@ describe("scheduled daily digest payload", () => {
     expect(rolledBackDigest).toBeUndefined();
     expect(rolledBackStory).toBeUndefined();
   }, 20_000);
+});
+
+describe("durable pipeline artifact routes", () => {
+  it("registers dated Markdown routes with the exact export filenames expected by the GitHub publisher", () => {
+    const routes: Array<{ path: string; handler: Function }> = [];
+    const app = {
+      get: (path: string, handler: Function) => routes.push({ path, handler }),
+      post: () => undefined,
+    };
+
+    registerPublicationRoutes(app as never);
+
+    expect(routes.map(route => route.path)).toEqual(expect.arrayContaining([
+      "/research/:date.md",
+      "/site-find/:date.md",
+      "/url-manifests/:date.md",
+      "/sitemap.xml",
+    ]));
+
+    const source = registerPublicationRoutes.toString();
+    expect(source).toContain('filename="SITE FIND ${date.data}.md"');
+    expect(source).toContain('filename="URL+${date.data}.md"');
+  });
 });

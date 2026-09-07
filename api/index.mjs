@@ -596,6 +596,12 @@ async function getStoryCatalogForAnalysis() {
     modifiedAt: stories.modifiedAt
   }).from(stories).innerJoin(categories, eq(stories.categoryId, categories.id)).orderBy(desc(stories.publishedAt));
 }
+async function getSiteFindReportByDate(reportDate) {
+  const db = await getDb();
+  if (!db) return void 0;
+  const rows = await db.select().from(siteFindReports).where(eq(siteFindReports.reportDate, reportDate)).limit(1);
+  return rows[0];
+}
 function selectLatestSiteFindForPublishing(rows, includeDraft = false) {
   const allowed = includeDraft ? /* @__PURE__ */ new Set(["completed", "draft"]) : /* @__PURE__ */ new Set(["completed"]);
   return [...rows].filter((row) => allowed.has(row.status) && Boolean(row.markdownArtifact.trim())).sort((left, right) => right.reportDate.localeCompare(left.reportDate) || right.updatedAt.getTime() - left.updatedAt.getTime())[0];
@@ -606,6 +612,12 @@ async function getLatestSiteFindForPublishing(includeDraft = false) {
   const allowedStatuses = includeDraft ? ["completed", "draft"] : ["completed"];
   const rows = await db.select().from(siteFindReports).where(inArray(siteFindReports.status, allowedStatuses)).orderBy(desc(siteFindReports.reportDate), desc(siteFindReports.updatedAt)).limit(20);
   return selectLatestSiteFindForPublishing(rows, includeDraft);
+}
+async function getUrlManifestByDate(manifestDate) {
+  const db = await getDb();
+  if (!db) return void 0;
+  const rows = await db.select().from(urlManifests).where(eq(urlManifests.manifestDate, manifestDate)).limit(1);
+  return rows[0];
 }
 var _db, publicStoryStatuses;
 var init_db = __esm({
@@ -2275,6 +2287,20 @@ Disallow: /search${sitemap}
     const data = await getDigestByDate(date2.data);
     if (!data?.digest.markdownArtifact) return res.status(404).type("text/plain").send("Research edition not found");
     res.set("Cache-Control", data.digest.status === "developing" ? "no-cache" : "public, max-age=900").set("Content-Disposition", `inline; filename="CasinoVerse-${date2.data}.md"`).type("text/markdown; charset=utf-8").send(data.digest.markdownArtifact);
+  });
+  app2.get("/site-find/:date.md", async (req, res) => {
+    const date2 = z5.string().regex(/^\d{4}-\d{2}-\d{2}$/).safeParse(req.params.date);
+    if (!date2.success) return res.status(404).type("text/plain").send("Site Find report not found");
+    const report = await getSiteFindReportByDate(date2.data);
+    if (!report?.markdownArtifact) return res.status(404).type("text/plain").send("Site Find report not found");
+    return res.set("Cache-Control", report.status === "completed" ? "public, max-age=900" : "no-cache").set("Content-Disposition", `inline; filename="SITE FIND ${date2.data}.md"`).type("text/markdown; charset=utf-8").send(report.markdownArtifact);
+  });
+  app2.get("/url-manifests/:date.md", async (req, res) => {
+    const date2 = z5.string().regex(/^\d{4}-\d{2}-\d{2}$/).safeParse(req.params.date);
+    if (!date2.success) return res.status(404).type("text/plain").send("URL manifest not found");
+    const manifest = await getUrlManifestByDate(date2.data);
+    if (!manifest?.markdownArtifact) return res.status(404).type("text/plain").send("URL manifest not found");
+    return res.set("Cache-Control", manifest.status === "completed" ? "public, max-age=900" : "no-cache").set("Content-Disposition", `inline; filename="URL+${date2.data}.md"`).type("text/markdown; charset=utf-8").send(manifest.markdownArtifact);
   });
   app2.post("/api/scheduled/daily-digest", scheduledDailyDigest);
   app2.post("/api/scheduled/agent-1-delivery-monitor", scheduledAgent1Monitor);

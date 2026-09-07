@@ -120,11 +120,11 @@ describe("Agent 2 content analysis", () => {
     expect(rolledBack).toBeUndefined();
   }, 20_000);
 
-  it("registers no public Site Find page or artifact route", () => {
+  it("registers the dated Site Find export route without creating a navigable HTML page", () => {
     const app = express();
     registerPublicationRoutes(app);
     const paths = (app as unknown as { _router?: { stack?: Array<{ route?: { path?: string } }> } })._router?.stack?.map(layer => layer.route?.path).filter(Boolean) ?? [];
-    expect(paths).not.toContain("/site-find/:date.md");
+    expect(paths).toContain("/site-find/:date.md");
     expect(paths).not.toContain("/site-find/:date");
     expect(paths).toContain("/api/scheduled/content-analysis");
   });
@@ -146,7 +146,8 @@ describe("Agent 2 content analysis", () => {
       expect(robots.status).toBe(200);
       expect(sitemap.status).toBe(200);
       expect(newsSitemap.status).toBe(200);
-      expect(siteFind.status).toBe(404);
+      expect(siteFind.status).toBe(200);
+      expect(siteFind.headers.get("content-type")).toContain("text/markdown");
       expect(await robots.text()).not.toContain("site-find");
       expect(await sitemap.text()).not.toContain("site-find");
       expect(await newsSitemap.text()).not.toContain("site-find");
