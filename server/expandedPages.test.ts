@@ -80,7 +80,7 @@ describe("expanded multi-page publication", () => {
     const legal = read("client/src/pages/LegalPages.tsx");
     expect(legal).toContain("does not load until a visitor selects Accept analytics");
     expect(legal).toContain("not a casino, wagering service");
-    expect(legal).toContain("Evidence links open CasinoVerse-owned source records on this domain");
+    expect(legal).toContain("Evidence links open CasinooVerse-owned source records on this domain");
     expect(legal).toContain("newsletter email address");
     expect(legal).not.toContain("casinoverse.example");
   });

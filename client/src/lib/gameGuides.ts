@@ -23,7 +23,7 @@ export const GAME_GUIDES: Record<string, GameGuide> = {
     image: EXPANDED_IMAGES.poker, imageAlt: "Empty professional poker table showing seating positions, face-down cards, dealer button, and layout notes",
     introduction: [
       "Poker is a family of card games rather than one fixed ruleset. Variants combine chance in the deal with decisions about betting, folding, and interpreting incomplete information.",
-      "The game’s ancestry is debated. Historians connect modern poker to several European comparison and bluffing games rather than one proven inventor or single place of origin. CasinoVerse treats romantic origin stories as possibilities, not established fact.",
+      "The game’s ancestry is debated. Historians connect modern poker to several European comparison and bluffing games rather than one proven inventor or single place of origin. CasinooVerse treats romantic origin stories as possibilities, not established fact.",
     ],
     history: [
       { period: "16th–18th centuries", title: "European predecessors", text: "Games including Primero, Brelan, Bouillotte, and Poque developed combinations of ranked hands, betting, and bluffing." },
@@ -93,7 +93,7 @@ export const GAME_GUIDES: Record<string, GameGuide> = {
     image: EXPANDED_IMAGES.roulette, imageAlt: "European roulette wheel at rest beside its felt layout, calibration tools, and probability diagram",
     introduction: [
       "Roulette uses a rotating numbered wheel and a ball that comes to rest in one pocket. Bets are settled according to the pocket and the table layout; no previous result changes the probability of the next properly conducted spin.",
-      "Blaise Pascal is often named as the game’s inventor, but the modern casino game evolved from several European wheel and number games. CasinoVerse separates that popular story from the documentary record.",
+      "Blaise Pascal is often named as the game’s inventor, but the modern casino game evolved from several European wheel and number games. CasinooVerse separates that popular story from the documentary record.",
     ],
     history: [
       { period: "17th–18th centuries", title: "Wheel and number-game ancestry", text: "French, Italian, and English games contributed wheel mechanisms and number-betting structures." },

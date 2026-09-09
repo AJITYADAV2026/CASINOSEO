@@ -39,10 +39,10 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       <header className="site-header">
         <div className="site-header-main">
           <div className="container flex h-[82px] items-center justify-between gap-4">
-            <Link href="/" className="brand-mark" aria-label="CasinoVerse home">
+            <Link href="/" className="brand-mark" aria-label="CasinooVerse home">
               <span className="brand-orbit" aria-hidden="true">C</span>
               <span>
-                Casino<span className="text-gold">Verse</span>
+                Casinoo<span className="text-gold">Verse</span>
                 <small>The world behind the games</small>
               </span>
             </Link>
@@ -57,12 +57,12 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
 
             <div className="flex items-center gap-2">
               <Link href="/archive" className="edition-link hidden 2xl:inline-flex"><BookOpenText className="h-3.5 w-3.5" />Latest edition</Link>
-              <Link href="/search" className="icon-link" aria-label="Search CasinoVerse"><Search className="h-5 w-5" /></Link>
+              <Link href="/search" className="icon-link" aria-label="Search CasinooVerse"><Search className="h-5 w-5" /></Link>
               <Sheet>
                 <SheetTrigger asChild><button className="icon-link xl:hidden" aria-label="Open navigation menu"><Menu className="h-5 w-5" /></button></SheetTrigger>
                 <SheetContent className="overflow-y-auto border-gold/20 bg-[#11100f] text-ivory">
                   <SheetHeader>
-                    <SheetTitle className="font-display text-3xl text-ivory">Casino<span className="text-gold">Verse</span></SheetTitle>
+                    <SheetTitle className="font-display text-3xl text-ivory">Casinoo<span className="text-gold">Verse</span></SheetTitle>
                     <p className="text-sm leading-6 text-ivory/48">A research-led publication about the casino floor, the industry around it, and the risks within it.</p>
                   </SheetHeader>
                   <nav className="mt-8" aria-label="Mobile navigation">
@@ -115,14 +115,14 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           <div>
             <Link href="/" className="brand-mark">
               <span className="brand-orbit" aria-hidden="true">C</span>
-              <span>Casino<span className="text-gold">Verse</span><small>The world behind the games</small></span>
+              <span>Casinoo<span className="text-gold">Verse</span><small>The world behind the games</small></span>
             </Link>
-            <p className="mt-5 max-w-xs text-sm leading-6 text-ivory/55">Independent reporting from the casino floor to the regulatory file: games, operations, design, destinations, history, and harm.</p>
+            <p className="mt-5 max-w-xs text-sm leading-6 text-ivory/55">Independent reporting from Sikkim, India, covering the casino floor to the regulatory file: games, operations, design, destinations, history, and harm.</p>
             <div className="mt-6 flex flex-wrap gap-2" aria-label="Publication principles"><span className="footer-chip">Source-led</span><span className="footer-chip">No wagering</span></div>
           </div>
           <FooterGroup title="Editorial" links={[["Blog", "/articles"], ["Floor report", "/games"], ["Daily research", "/archive"], ["Source library", "/sources"], ["Casino facts", "/facts"]]} />
           <FooterGroup title="Casino world" links={[["Game laboratory", "/games"], ["History", "/history"], ["Culture & design", "/culture"], ["Destinations", "/destinations"], ["Visual gallery", "/gallery"]]} />
-          <FooterGroup title="Publication" links={[["About CasinoVerse", "/about"], ["Editorial standards", "/about#standards"], ["Source library", "/sources"], ["Guides", "/guides"], ["Privacy", "/privacy"], ["Disclaimer", "/disclaimer"], ["Terms", "/terms"], ["Contact", "/about#contact"]]} />
+          <FooterGroup title="Publication" links={[["About CasinooVerse", "/about"], ["Editorial standards", "/about#standards"], ["Source library", "/sources"], ["Guides", "/guides"], ["Privacy", "/privacy"], ["Disclaimer", "/disclaimer"], ["Terms", "/terms"], ["Contact", "/about#contact"]]} />
           <div>
             <h2 className="eyebrow">Responsible play desk</h2>
             <p className="mt-4 text-sm leading-6 text-ivory/55">Gambling is not a way to make money. Set time and spending limits, never chase losses, and seek local support if play causes harm.</p>
@@ -131,7 +131,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
         </div>
         <div className="border-t border-white/8">
           <div className="container flex flex-col gap-3 py-6 text-xs text-ivory/40 sm:flex-row sm:items-center sm:justify-between">
-            <p>© 2026 CasinoVerse. Informational content only.</p>
+            <p>© 2026 CasinooVerse · Sikkim, India. Informational content only.</p>
             <div className="flex flex-wrap items-center gap-3"><p>No wagering, deposits, bonuses, or real-money games are offered.</p><button type="button" className="text-gold hover:text-gold-light" onClick={openCookieSettings}>Cookie settings</button></div>
           </div>
         </div>

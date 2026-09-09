@@ -241,3 +241,10 @@
 - [x] Verify the scheduled post-Agent-3 repository publisher waits for same-day completed Agent 1, Agent 2, and Agent 3 durable artifacts, commits only real site/artifact changes to GitHub `main`, and never triggers Agents or Agent 4.
 - [x] Verify the connected Vercel project automatically deploys the exact GitHub commit produced after a completed site update, with production route, image, SSR, sitemap, and runtime-log checks passing.
 - [x] Document the image-uniqueness contract and GitHub-first deployment sequence, preserving separate agent schedules and paused indexing.
+- [x] Audit all public, SSR, metadata, structured-data, email, documentation, and test references to `CasinoVerse` and every existing location/address surface before renaming.
+- [x] Rename the public website brand consistently to `CasinooVerse` without changing repository, project, database, route, or agent identifiers that must remain stable for deployment compatibility.
+- [x] Replace the partial `Assam, India` location update with `Sikkim, India`, and add that truthful regional location to the footer, About, contact, and applicable legal/publication surfaces without fabricating a street or postal address.
+- [x] Update regression coverage and verify no visible `CasinoVerse` branding remains on public pages, while canonical URLs, agent callbacks, and automation remain operational.
+- [x] Run tests, TypeScript, Vercel build, SSR/route checks, responsive screenshots, and runtime-log validation after the brand and location update.
+- [ ] Save a checkpoint, push the update to `AJITYADAV2026/CASINOSEO` first, and verify Vercel automatically deploys the exact GitHub commit with production checks passing.
+- [x] Verify no public, metadata, test, or documentation surface retains the superseded `Assam, India` location.

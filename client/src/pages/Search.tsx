@@ -24,13 +24,13 @@ export default function Search() {
 
   return (
     <>
-      <Seo title="Search" description="Search CasinoVerse research, regulation, culture, game guides, and responsible-entertainment coverage." path="/search" image={SEARCH_HERO_IMAGE} noIndex />
+      <Seo title="Search" description="Search CasinooVerse research, regulation, culture, game guides, and responsible-entertainment coverage." path="/search" image={SEARCH_HERO_IMAGE} noIndex />
       <header className="search-header relative overflow-hidden border-b border-gold/15" style={{ backgroundImage: `linear-gradient(90deg, rgba(17,16,15,.98), rgba(17,16,15,.83) 58%, rgba(17,16,15,.32)), url(${SEARCH_HERO_IMAGE})`, backgroundSize: "cover", backgroundPosition: "center" }}>
         <div className="container py-16 md:py-24">
           <p className="eyebrow text-gold">Search the publication</p>
           <h1 className="mt-4 font-display text-[clamp(4rem,9vw,8rem)] leading-[.84] tracking-[-.045em] text-ivory">Find the context.</h1>
           <form onSubmit={submit} className="mt-10 flex max-w-4xl items-center gap-3 rounded-full border border-gold/25 bg-black/20 p-2" role="search">
-            <label htmlFor="site-search" className="sr-only">Search CasinoVerse</label>
+            <label htmlFor="site-search" className="sr-only">Search CasinooVerse</label>
             <SearchIcon className="ml-4 h-5 w-5 shrink-0 text-gold" aria-hidden="true" />
             <input id="site-search" value={input} onChange={event => setInput(event.target.value)} className="min-w-0 flex-1 bg-transparent px-2 py-3 text-lg text-ivory outline-none placeholder:text-ivory/30" placeholder="Search markets, regulation, resorts, or games" autoComplete="off" />
             <button type="submit" className="button-gold">Search</button>

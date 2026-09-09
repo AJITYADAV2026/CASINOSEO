@@ -5,7 +5,7 @@ import { Seo } from "@/components/Seo";
 export default function NotFound() {
   return (
     <>
-      <Seo title="Page not found" description="The requested CasinoVerse page could not be found." noIndex />
+      <Seo title="Page not found" description="The requested CasinooVerse page could not be found." noIndex />
       <section className="container flex min-h-[68vh] items-center py-20">
         <div className="grid w-full gap-10 lg:grid-cols-[.7fr_1.3fr] lg:items-end">
           <div>
@@ -19,7 +19,7 @@ export default function NotFound() {
             <div className="mt-8 flex flex-wrap gap-4">
               <Link href="/" className="button-gold"><ArrowLeft className="h-4 w-4" /> Latest edition</Link>
               <Link href="/archive" className="button-ghost">Research archive</Link>
-              <Link href="/search" className="button-ghost"><Search className="h-4 w-4" /> Search CasinoVerse</Link>
+              <Link href="/search" className="button-ghost"><Search className="h-4 w-4" /> Search CasinooVerse</Link>
             </div>
           </div>
         </div>

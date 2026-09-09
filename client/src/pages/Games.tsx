@@ -58,7 +58,7 @@ export default function Games() {
       <div className="container py-20">
         <ResearchReferences
           title="How to read a game guide"
-          intro="Rules describe what can happen; probability describes long-run patterns; neither predicts a short session. CasinoVerse separates fixed game mechanisms from venue-specific rules and treats any participation as risk-bearing entertainment."
+          intro="Rules describe what can happen; probability describes long-run patterns; neither predicts a short session. CasinooVerse separates fixed game mechanisms from venue-specific rules and treats any participation as risk-bearing entertainment."
           sources={[
             { name: "Arizona Department of Gaming", detail: "2026 training on gambling literacy, independent outcomes, myths, limits, and signs of harm.", href: "https://gaming.az.gov/sites/default/files/files/AZ%20Responsible%20Gaming%20-%20Modules%204-6.pdf" },
             { name: "World Health Organization", detail: "Public-health overview of gambling exposure, product risk, prevention, and harm.", href: "https://www.who.int/news-room/fact-sheets/detail/gambling" },

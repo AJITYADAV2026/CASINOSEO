@@ -13,13 +13,13 @@ function tsxFiles(directory: string): string[] {
   });
 }
 
-describe("CasinoVerse same-domain navigation", () => {
+describe("CasinooVerse same-domain navigation", () => {
   it("maps representative external provenance addresses to internal source records", () => {
     const examples = [
       ["World Health Organization", "https://www.who.int/news-room/fact-sheets/detail/gambling", "/sources/world-health-organization"],
       ["UK Gambling Commission", "https://www.gamblingcommission.gov.uk/statistics-and-research/publication/industry-statistics", "/sources/uk-gambling-commission-statistics"],
       ["W3C Web Accessibility Initiative", "https://www.w3.org/WAI/media/av/", "/sources/w3c-media-accessibility"],
-      ["CasinoVerse editorial standards", "/about#standards", "/about#standards"],
+      ["CasinooVerse editorial standards", "/about#standards", "/about#standards"],
     ] as const;
     examples.forEach(([name, address, expected]) => expect(internalReferencePath(name, address)).toBe(expected));
   });

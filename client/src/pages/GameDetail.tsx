@@ -13,7 +13,7 @@ export default function GameDetail() {
 
   return (
     <>
-      <Seo title={`${guide.name} guide`} description={guide.dek} path={`/games/${guide.slug}`} image={guide.image} jsonLd={{ "@context": "https://schema.org", "@type": "Article", headline: `${guide.name}: history, concepts and probability`, description: guide.dek, articleSection: "Game Guides", author: { "@type": "Organization", name: "CasinoVerse Research Desk" } }} />
+      <Seo title={`${guide.name} guide`} description={guide.dek} path={`/games/${guide.slug}`} image={guide.image} jsonLd={{ "@context": "https://schema.org", "@type": "Article", headline: `${guide.name}: history, concepts and probability`, description: guide.dek, articleSection: "Game Guides", author: { "@type": "Organization", name: "CasinooVerse Research Desk" } }} />
       <article>
         <header className="relative min-h-[72vh] overflow-hidden border-b border-gold/15">
           <img src={guide.image} alt={guide.imageAlt} className="absolute inset-0 h-full w-full object-cover" />
@@ -24,7 +24,7 @@ export default function GameDetail() {
               <p className="mt-8 text-xs uppercase tracking-[.24em] text-ivory/50">{guide.eyebrow}</p>
               <h1 className="mt-4 font-display text-6xl leading-[.92] text-ivory sm:text-7xl lg:text-9xl">{guide.name}</h1>
               <p className="mt-6 max-w-2xl text-xl leading-9 text-ivory/72">{guide.dek}</p>
-              <p className="mt-6 text-sm text-ivory/45">CasinoVerse Research Desk · Reviewed 3 September 2026 · Educational reference</p>
+              <p className="mt-6 text-sm text-ivory/45">CasinooVerse Research Desk · Reviewed 3 September 2026 · Educational reference</p>
             </div>
           </div>
         </header>

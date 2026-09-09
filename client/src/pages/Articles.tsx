@@ -22,7 +22,7 @@ export default function Articles() {
 
   return (
     <>
-      <Seo title="Blog" description="Explore CasinoVerse Blog reporting and explainers on casino markets, regulation, operations, culture, travel, game literacy, and responsible entertainment." path="/articles" image={EXPANDED_IMAGES.articles} />
+      <Seo title="Blog" description="Explore CasinooVerse Blog reporting and explainers on casino markets, regulation, operations, culture, travel, game literacy, and responsible entertainment." path="/articles" image={EXPANDED_IMAGES.articles} />
       <section className="casino-blog-hero relative min-h-[62vh] overflow-hidden border-b border-gold/15">
         <img src={EXPANDED_IMAGES.articles} alt="Casino editorial desk where a blackjack layout meets reporter notes, a gaming license dossier, cards, chips, and roulette detail" className="absolute inset-0 h-full w-full object-cover" />
         <div className="hero-vignette absolute inset-0" />
@@ -41,7 +41,7 @@ export default function Articles() {
 
       <section className="section-pad border-b border-white/8">
         <div className="container">
-          <SectionHeading eyebrow="The opening table" title={featured?.story.title ?? "The latest CasinoVerse research"} description={featured?.story.dek ?? "Current sourced coverage will appear here as the research desk publishes it."} />
+          <SectionHeading eyebrow="The opening table" title={featured?.story.title ?? "The latest CasinooVerse research"} description={featured?.story.dek ?? "Current sourced coverage will appear here as the research desk publishes it."} />
           {featured && <div className="mt-10"><StoryCard item={featured} variant="horizontal" /></div>}
         </div>
       </section>
@@ -71,10 +71,10 @@ export default function Articles() {
 
       <section className="section-pad bg-felt-deep"><div className="container grid gap-8 lg:grid-cols-[1fr_360px] lg:items-end"><div><p className="eyebrow text-gold">From evidence to explanation</p><h2 className="mt-3 max-w-4xl font-display text-5xl leading-tight text-ivory">Every article separates the event, the evidence, and the unresolved questions.</h2><p className="mt-5 max-w-3xl leading-8 text-ivory/60">The Blog links current developments to operating context, regulation, game mechanics, destination policy, and gambling-harm evidence. Forecasts remain forecasts, proposals remain proposals, and corrections are recorded rather than hidden.</p></div><Link href="/sources" className="research-method-card group"><span className="eyebrow text-gold">Publishers · Documents · Retrieval dates</span><h3 className="mt-4 font-display text-3xl text-ivory group-hover:text-gold-light">Inspect the source library</h3><span className="mt-7 inline-flex text-sm text-gold-light">See how evidence is retained →</span></Link></div></section>
 
-      <ResearchReferences title="How this index is assembled" intro="CasinoVerse favors original documents, regulators, company disclosures, reputable trade reporting, universities, and public-health sources. Developing stories are visibly labeled and may remain outside indexing until their reporting window closes." sources={[
+      <ResearchReferences title="How this index is assembled" intro="CasinooVerse favors original documents, regulators, company disclosures, reputable trade reporting, universities, and public-health sources. Developing stories are visibly labeled and may remain outside indexing until their reporting window closes." sources={[
         { name: "Society of Professional Journalists", detail: "Code of Ethics: verification, attribution, corrections, and minimizing harm.", href: "https://www.spj.org/ethicscode.asp" },
         { name: "Thomson Reuters Trust Principles", detail: "Independence, integrity, freedom from bias, and reliable news service.", href: "https://www.thomsonreuters.com/en/about-us/trust-principles.html" },
-        { name: "CasinoVerse editorial standards", detail: "Our sourcing, developing-story, corrections, and informational-only rules.", href: "/about#standards" },
+        { name: "CasinooVerse editorial standards", detail: "Our sourcing, developing-story, corrections, and informational-only rules.", href: "/about#standards" },
       ]} />
     </>
   );

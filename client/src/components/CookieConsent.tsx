@@ -47,7 +47,7 @@ export function CookieConsent() {
       <div className="cookie-consent__icon" aria-hidden="true"><Cookie /></div>
       <div className="cookie-consent__copy">
         <p className="eyebrow text-gold">Your privacy</p>
-        <h2 id="cookie-consent-title">Choose how CasinoVerse measures visits</h2>
+        <h2 id="cookie-consent-title">Choose how CasinooVerse measures visits</h2>
         <p id="cookie-consent-description">
           Essential storage remembers this choice. Optional, privacy-focused analytics helps us understand which research pages are useful; it loads only if you accept.
         </p>

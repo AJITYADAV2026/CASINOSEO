@@ -1,4 +1,4 @@
-export const SITE_NAME = "CasinoVerse";
+export const SITE_NAME = "CasinooVerse";
 export const SITE_DESCRIPTION =
   "Independent casino-industry research, culture, regulation, destinations, and responsible-entertainment guides.";
 

@@ -46,8 +46,8 @@ export default function ResponsibleEntertainment() {
             <SupportCard title="Add financial friction" text="Ask your bank whether it offers gambling transaction blocks. Remove saved payment methods and avoid carrying cards or cash into a venue." />
             <SupportCard title="Talk to someone early" text="A trusted person, qualified counsellor, or local gambling-harm service can help with practical, emotional, and financial next steps." />
             <div className="grid gap-3 rounded-[20px] border border-[#7893A6]/25 bg-[#14181a] p-6 sm:grid-cols-2">
-              <Link href="/support#national-problem-gambling-helpline-us" className="support-link">National Problem Gambling Helpline <ShieldCheck className="h-4 w-4" /><small>CasinoVerse internal support record</small></Link>
-              <Link href="/support#gambling-therapy-international" className="support-link">Gambling Therapy <ShieldCheck className="h-4 w-4" /><small>CasinoVerse internal support record</small></Link>
+              <Link href="/support#national-problem-gambling-helpline-us" className="support-link">National Problem Gambling Helpline <ShieldCheck className="h-4 w-4" /><small>CasinooVerse internal support record</small></Link>
+              <Link href="/support#gambling-therapy-international" className="support-link">Gambling Therapy <ShieldCheck className="h-4 w-4" /><small>CasinooVerse internal support record</small></Link>
             </div>
           </div>
         </div>
@@ -55,7 +55,7 @@ export default function ResponsibleEntertainment() {
 
       <section className="pb-24">
         <div className="container">
-          <div className="rounded-[26px] border border-gold/20 bg-[#171410] p-8 md:p-10"><p className="eyebrow text-gold">Important disclosure</p><p className="mt-4 max-w-5xl text-lg leading-8 text-ivory/62">CasinoVerse is an informational publication. We do not offer gambling, deposits, withdrawals, bonuses, odds, or real-money games. This page provides general education and is not medical or financial advice. If gambling is causing immediate danger, severe distress, or thoughts of self-harm, contact local emergency services or an appropriate crisis service now.</p><Link href="/" className="mt-6 inline-flex text-sm text-gold">Return to CasinoVerse →</Link></div>
+          <div className="rounded-[26px] border border-gold/20 bg-[#171410] p-8 md:p-10"><p className="eyebrow text-gold">Important disclosure</p><p className="mt-4 max-w-5xl text-lg leading-8 text-ivory/62">CasinooVerse is an informational publication. We do not offer gambling, deposits, withdrawals, bonuses, odds, or real-money games. This page provides general education and is not medical or financial advice. If gambling is causing immediate danger, severe distress, or thoughts of self-harm, contact local emergency services or an appropriate crisis service now.</p><Link href="/" className="mt-6 inline-flex text-sm text-gold">Return to CasinooVerse →</Link></div>
         </div>
       </section>
 

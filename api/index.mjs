@@ -1461,7 +1461,7 @@ async function analyzeDigestContent(digestMarkdown, storyCatalog) {
     messages: [
       {
         role: "system",
-        content: "You are CasinoVerse Agent 2, a precise content-analysis editor. Analyze only the supplied Agent 1 research and current story catalog. Return at most 7 decisions, only for content materially affected by this digest; never enumerate unrelated catalog items. Keep the executive summary under 75 words and source assessment under 60 words. Each rationale must be one sentence under 25 words. Each actionable decision must have exactly one compact evidence item under 20 words, preferably with the source citation number. Return at most 3 short warnings. An add decision means a new editorial content item only; never recommend creating a daily digest page, any other page, a URL, an indexing directive, or a sitemap change. The Agent 1 digest already exists and must not be proposed as a new page. Do not invent facts. Preserve uncertainty and source references. Prefer update over add when the same event already exists. Every remove decision must require human review. Return only the requested JSON schema."
+        content: "You are CasinooVerse Agent 2, a precise content-analysis editor. Analyze only the supplied Agent 1 research and current story catalog. Return at most 7 decisions, only for content materially affected by this digest; never enumerate unrelated catalog items. Keep the executive summary under 75 words and source assessment under 60 words. Each rationale must be one sentence under 25 words. Each actionable decision must have exactly one compact evidence item under 20 words, preferably with the source citation number. Return at most 3 short warnings. An add decision means a new editorial content item only; never recommend creating a daily digest page, any other page, a URL, an indexing directive, or a sitemap change. The Agent 1 digest already exists and must not be proposed as a new page. Do not invent facts. Preserve uncertainty and source references. Prefer update over add when the same event already exists. Every remove decision must require human review. Return only the requested JSON schema."
       },
       {
         role: "user",
@@ -1541,7 +1541,7 @@ ${entries}`;
   const warnings = input.analysis.warnings.length ? input.analysis.warnings.map((item) => `- ${item}`).join("\n") : "- No additional analysis warnings.";
   const references = extractReferences(input.sourceMarkdown);
   return `---
-title: "CasinoVerse Site Find \u2014 ${input.reportDate}"
+title: "CasinooVerse Site Find \u2014 ${input.reportDate}"
 reportDate: "${input.reportDate}"
 sourceDigestDate: "${input.sourceDigestDate}"
 status: "${input.sourceDigestStatus === "published" ? "completed" : "draft"}"
@@ -1553,7 +1553,7 @@ archiveCount: ${counts.archive}
 removeCount: ${counts.remove}
 ---
 
-# CasinoVerse Site Find \u2014 ${input.reportDate}
+# CasinooVerse Site Find \u2014 ${input.reportDate}
 
 > **Agent 2 scope:** Content analysis only. This report does not create pages or URLs and does not modify indexing or sitemap files. Agent 3 and Agent 4 own those later stages.
 
@@ -1583,7 +1583,7 @@ ${warnings}
 
 ## Responsible-Entertainment Safeguard
 
-CasinoVerse content must remain informational and non-promotional. No decision in this report should be interpreted as encouragement to gamble. Removal recommendations are never executed by Agent 2 and always require human or downstream editorial review.
+CasinooVerse content must remain informational and non-promotional. No decision in this report should be interpreted as encouragement to gamble. Removal recommendations are never executed by Agent 2 and always require human or downstream editorial review.
 
 ${references || "## References\n\nThe source digest did not include a separate reference block."}
 `;
@@ -1693,7 +1693,7 @@ function renderUrlManifest(input) {
   const rows = input.actions.length ? input.actions.map((action) => `| ${action.decision} | ${action.outcome} | ${tableCell2(action.title)} | ${action.storySlug ? `\`${tableCell2(action.storySlug)}\`` : "Not resolved"} | ${action.canonicalUrl ? `[Open page](${action.canonicalUrl})` : "Not created"} | ${action.pageStatus ?? "Not changed"} | ${action.sitemapIncluded ? "Included" : "Not included"} | ${tableCell2(action.note)} |`).join("\n") : "| \u2014 | retained | No material page actions | \u2014 | \u2014 | \u2014 | Not changed | Agent 2 supplied no actionable page decision. |";
   const status = input.sourceReportStatus === "completed" && count("review-required") === 0 ? "completed" : "partial";
   return `---
-title: "CasinoVerse URL Manifest \u2014 ${input.manifestDate}"
+title: "CasinooVerse URL Manifest \u2014 ${input.manifestDate}"
 manifestDate: "${input.manifestDate}"
 sourceSiteFindDate: "${input.sourceReportDate}"
 status: "${status}"
@@ -1704,7 +1704,7 @@ archivedCount: ${count("archived")}
 reviewCount: ${count("review-required")}
 ---
 
-# CasinoVerse URL Manifest \u2014 ${input.manifestDate}
+# CasinooVerse URL Manifest \u2014 ${input.manifestDate}
 
 > **Agent 3 scope:** Page creation, page updates, permanent URL recording, and dynamic sitemap state only. No search-engine indexing submission was performed.
 
@@ -1726,7 +1726,7 @@ ${rows}
 
 ## Sitemap Result
 
-CasinoVerse generates \`sitemap.xml\` dynamically from durable publication data. Published pages are included automatically, archived pages are excluded, and updated pages receive a refreshed modification timestamp.
+CasinooVerse generates \`sitemap.xml\` dynamically from durable publication data. Published pages are included automatically, archived pages are excluded, and updated pages receive a refreshed modification timestamp.
 
 ## Indexing Boundary
 
@@ -1965,7 +1965,7 @@ var storySchema = z5.object({
   body: z5.string().trim().min(80).max(2e4),
   contentType: z5.enum(["news", "analysis", "guide", "culture", "video"]).default("news"),
   categorySlug: z5.string().trim().min(1).max(96),
-  authorName: z5.string().trim().min(2).max(160).default("CasinoVerse Research Desk"),
+  authorName: z5.string().trim().min(2).max(160).default("CasinooVerse Research Desk"),
   readingMinutes: z5.number().int().min(1).max(30).default(4),
   featuredImageUrl: z5.string().max(2e3).optional(),
   featuredImageAlt: z5.string().max(280).optional(),
@@ -2251,7 +2251,7 @@ async function scheduledAgent1Monitor(req, res) {
       return res.json({ ok: true, status: "delivered", digestDate: assessment.expectedDigestDate });
     }
     const notificationSent = await notifyOwner({
-      title: `CasinoVerse Agent 1 missed ${assessment.expectedDigestDate}`,
+      title: `CasinooVerse Agent 1 missed ${assessment.expectedDigestDate}`,
       content: `The required published research edition for ${assessment.expectedDigestDate} was not present by the 12:15 AM IST delivery check. Agent 2 must stop rather than analyze stale data. Inspect Agent 1 before resuming the sequence.`
     });
     if (!notificationSent) {
@@ -2299,7 +2299,7 @@ Disallow: /search${sitemap}
     const { stories: storyRows } = await getHomepageContent();
     const cutoff = Date.now() - 48 * 60 * 60 * 1e3;
     const recent = storyRows.filter((item) => item.story.status === "published" && item.story.publishedAt && item.story.publishedAt.getTime() >= cutoff);
-    const body = recent.map((item) => `<url><loc>${xml(origin2 + `/articles/${item.story.slug}`)}</loc><news:news><news:publication><news:name>CasinoVerse</news:name><news:language>en</news:language></news:publication><news:publication_date>${item.story.publishedAt.toISOString()}</news:publication_date><news:title>${xml(item.story.title)}</news:title></news:news></url>`).join("");
+    const body = recent.map((item) => `<url><loc>${xml(origin2 + `/articles/${item.story.slug}`)}</loc><news:news><news:publication><news:name>CasinooVerse</news:name><news:language>en</news:language></news:publication><news:publication_date>${item.story.publishedAt.toISOString()}</news:publication_date><news:title>${xml(item.story.title)}</news:title></news:news></url>`).join("");
     res.set("Cache-Control", "public, max-age=900").type("application/xml").send(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">${body}</urlset>`);
   });
   app2.get("/rss.xml", async (_req, res) => {
@@ -2307,14 +2307,14 @@ Disallow: /search${sitemap}
     if (!origin2) return res.status(503).type("text/plain").send("CANONICAL_ORIGIN is not configured");
     const { stories: storyRows } = await getHomepageContent();
     const items = storyRows.filter((item) => item.story.status === "published").slice(0, 30).map((item) => `<item><title>${xml(item.story.title)}</title><link>${xml(origin2 + `/articles/${item.story.slug}`)}</link><guid>${xml(origin2 + `/articles/${item.story.slug}`)}</guid><description>${xml(item.story.dek)}</description>${item.story.publishedAt ? `<pubDate>${item.story.publishedAt.toUTCString()}</pubDate>` : ""}<category>${xml(item.category.name)}</category></item>`).join("");
-    res.set("Cache-Control", "public, max-age=900").type("application/rss+xml").send(`<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>CasinoVerse</title><link>${xml(origin2)}</link><description>${xml("Independent casino-industry research, culture, regulation, and responsible entertainment.")}</description>${items}</channel></rss>`);
+    res.set("Cache-Control", "public, max-age=900").type("application/rss+xml").send(`<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>CasinooVerse</title><link>${xml(origin2)}</link><description>${xml("Independent casino-industry research, culture, regulation, and responsible entertainment.")}</description>${items}</channel></rss>`);
   });
   app2.get("/research/:date.md", async (req, res) => {
     const date2 = z5.string().regex(/^\d{4}-\d{2}-\d{2}$/).safeParse(req.params.date);
     if (!date2.success) return res.status(404).type("text/plain").send("Research edition not found");
     const data = await getDigestByDate(date2.data);
     if (!data?.digest.markdownArtifact) return res.status(404).type("text/plain").send("Research edition not found");
-    res.set("Cache-Control", data.digest.status === "developing" ? "no-cache" : "public, max-age=900").set("Content-Disposition", `inline; filename="CasinoVerse-${date2.data}.md"`).type("text/markdown; charset=utf-8").send(data.digest.markdownArtifact);
+    res.set("Cache-Control", data.digest.status === "developing" ? "no-cache" : "public, max-age=900").set("Content-Disposition", `inline; filename="CasinooVerse-${date2.data}.md"`).type("text/markdown; charset=utf-8").send(data.digest.markdownArtifact);
   });
   app2.get("/site-find/:date.md", async (req, res) => {
     const date2 = z5.string().regex(/^\d{4}-\d{2}-\d{2}$/).safeParse(req.params.date);
@@ -2528,7 +2528,7 @@ async function buildSsrPrefetch(req, res) {
 
 // server/_core/staticSsr.ts
 var CANONICAL_ORIGIN = (process.env.CANONICAL_ORIGIN ?? "").replace(/\/$/, "");
-var SITE_NAME = process.env.SITE_NAME ?? "CasinoVerse";
+var SITE_NAME = process.env.SITE_NAME ?? "CasinooVerse";
 var DEFAULT_DESCRIPTION = "Independent casino-industry research, culture, regulation, destinations, and responsible-entertainment guides.";
 var escapeHtml = (value) => value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 var clampText = (value, max) => {

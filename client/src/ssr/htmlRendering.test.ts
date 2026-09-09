@@ -22,12 +22,12 @@ const story = {
     id: 1,
     slug: "verified-casino-market-record",
     title: "Verified casino market record",
-    dek: "A source-attributed CasinoVerse article rendered in the initial HTML response.",
+    dek: "A source-attributed CasinooVerse article rendered in the initial HTML response.",
     body: "This complete article body is present before client-side JavaScript executes.",
     contentType: "news",
     status: "published",
     categoryId: 1,
-    authorName: "CasinoVerse Research Desk",
+    authorName: "CasinooVerse Research Desk",
     readingMinutes: 3,
     featuredImageUrl: "/manus-storage/story.jpg",
     featuredImageAlt: "Casino research desk",
@@ -55,10 +55,10 @@ const digest = {
   digest: {
     id: 1,
     digestDate: "2026-09-03",
-    title: "CasinoVerse research edition — 3 September 2026",
+    title: "CasinooVerse research edition — 3 September 2026",
     summary: "A complete source-attributed daily research edition.",
     body: "Daily research body rendered into HTML.",
-    markdownArtifact: "# CasinoVerse research edition",
+    markdownArtifact: "# CasinooVerse research edition",
     status: "published",
     createdAt: now,
     updatedAt: now,
@@ -71,7 +71,7 @@ const source = {
   slug: "casino-regulator",
   name: "Casino Regulator",
   publicationLabel: "Official records",
-  description: "An internal CasinoVerse provenance record.",
+  description: "An internal CasinooVerse provenance record.",
   sourceType: "regulator",
   originalUrl: "https://example.test/source",
   accessedAt: now,
@@ -89,7 +89,7 @@ const historicalRecord = {
   title: "Verified 2010 casino-industry milestone",
   desk: "industry_and_regulation",
   jurisdiction: "International",
-  summary: "A verified milestone in the CasinoVerse historical database.",
+  summary: "A verified milestone in the CasinooVerse historical database.",
   significance: "It establishes the beginning of the year-by-year archive.",
   sourceCatalogId: 1,
   sourceName: "Casino Regulator",
@@ -130,7 +130,7 @@ async function htmlFor(url: string) {
   return { ...result, document: composeHtml(template, result.html, result.head, result.dehydratedState) };
 }
 
-describe("CasinoVerse HTML-first rendering", () => {
+describe("CasinooVerse HTML-first rendering", () => {
   it.each([
     ["/", "Inside the house"],
     ["/articles", "Casino reporting beyond the lights"],
@@ -151,14 +151,14 @@ describe("CasinoVerse HTML-first rendering", () => {
     ["/privacy", "Privacy Policy"],
     ["/disclaimer", "Disclaimer"],
     ["/terms", "Terms of Use"],
-    ["/search?q=casino", "Search CasinoVerse"],
+    ["/search?q=casino", "Search CasinooVerse"],
   ])("renders primary %s content inside the initial HTML document", async (url, needle) => {
     const result = await htmlFor(url);
     expect(result.head.notFound).not.toBe(true);
     expect(result.document).toContain('<div id="root">');
       expect(result.document).toContain(needle);
       expect(result.document).toContain("How to use this page");
-      expect(result.document).toContain("All links stay inside CasinoVerse");
+      expect(result.document).toContain("All links stay inside CasinooVerse");
       expect(result.document).toContain("window.__RQ_STATE__");
     expect(result.document.match(/<title>/g)).toHaveLength(1);
     expect(result.document.match(/rel="canonical"/g)).toHaveLength(1);

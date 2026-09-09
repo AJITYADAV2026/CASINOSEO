@@ -15,7 +15,7 @@ function mockPrefetch(overrides: Partial<SsrPrefetch> = {}): SsrPrefetch {
       contentType: "news" as const,
       status: "developing" as const,
       categoryId: 1,
-      authorName: "CasinoVerse Research Desk",
+      authorName: "CasinooVerse Research Desk",
       readingMinutes: 3,
       featuredImageUrl: "/manus-storage/story.jpg",
       featuredImageAlt: "Editorial scene",
@@ -54,7 +54,7 @@ function mockPrefetch(overrides: Partial<SsrPrefetch> = {}): SsrPrefetch {
   } as SsrPrefetch;
 }
 
-describe("CasinoVerse SSR prefetch", () => {
+describe("CasinooVerse SSR prefetch", () => {
   it("seeds homepage data under the exact tRPC query key", async () => {
     const qc = new QueryClient();
     const p = mockPrefetch();

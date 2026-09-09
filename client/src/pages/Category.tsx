@@ -37,7 +37,7 @@ export default function Category() {
           <Link href="/" className="inline-flex items-center gap-2 text-sm text-ivory/45 hover:text-gold-light"><ArrowLeft className="h-4 w-4" /> Back to the latest edition</Link>
           <div className="mt-12 grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
             <div>
-              <p className="eyebrow" style={{ color: data.category.accent }}>CasinoVerse topic</p>
+              <p className="eyebrow" style={{ color: data.category.accent }}>CasinooVerse topic</p>
               <h1 className="mt-4 font-display text-[clamp(3.6rem,9vw,8.5rem)] leading-[.82] tracking-[-.05em] text-ivory">{data.category.name}</h1>
               <p className="mt-7 max-w-2xl text-xl leading-8 text-ivory/58">{data.category.description}</p>
             </div>

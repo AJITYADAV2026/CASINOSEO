@@ -27,7 +27,7 @@ export default function Article() {
       ...(image ? { image: [image] } : {}),
       articleSection: data.category.name,
       author: { "@type": "Organization", name: data.story.authorName },
-      publisher: { "@type": "Organization", name: "CasinoVerse", url: origin },
+      publisher: { "@type": "Organization", name: "CasinooVerse", url: origin },
     };
   }, [data]);
 
@@ -85,7 +85,7 @@ export default function Article() {
               <section className="mt-16 border-t border-gold/20 pt-9" aria-labelledby="sources-heading">
                 <p className="eyebrow text-gold">Research transparency</p>
                 <h2 id="sources-heading" className="mt-3 font-display text-3xl text-ivory">Original sources</h2>
-                <p className="mt-3 max-w-2xl text-sm leading-6 text-ivory/50">CasinoVerse summarizes and contextualizes reporting. Open each internal source record to inspect the publisher, title, dates, source type, and stored provenance address without leaving CasinoVerse.</p>
+                <p className="mt-3 max-w-2xl text-sm leading-6 text-ivory/50">CasinooVerse summarizes and contextualizes reporting. Open each internal source record to inspect the publisher, title, dates, source type, and stored provenance address without leaving CasinooVerse.</p>
                 <ol className="mt-7 space-y-3">
                   {data.sources.map((source, index) => (
                     <li key={source.id}>

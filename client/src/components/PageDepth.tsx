@@ -24,10 +24,10 @@ const detail = (
 const HOME = detail(
   "Reader orientation",
   "A publication map, not a casino lobby.",
-  "CasinoVerse is organized around evidence and explanation. The homepage introduces the main editorial desks; this guide explains how those desks connect and what a reader should expect before opening a story.",
+  "CasinooVerse is organized around evidence and explanation. The homepage introduces the main editorial desks; this guide explains how those desks connect and what a reader should expect before opening a story.",
   [
     { title: "Start with the claim", body: "News and analysis pages identify what happened, where it happened, and whether the information is a confirmed result, a proposal, a forecast, or a developing dispute." },
-    { title: "Follow the evidence", body: "Article source links remain on CasinoVerse and open stored provenance records showing the publisher, source title, type, dates, and original address as non-clickable audit data." },
+    { title: "Follow the evidence", body: "Article source links remain on CasinooVerse and open stored provenance records showing the publisher, source title, type, dates, and original address as non-clickable audit data." },
     { title: "Keep risk visible", body: "Game mechanics, market reporting, travel context, and resort design are never presented as reasons to gamble. Loss, access controls, and support routes remain part of the editorial frame." },
   ],
   ["Use the Blog for current reporting and long-form explainers.", "Use Daily Research for date-bounded source files and revision status.", "Use Sources and About to inspect provenance, standards, corrections, and scope."],
@@ -36,7 +36,7 @@ const HOME = detail(
 
 const ARTICLES = detail(
   "Reading the Blog",
-  "How a CasinoVerse article earns its place.",
+  "How a CasinooVerse article earns its place.",
   "The Blog index is more than a feed. Each item belongs to an editorial category, carries a publication state, and connects current information to a visible evidence trail and responsible-entertainment boundary.",
   [
     { title: "Event", body: "The article first establishes the observable development: a filing, regulator action, operating result, public-policy change, research finding, destination project, or game-literacy question." },
@@ -102,7 +102,7 @@ const DIGEST = detail(
 const GAMES = detail(
   "Game-literacy framework",
   "Rules explain the product; probability explains the risk.",
-  "CasinoVerse game coverage is educational. It describes how common games are structured, how outcomes are resolved, what common terms mean, and why knowing the rules does not remove randomness or the house advantage.",
+  "CasinooVerse game coverage is educational. It describes how common games are structured, how outcomes are resolved, what common terms mean, and why knowing the rules does not remove randomness or the house advantage.",
   [
     { title: "Mechanism", body: "A useful guide starts with the sequence of play, available decisions, outcome rules, payout structure, and the role of the dealer, machine, or random-number system." },
     { title: "Mathematics", body: "House edge, return percentages, variance, and probability describe repeated events under defined rules. They do not forecast a session or make a loss recoverable." },
@@ -128,7 +128,7 @@ const GAME_DETAIL = detail(
 const GUIDES = detail(
   "Guide standard",
   "Mechanism, limitation, evidence, and a safe stopping point.",
-  "CasinoVerse guides are designed for informed reading before any participation. They explain the product and vocabulary, state what the information cannot accomplish, and connect readers to evidence and risk controls.",
+  "CasinooVerse guides are designed for informed reading before any participation. They explain the product and vocabulary, state what the information cannot accomplish, and connect readers to evidence and risk controls.",
   [
     { title: "Understand the product", body: "Learn the sequence of play, decision points, payout rules, equipment, and common terms before interpreting strategy discussions or marketing claims." },
     { title: "Understand the number", body: "Ask what population, time period, rule set, denominator, and assumptions sit behind a percentage. A headline number without those boundaries is incomplete." },
@@ -206,11 +206,11 @@ const GALLERY = detail(
 const ABOUT = detail(
   "Publication governance",
   "Editorial independence is a set of operating rules.",
-  "CasinoVerse is an informational publication. Its standards govern sourcing, uncertainty labels, corrections, conflicts, internal navigation, reader data, and the separation between coverage and gambling promotion.",
+  "CasinooVerse is an informational publication. Its standards govern sourcing, uncertainty labels, corrections, conflicts, internal navigation, reader data, and the separation between coverage and gambling promotion.",
   [
     { title: "Independence", body: "The site does not publish affiliate casino links, bonus offers, referral calls to action, trade signals, target prices, guaranteed returns, or wallet solicitation." },
     { title: "Corrections", body: "Material factual errors should be corrected promptly and transparently. Updated dates and revision records help readers distinguish a clarified article from its earlier state." },
-    { title: "Accountability", body: "Readers can inspect source records, privacy terms, disclaimers, support information, and the contact process without leaving the CasinoVerse domain." },
+    { title: "Accountability", body: "Readers can inspect source records, privacy terms, disclaimers, support information, and the contact process without leaving the CasinooVerse domain." },
   ],
   ["Use the standards section to assess reporting choices.", "Use the contact form for factual corrections or privacy requests.", "Use Source records to audit provenance before challenging or reusing a claim."],
   [{ label: "Inspect source records", href: "/sources" }, { label: "Read the Privacy Policy", href: "/privacy" }, { label: "Open support information", href: "/support" }],
@@ -218,7 +218,7 @@ const ABOUT = detail(
 
 const SEARCH = detail(
   "Search scope",
-  "Search retrieves CasinoVerse reporting, not gambling offers.",
+  "Search retrieves CasinooVerse reporting, not gambling offers.",
   "The search desk matches terms against publication content and returns internal pages. It does not query casinos, brokers, exchanges, social profiles, affiliate networks, or third-party promotional directories.",
   [
     { title: "Use precise terms", body: "A jurisdiction, regulator, company, game, destination, or policy term generally produces more useful results than a broad phrase such as casino news." },
@@ -232,7 +232,7 @@ const SEARCH = detail(
 const SOURCES = detail(
   "Source methodology",
   "A provenance record explains what a source is and how it was used.",
-  "The source library stores the publisher, publication label, source type, description, original address, access date, and update state required to audit CasinoVerse reporting without turning provenance into outbound promotion.",
+  "The source library stores the publisher, publication label, source type, description, original address, access date, and update state required to audit CasinooVerse reporting without turning provenance into outbound promotion.",
   [
     { title: "Inclusion criteria", body: "Sources must be identifiable, relevant to a published claim, and suitable for the evidentiary role assigned to them. Primary documents are preferred when available." },
     { title: "Source hierarchy", body: "Regulator records, government material, filings, and research can establish facts directly; trade and public-interest reporting can add context, independent observation, or specialist interpretation." },
@@ -245,10 +245,10 @@ const SOURCES = detail(
 const SOURCE_DETAIL = detail(
   "Using this source record",
   "Provenance is evidence metadata, not an endorsement.",
-  "This page keeps the source identity and original location visible as data while public navigation remains inside CasinoVerse. Readers should evaluate the source type, date, scope, and role in the citing article.",
+  "This page keeps the source identity and original location visible as data while public navigation remains inside CasinooVerse. Readers should evaluate the source type, date, scope, and role in the citing article.",
   [
     { title: "Authority", body: "Ask whether the publisher had direct responsibility for the record, disclosed a business interest, reported independently, or synthesized earlier evidence." },
-    { title: "Recency", body: "The source publication date and CasinoVerse access date answer different questions. Later filings, rulings, corrections, or datasets may supersede an older record." },
+    { title: "Recency", body: "The source publication date and CasinooVerse access date answer different questions. Later filings, rulings, corrections, or datasets may supersede an older record." },
     { title: "Reporting use", body: "A source may establish one narrow fact without supporting every inference in an article. The citing story explains which claim relied on the record and what context was added." },
   ],
   ["Identify the source type and publisher role.", "Check publication, access, and update dates.", "Return to the citing article before interpreting the record in isolation."],
@@ -258,7 +258,7 @@ const SOURCE_DETAIL = detail(
 const SUPPORT = detail(
   "Using support information",
   "Choose the route that matches the urgency and type of harm.",
-  "The support directory organizes emergency guidance, helplines, counselling, self-exclusion, blocking tools, and financial-friction information. CasinoVerse does not provide treatment, legal advice, or emergency services.",
+  "The support directory organizes emergency guidance, helplines, counselling, self-exclusion, blocking tools, and financial-friction information. CasinooVerse does not provide treatment, legal advice, or emergency services.",
   [
     { title: "Immediate danger", body: "A threat to life, safety, or control requires local emergency services or an appropriate crisis resource. A publication page cannot assess or manage an emergency." },
     { title: "Gambling-specific support", body: "Helplines and counselling services can help assess behavior, plan next steps, involve family support, and identify local treatment or peer options." },
@@ -284,10 +284,10 @@ const RESPONSIBLE = detail(
 const LEGAL = detail(
   "Policy context",
   "Publication rules connect privacy, editorial responsibility, and permitted use.",
-  "The legal pages explain how CasinoVerse handles data and consent, defines its informational boundary, protects publication material, and gives readers a route to request clarification, correction, or privacy action.",
+  "The legal pages explain how CasinooVerse handles data and consent, defines its informational boundary, protects publication material, and gives readers a route to request clarification, correction, or privacy action.",
   [
     { title: "Data and consent", body: "Essential operation, optional analytics, newsletter consent, contact submissions, and infrastructure records have different purposes. Optional analytics remains consent-gated." },
-    { title: "Editorial boundary", body: "CasinoVerse provides information and research, not gambling, investment, legal, medical, financial, or treatment services. Content should not replace qualified local advice." },
+    { title: "Editorial boundary", body: "CasinooVerse provides information and research, not gambling, investment, legal, medical, financial, or treatment services. Content should not replace qualified local advice." },
     { title: "Access and accountability", body: "Readers can report accessibility barriers, request an alternative format, submit a correction, or raise a privacy question through the internal contact process." },
   ],
   ["Read the policy that matches your question.", "Use cookie settings to revisit optional analytics consent.", "Contact the publication for correction, privacy, or accessibility requests."],
@@ -304,7 +304,7 @@ const NOT_FOUND = detail(
     { title: "Safety and support", body: "Responsible Entertainment explains warning signs, limits, and blocking controls; Support organizes practical help routes for readers who need distance or assistance." },
   ],
   ["Check the spelling of the requested internal path.", "Use Search for a title, jurisdiction, regulator, or topic.", "Use Support directly for urgent gambling-harm information."],
-  [{ label: "Browse the Blog", href: "/articles" }, { label: "Search CasinoVerse", href: "/search" }, { label: "Open support information", href: "/support" }],
+  [{ label: "Browse the Blog", href: "/articles" }, { label: "Search CasinooVerse", href: "/search" }, { label: "Open support information", href: "/support" }],
 );
 
 export function getPageDepth(pathname: string): PageDepthEntry {
@@ -358,7 +358,7 @@ export function PageDepth({ pathname }: { pathname: string }) {
         </div>
 
         <div className="mt-10 flex flex-col gap-5 border-t border-white/10 pt-8 lg:flex-row lg:items-center lg:justify-between">
-          <div className="flex items-center gap-3 text-sm text-ivory/48"><FileSearch className="h-5 w-5 text-gold" aria-hidden="true" /><span>All links stay inside CasinoVerse. Sources, caveats, and corrections remain visible.</span></div>
+          <div className="flex items-center gap-3 text-sm text-ivory/48"><FileSearch className="h-5 w-5 text-gold" aria-hidden="true" /><span>All links stay inside CasinooVerse. Sources, caveats, and corrections remain visible.</span></div>
           <nav className="flex flex-wrap gap-3" aria-label="Detailed related reading">
             {content.links.map(link => <Link key={`${link.href}-${link.label}`} href={link.href} className="button-ghost">{link.label}<ArrowRight className="h-4 w-4" /></Link>)}
           </nav>

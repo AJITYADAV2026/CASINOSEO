@@ -26,7 +26,7 @@ export default function Digest() {
         name: item.story.title,
       })),
     },
-    publisher: { "@type": "Organization", name: "CasinoVerse" },
+    publisher: { "@type": "Organization", name: "CasinooVerse" },
   } : undefined, [data]);
 
   if (isLoading) return <div className="container py-20"><Skeleton className="h-6 w-48 bg-white/5" /><Skeleton className="mt-8 h-28 max-w-5xl bg-white/5" /><Skeleton className="mt-12 h-80 rounded-[28px] bg-white/5" /></div>;
@@ -46,7 +46,7 @@ export default function Digest() {
             {isDeveloping ? <span className="status-dot">Developing edition</span> : <span className="inline-flex items-center gap-2 text-xs uppercase tracking-[.13em] text-[#91af98]"><CheckCircle2 className="h-4 w-4" /> Published edition</span>}
           </div>
           <time className="mt-7 block font-display text-2xl text-gold-light" dateTime={data.digest.digestDate}>{formatDate(`${data.digest.digestDate}T12:00:00Z`)}</time>
-          <h1 className="mt-4 max-w-6xl font-display text-[clamp(3.5rem,8vw,7.5rem)] leading-[.86] tracking-[-.045em] text-ivory">{data.digest.title.replace(/^CasinoVerse Daily Research Digest — /, "")}</h1>
+          <h1 className="mt-4 max-w-6xl font-display text-[clamp(3.5rem,8vw,7.5rem)] leading-[.86] tracking-[-.045em] text-ivory">{data.digest.title.replace(/^CasinooVerse Daily Research Digest — /, "")}</h1>
           <p className="mt-7 max-w-3xl text-xl leading-8 text-ivory/60">{data.digest.summary}</p>
         </div>
       </header>

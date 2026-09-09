@@ -52,7 +52,7 @@ describe("Agent 3 page creation", () => {
         note: "Permanent page updated from sourced Agent 1 content.",
       }],
     });
-    expect(markdown).toContain('title: "CasinoVerse URL Manifest — 2026-09-03"');
+    expect(markdown).toContain('title: "CasinooVerse URL Manifest — 2026-09-03"');
     expect(markdown).toContain("[Open page](https://casinonews-flgw988r.manus.space/articles/verified-market-development)");
     expect(markdown).toContain("Included");
     expect(markdown).toContain("No search-engine indexing submission was performed");

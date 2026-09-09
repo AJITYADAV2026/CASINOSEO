@@ -86,7 +86,7 @@ const storySchema = z.object({
   body: z.string().trim().min(80).max(20000),
   contentType: z.enum(["news", "analysis", "guide", "culture", "video"]).default("news"),
   categorySlug: z.string().trim().min(1).max(96),
-  authorName: z.string().trim().min(2).max(160).default("CasinoVerse Research Desk"),
+  authorName: z.string().trim().min(2).max(160).default("CasinooVerse Research Desk"),
   readingMinutes: z.number().int().min(1).max(30).default(4),
   featuredImageUrl: z.string().max(2000).optional(),
   featuredImageAlt: z.string().max(280).optional(),
@@ -399,7 +399,7 @@ async function scheduledAgent1Monitor(req: Request, res: Response) {
     }
 
     const notificationSent = await notifyOwner({
-      title: `CasinoVerse Agent 1 missed ${assessment.expectedDigestDate}`,
+      title: `CasinooVerse Agent 1 missed ${assessment.expectedDigestDate}`,
       content: `The required published research edition for ${assessment.expectedDigestDate} was not present by the 12:15 AM IST delivery check. Agent 2 must stop rather than analyze stale data. Inspect Agent 1 before resuming the sequence.`,
     });
     if (!notificationSent) {
@@ -445,7 +445,7 @@ export function registerPublicationRoutes(app: Express) {
     const { stories: storyRows } = await getHomepageContent();
     const cutoff = Date.now() - 48 * 60 * 60 * 1000;
     const recent = storyRows.filter(item => item.story.status === "published" && item.story.publishedAt && item.story.publishedAt.getTime() >= cutoff);
-    const body = recent.map(item => `<url><loc>${xml(origin + `/articles/${item.story.slug}`)}</loc><news:news><news:publication><news:name>CasinoVerse</news:name><news:language>en</news:language></news:publication><news:publication_date>${item.story.publishedAt!.toISOString()}</news:publication_date><news:title>${xml(item.story.title)}</news:title></news:news></url>`).join("");
+    const body = recent.map(item => `<url><loc>${xml(origin + `/articles/${item.story.slug}`)}</loc><news:news><news:publication><news:name>CasinooVerse</news:name><news:language>en</news:language></news:publication><news:publication_date>${item.story.publishedAt!.toISOString()}</news:publication_date><news:title>${xml(item.story.title)}</news:title></news:news></url>`).join("");
     res.set("Cache-Control", "public, max-age=900").type("application/xml").send(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">${body}</urlset>`);
   });
 
@@ -454,7 +454,7 @@ export function registerPublicationRoutes(app: Express) {
     if (!origin) return res.status(503).type("text/plain").send("CANONICAL_ORIGIN is not configured");
     const { stories: storyRows } = await getHomepageContent();
     const items = storyRows.filter(item => item.story.status === "published").slice(0, 30).map(item => `<item><title>${xml(item.story.title)}</title><link>${xml(origin + `/articles/${item.story.slug}`)}</link><guid>${xml(origin + `/articles/${item.story.slug}`)}</guid><description>${xml(item.story.dek)}</description>${item.story.publishedAt ? `<pubDate>${item.story.publishedAt.toUTCString()}</pubDate>` : ""}<category>${xml(item.category.name)}</category></item>`).join("");
-    res.set("Cache-Control", "public, max-age=900").type("application/rss+xml").send(`<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>CasinoVerse</title><link>${xml(origin)}</link><description>${xml("Independent casino-industry research, culture, regulation, and responsible entertainment.")}</description>${items}</channel></rss>`);
+    res.set("Cache-Control", "public, max-age=900").type("application/rss+xml").send(`<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>CasinooVerse</title><link>${xml(origin)}</link><description>${xml("Independent casino-industry research, culture, regulation, and responsible entertainment.")}</description>${items}</channel></rss>`);
   });
 
   app.get("/research/:date.md", async (req, res) => {
@@ -464,7 +464,7 @@ export function registerPublicationRoutes(app: Express) {
     if (!data?.digest.markdownArtifact) return res.status(404).type("text/plain").send("Research edition not found");
     res
       .set("Cache-Control", data.digest.status === "developing" ? "no-cache" : "public, max-age=900")
-      .set("Content-Disposition", `inline; filename="CasinoVerse-${date.data}.md"`)
+      .set("Content-Disposition", `inline; filename="CasinooVerse-${date.data}.md"`)
       .type("text/markdown; charset=utf-8")
       .send(data.digest.markdownArtifact);
   });

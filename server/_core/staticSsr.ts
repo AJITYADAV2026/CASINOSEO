@@ -6,7 +6,7 @@ import type { HeadMeta } from "../../client/src/ssr/prefetch";
 import { buildSsrPrefetch } from "./ssrCaller";
 
 const CANONICAL_ORIGIN = (process.env.CANONICAL_ORIGIN ?? "").replace(/\/$/, "");
-const SITE_NAME = process.env.SITE_NAME ?? "CasinoVerse";
+const SITE_NAME = process.env.SITE_NAME ?? "CasinooVerse";
 const DEFAULT_DESCRIPTION = "Independent casino-industry research, culture, regulation, destinations, and responsible-entertainment guides.";
 
 const escapeHtml = (value: string) => value

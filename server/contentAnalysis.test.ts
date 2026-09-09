@@ -82,7 +82,7 @@ describe("Agent 2 content analysis", () => {
       analysis: contentAnalysisSchema.parse(analysisFixture),
       sourceMarkdown: "# Research\n\n## References\n\n[1]: https://example.com/source",
     });
-    expect(markdown).toContain('title: "CasinoVerse Site Find — 2026-09-03"');
+    expect(markdown).toContain('title: "CasinooVerse Site Find — 2026-09-03"');
     expect(markdown).toContain('status: "draft"');
     expect(markdown).toContain("Content analysis only");
     expect(markdown).toContain("does not create pages or URLs");
@@ -109,7 +109,7 @@ describe("Agent 2 content analysis", () => {
         taskUid: "agent-2-test-task",
         force: true,
       });
-      expect("report" in result && result.report?.markdownArtifact).toContain("CasinoVerse Site Find");
+      expect("report" in result && result.report?.markdownArtifact).toContain("CasinooVerse Site Find");
       const [stored] = await tx.select().from(siteFindReports).where(eq(siteFindReports.reportDate, reportDate)).limit(1);
       expect(stored?.updateCount).toBe(1);
       expect(stored?.sourceDigestId).toBe(digest.id);
