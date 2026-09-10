@@ -253,4 +253,4 @@
 - [x] Verify Agent 1 remains scheduled at exactly 12:01 AM IST in isolated execution mode, with actual-start and post-12:06 delay reporting required.
 - [x] Verify the 12:15 AM delivery monitor, 2:00 AM Agent 2, 2:30 AM Agent 3, and post-Agent-3 GitHub publisher remain separate, while Agent 4 remains paused or absent.
 - [x] Verify the durable callback and Markdown route remain operational under the CasinooVerse brand without creating a synthetic agent run.
-- [ ] Save the configuration evidence, push GitHub first, and verify Vercel automatically deploys the exact matching commit.
+- [x] Save the configuration evidence, push GitHub first, and verify Vercel automatically deploys the exact matching commit.

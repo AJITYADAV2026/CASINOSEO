@@ -25,3 +25,5 @@ The repeated user-supplied instruction was consolidated to the first, stricter b
 The active schedule playbook matches `docs/agent-1-isolated-daily-research-playbook.md` byte for byte. Its detail and playbook contain no old public brand wording. Existing connectors were preserved because the update omitted connector changes.
 
 The Vercel production durable Markdown route returned HTTP 200 with CasinooVerse content, and an unauthenticated callback request returned HTTP 403. No synthetic digest or agent run was created. The Manus rollback origin was unavailable during this check, so the verification relied on the GitHub-backed Vercel production contract rather than claiming the unavailable host was healthy.
+
+Checkpoint `885323cc915274ed8ae82c85728b79d6df98e68a` was pushed to `AJITYADAV2026/CASINOSEO` `main` first. The remote branch matched exactly, and the connected Vercel project reported a successful production deployment for that same GitHub SHA.
