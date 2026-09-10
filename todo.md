@@ -248,3 +248,9 @@
 - [x] Run tests, TypeScript, Vercel build, SSR/route checks, responsive screenshots, and runtime-log validation after the brand and location update.
 - [x] Save a checkpoint, push the update to `AJITYADAV2026/CASINOSEO` first, and verify Vercel automatically deploys the exact GitHub commit with production checks passing.
 - [x] Verify no public, metadata, test, or documentation surface retains the superseded `Assam, India` location.
+- [x] Consolidate the newly supplied Agent 1 playbook by removing its duplicated trailing block, preserving the stricter start-time, delay, sourcing, payload, failure, and reporting requirements, and changing visible publication wording from CasinoVerse to CasinooVerse.
+- [x] Compare the consolidated CasinooVerse playbook with the active isolated Agent 1 task and update only the playbook text if needed, without triggering Agent 1 or changing its authenticated callback contract.
+- [x] Verify Agent 1 remains scheduled at exactly 12:01 AM IST in isolated execution mode, with actual-start and post-12:06 delay reporting required.
+- [x] Verify the 12:15 AM delivery monitor, 2:00 AM Agent 2, 2:30 AM Agent 3, and post-Agent-3 GitHub publisher remain separate, while Agent 4 remains paused or absent.
+- [x] Verify the durable callback and Markdown route remain operational under the CasinooVerse brand without creating a synthetic agent run.
+- [ ] Save the configuration evidence, push GitHub first, and verify Vercel automatically deploys the exact matching commit.

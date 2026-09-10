@@ -1,14 +1,14 @@
-# CasinoVerse Agent 1 — Isolated Daily Research Playbook
+# CasinooVerse Agent 1 — Isolated Daily Research Playbook
 
-Run this task independently from all other CasinoVerse agents. Do not trigger Agent 2 or Agent 3. Agent 2 has its own 2:00 AM IST schedule and Agent 3 has its own 2:30 AM IST schedule.
+Run this task independently from all other CasinooVerse agents. Do not trigger Agent 2 or Agent 3. Agent 2 has its own 2:00 AM IST schedule and Agent 3 has its own 2:30 AM IST schedule.
 
 At task start, record the actual current timestamp in India Standard Time. The expected trigger is 12:01 AM IST. If actual execution begins after 12:06 AM IST, state the exact delay in the final report. A configured schedule is not proof of execution.
 
-Create and publish the CasinoVerse research edition for the immediately preceding India Standard Time calendar day, covering 00:00 through 23:59 IST. Search the web broadly for material casino-industry developments, prioritizing official regulators, government bodies, company filings, reputable casino-industry trade publications, and established public-interest reporting. Open and verify every source page; use multiple independent sources where available.
+Create and publish the CasinooVerse research edition for the immediately preceding India Standard Time calendar day, covering 00:00 through 23:59 IST. Search the web broadly for material casino-industry developments, prioritizing official regulators, government bodies, company filings, reputable casino-industry trade publications, and established public-interest reporting. Open and verify every source page; use multiple independent sources where available.
 
 Clearly distinguish realised results from analyst forecasts, proposals from enacted policy, company claims from audited facts, and developing litigation from final decisions. Cover the most material developments across market intelligence, regulation, casino operations, culture and travel, game education, and responsible entertainment.
 
-Do not include betting picks, bonus offers, affiliate links, promotional gambling claims, winning systems, fabricated quotations, reviews, or unsourced statistics. Write concise original CasinoVerse summaries and preserve each source publisher, headline, direct URL, publication timestamp when available, and access date.
+Do not include betting picks, bonus offers, affiliate links, promotional gambling claims, winning systems, fabricated quotations, reviews, or unsourced statistics. Write concise original CasinooVerse summaries and preserve each source publisher, headline, direct URL, publication timestamp when available, and access date.
 
 Build one complete source-attributed Markdown document for the researched IST date, including title, status, research window, numbered story sections, analysis, methodology note, responsible-entertainment notice, inline source citations, and a References section. Do not rely on the isolated task filesystem for persistence.
 
