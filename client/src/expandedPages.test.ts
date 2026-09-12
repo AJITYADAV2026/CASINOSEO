@@ -57,7 +57,7 @@ describe("expanded editorial content", () => {
     expect(values).toHaveLength(19);
     expect(new Set(values).size).toBe(values.length);
     ["articles", "history", "culture", "destinations", "facts", "gallery", "poker", "blackjack", "roulette", "baccarat", "slots"].forEach(key => {
-      expect(EXPANDED_IMAGES[key as keyof typeof EXPANDED_IMAGES]).toContain("cv-casino-editorial-");
+      expect(EXPANDED_IMAGES[key as keyof typeof EXPANDED_IMAGES]).toMatch(/^\/manus-storage\//);
     });
   });
 });

@@ -3,6 +3,7 @@ import { z } from "zod";
 import { categories, dailyDigests, digestStories, siteFindReports, stories, urlManifests } from "../drizzle/schema";
 import { contentAnalysisSchema, previousIsoCalendarDate } from "./contentAnalysis";
 import { getDb, getLatestSiteFindForPublishing } from "./db";
+import { isKnownTypographyImage } from "./imagePublicationPolicy";
 
 const outcomes = ["created", "updated", "retained", "archived", "review-required"] as const;
 
@@ -175,6 +176,19 @@ export async function runPageCreation(options: {
           pageStatus: resolved.story.status,
           sitemapIncluded: resolved.story.status === "published",
           note: "Publication stopped because this story does not have its own featured image and accessible alt description.",
+        }));
+        continue;
+      }
+      if (isKnownTypographyImage(resolved.story.featuredImageUrl)) {
+        actions.push(pageActionSchema.parse({
+          decision: decision.action,
+          outcome: "review-required",
+          title: resolved.story.title,
+          storySlug: resolved.story.slug,
+          canonicalUrl: `${origin()}/articles/${resolved.story.slug}`,
+          pageStatus: resolved.story.status,
+          sitemapIncluded: resolved.story.status === "published",
+          note: "Publication stopped because the featured image is on the verified embedded-typography blocklist and must be replaced with a text-free unique image.",
         }));
         continue;
       }

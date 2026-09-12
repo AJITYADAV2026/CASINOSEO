@@ -1,0 +1,1546 @@
+{
+  "summary": {
+    "total": 51,
+    "keep": 21,
+    "clean_or_replace": 30,
+    "manual_review": 0
+  },
+  "results": [
+    {
+      "id": 1,
+      "url": "https://casinoseo.vercel.app/manus-storage/cv-casino-editorial-home-master_dd528b70.jpg",
+      "contexts": [
+        {
+          "route": "/",
+          "element": "img",
+          "alt": "Unoccupied casino table with roulette wheel, dealer shoe, chip rack, regulatory dossier, and casino floor beyond"
+        },
+        {
+          "route": "/",
+          "element": "og:image",
+          "alt": ""
+        },
+        {
+          "route": "/privacy",
+          "element": "og:image",
+          "alt": ""
+        },
+        {
+          "route": "/disclaimer",
+          "element": "og:image",
+          "alt": ""
+        },
+        {
+          "route": "/terms",
+          "element": "og:image",
+          "alt": ""
+        }
+      ],
+      "embeddedText": true,
+      "description": "Numbers visible on the roulette wheel (e.g., 20, 28, 12, 35, 3) and blurry markings on the betting layout and floor plan.",
+      "certainty": "high",
+      "action": "clean_or_replace",
+      "rationale": "The image contains visible numbers on the roulette wheel and illegible text-like markings on the table layout and floor plan."
+    },
+    {
+      "id": 2,
+      "url": "https://casinoseo.vercel.app/manus-storage/cv-casino-story-macau-rebound_1de8455d.jpg",
+      "contexts": [
+        {
+          "route": "/",
+          "element": "img",
+          "alt": "Macau casino-resort forecast desk with waterfront skyline, roulette detail, calendar, and trend notes"
+        },
+        {
+          "route": "/articles",
+          "element": "img",
+          "alt": "Macau casino-resort forecast desk with waterfront skyline, roulette detail, calendar, and trend notes"
+        },
+        {
+          "route": "/articles",
+          "element": "img",
+          "alt": "Macau casino-resort forecast desk with waterfront skyline, roulette detail, calendar, and trend notes"
+        },
+        {
+          "route": "/category/market-intelligence",
+          "element": "img",
+          "alt": "Macau casino-resort forecast desk with waterfront skyline, roulette detail, calendar, and trend notes"
+        },
+        {
+          "route": "/articles/macau-revenue-expected-to-rebound-in-september",
+          "element": "img",
+          "alt": "Macau casino-resort forecast desk with waterfront skyline, roulette detail, calendar, and trend notes"
+        },
+        {
+          "route": "/articles/macau-revenue-expected-to-rebound-in-september",
+          "element": "og:image",
+          "alt": ""
+        },
+        {
+          "route": "/archive/2026-09-02",
+          "element": "img",
+          "alt": "Macau casino-resort forecast desk with waterfront skyline, roulette detail, calendar, and trend notes"
+        },
+        {
+          "route": "/archive/2026-09-02",
+          "element": "og:image",
+          "alt": ""
+        }
+      ],
+      "embeddedText": "",
+      "description": "none",
+      "certainty": "high",
+      "action": "keep",
+      "rationale": "The image contains no visible typography, only line graphs, architectural blueprints, and a roulette wheel with numbers, but no embedded text or letters."
+    },
+    {
+      "id": 3,
+      "url": "https://casinoseo.vercel.app/manus-storage/cv-casino-editorial-floor-report_efb69f8c.jpg",
+      "contexts": [
+        {
+          "route": "/",
+          "element": "img",
+          "alt": "Empty casino pit with table layouts, roulette wheel, surveillance cameras, and an operations floor plan"
+        }
+      ],
+      "embeddedText": true,
+      "description": "Numbers on the roulette wheel and schematic grid markings/text on the papers in the foreground.",
+      "certainty": "high",
+      "action": "clean_or_replace",
+      "rationale": "There are numbers visible on the roulette wheel and schematic markings on the papers in the foreground."
+    },
+    {
+      "id": 4,
+      "url": "https://casinoseo.vercel.app/manus-storage/cv-casino-editorial-industry_37397fe6.jpg",
+      "contexts": [
+        {
+          "route": "/",
+          "element": "img",
+          "alt": "Gaming-control review desk with licensing folders, chip inventory, surveillance images, and a casino beyond"
+        }
+      ],
+      "embeddedText": true,
+      "description": "Numbers on the roulette wheel",
+      "certainty": "high",
+      "action": "clean_or_replace",
+      "rationale": "The roulette wheel has numbers printed on it."
+    },
+    {
+      "id": 5,
+      "url": "https://casinoseo.vercel.app/manus-storage/casinoverse-places-design-desk-unique_95be8e4c.jpg",
+      "contexts": [
+        {
+          "route": "/",
+          "element": "img",
+          "alt": "Casino destination study with world map, integrated-resort models, roulette-wheel compass, and skyline"
+        }
+      ],
+      "embeddedText": "",
+      "description": "none",
+      "certainty": "high",
+      "action": "keep",
+      "rationale": "The image depicts a miniature city model and maps without any visible typography, logos, or watermarks."
+    },
+    {
+      "id": 6,
+      "url": "https://casinoseo.vercel.app/manus-storage/cv-casino-editorial-archive_118ba0e9.jpg",
+      "contexts": [
+        {
+          "route": "/",
+          "element": "img",
+          "alt": "Casino research archive with gaming dossiers, floor maps, chip trays, card evidence boxes, and brass index drawers"
+        }
+      ],
+      "embeddedText": true,
+      "description": "Numbers on the roulette wheel (e.g., 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10) and unreadable markings on the papers.",
+      "certainty": "high",
+      "action": "clean_or_replace",
+      "rationale": "The image contains visible numbers on the roulette wheel."
+    },
+    {
+      "id": 7,
+      "url": "https://casinoseo.vercel.app/manus-storage/casinooverse-playtech-h1-results-2026-09-11_6cdcef2c.jpg",
+      "contexts": [
+        {
+          "route": "/",
+          "element": "img",
+          "alt": "Gaming technology operations room with restrained financial and Americas data overlays"
+        },
+        {
+          "route": "/articles",
+          "element": "img",
+          "alt": "Gaming technology operations room with restrained financial and Americas data overlays"
+        },
+        {
+          "route": "/category/market-intelligence",
+          "element": "img",
+          "alt": "Gaming technology operations room with restrained financial and Americas data overlays"
+        },
+        {
+          "route": "/articles/playtech-h1-2026-profit-surge-americas-growth-cautious-h2-guidance",
+          "element": "img",
+          "alt": "Gaming technology operations room with restrained financial and Americas data overlays"
+        },
+        {
+          "route": "/articles/playtech-h1-2026-profit-surge-americas-growth-cautious-h2-guidance",
+          "element": "og:image",
+          "alt": ""
+        },
+        {
+          "route": "/articles/macau-visitor-recovery-gaming-tax-receipts-2026",
+          "element": "img",
+          "alt": "Gaming technology operations room with restrained financial and Americas data overlays"
+        },
+        {
+          "route": "/articles/detroit-commercial-casino-august-revenue",
+          "element": "img",
+          "alt": "Gaming technology operations room with restrained financial and Americas data overlays"
+        },
+        {
+          "route": "/articles/paradise-co-record-august-revenue",
+          "element": "img",
+          "alt": "Gaming technology operations room with restrained financial and Americas data overlays"
+        },
+        {
+          "route": "/articles/macau-revenue-expected-to-rebound-in-september",
+          "element": "img",
+          "alt": "Gaming technology operations room with restrained financial and Americas data overlays"
+        },
+        {
+          "route": "/archive/2026-09-11",
+          "element": "img",
+          "alt": "Gaming technology operations room with restrained financial and Americas data overlays"
+        }
+      ],
+      "embeddedText": "",
+      "description": "none",
+      "certainty": "high",
+      "action": "keep",
+      "rationale": "The image contains graphs, charts, and maps on screens and glass panels, but no visible typography or readable text is present."
+    },
+    {
+      "id": 8,
+      "url": "https://casinoseo.vercel.app/manus-storage/casinooverse-malaysia-gaming-child-safety-2026-09-11_2eb3bdd8.jpg",
+      "contexts": [
+        {
+          "route": "/",
+          "element": "img",
+          "alt": "Parent and teenager reviewing digital safety and spending controls in Malaysia"
+        },
+        {
+          "route": "/articles",
+          "element": "img",
+          "alt": "Parent and teenager reviewing digital safety and spending controls in Malaysia"
+        },
+        {
+          "route": "/category/regulation",
+          "element": "img",
+          "alt": "Parent and teenager reviewing digital safety and spending controls in Malaysia"
+        },
+        {
+          "route": "/category/regulation",
+          "element": "og:image",
+          "alt": ""
+        },
+        {
+          "route": "/articles/nz-community-gambling-funds-recovery-suspension",
+          "element": "img",
+          "alt": "Parent and teenager reviewing digital safety and spending controls in Malaysia"
+        },
+        {
+          "route": "/articles/fatf-updates-gambling-sector-risk-indicators",
+          "element": "img",
+          "alt": "Parent and teenager reviewing digital safety and spending controls in Malaysia"
+        },
+        {
+          "route": "/articles/malaysia-gaming-sub-code-consultation",
+          "element": "img",
+          "alt": "Parent and teenager reviewing digital safety and spending controls in Malaysia"
+        },
+        {
+          "route": "/articles/malaysia-gaming-sub-code-consultation",
+          "element": "og:image",
+          "alt": ""
+        },
+        {
+          "route": "/articles/pennsylvania-charitable-gaming-proposal-skill-game-deadline",
+          "element": "img",
+          "alt": "Parent and teenager reviewing digital safety and spending controls in Malaysia"
+        },
+        {
+          "route": "/articles/prediction-markets-state-authority-supreme-court",
+          "element": "img",
+          "alt": "Parent and teenager reviewing digital safety and spending controls in Malaysia"
+        },
+        {
+          "route": "/archive/2026-09-11",
+          "element": "img",
+          "alt": "Parent and teenager reviewing digital safety and spending controls in Malaysia"
+        }
+      ],
+      "embeddedText": true,
+      "description": "18+",
+      "certainty": "high",
+      "action": "clean_or_replace",
+      "rationale": "The image contains a tablet screen displaying icons, including one with '18+' visible."
+    },
+    {
+      "id": 9,
+      "url": "https://casinoseo.vercel.app/manus-storage/casinooverse-macau-tourism-tax-2026-09-11_bfd4d5db.jpg",
+      "contexts": [
+        {
+          "route": "/",
+          "element": "img",
+          "alt": "Macau waterfront, arriving travelers, and public-finance data overlays"
+        },
+        {
+          "route": "/articles",
+          "element": "img",
+          "alt": "Macau waterfront, arriving travelers, and public-finance data overlays"
+        },
+        {
+          "route": "/category/market-intelligence",
+          "element": "img",
+          "alt": "Macau waterfront, arriving travelers, and public-finance data overlays"
+        },
+        {
+          "route": "/articles/playtech-h1-2026-profit-surge-americas-growth-cautious-h2-guidance",
+          "element": "img",
+          "alt": "Macau waterfront, arriving travelers, and public-finance data overlays"
+        },
+        {
+          "route": "/articles/macau-visitor-recovery-gaming-tax-receipts-2026",
+          "element": "img",
+          "alt": "Macau waterfront, arriving travelers, and public-finance data overlays"
+        },
+        {
+          "route": "/articles/macau-visitor-recovery-gaming-tax-receipts-2026",
+          "element": "og:image",
+          "alt": ""
+        },
+        {
+          "route": "/articles/detroit-commercial-casino-august-revenue",
+          "element": "img",
+          "alt": "Macau waterfront, arriving travelers, and public-finance data overlays"
+        },
+        {
+          "route": "/articles/paradise-co-record-august-revenue",
+          "element": "img",
+          "alt": "Macau waterfront, arriving travelers, and public-finance data overlays"
+        },
+        {
+          "route": "/articles/macau-revenue-expected-to-rebound-in-september",
+          "element": "img",
+          "alt": "Macau waterfront, arriving travelers, and public-finance data overlays"
+        },
+        {
+          "route": "/archive/2026-09-11",
+          "element": "img",
+          "alt": "Macau waterfront, arriving travelers, and public-finance data overlays"
+        }
+      ],
+      "embeddedText": true,
+      "description": "Numeric data overlay resembling a table on the top right.",
+      "certainty": "high",
+      "action": "clean_or_replace",
+      "rationale": "The image contains numeric data tables embedded in the right side as part of the chart overlay."
+    },
+    {
+      "id": 10,
+      "url": "https://casinoseo.vercel.app/manus-storage/casinooverse-detroit-casino-revenue-2026-09-11_6af78d4a.jpg",
+      "contexts": [
+        {
+          "route": "/",
+          "element": "img",
+          "alt": "Detroit skyline and casino buildings with restrained financial data overlays"
+        },
+        {
+          "route": "/articles",
+          "element": "img",
+          "alt": "Detroit skyline and casino buildings with restrained financial data overlays"
+        },
+        {
+          "route": "/category/market-intelligence",
+          "element": "img",
+          "alt": "Detroit skyline and casino buildings with restrained financial data overlays"
+        },
+        {
+          "route": "/category/market-intelligence",
+          "element": "og:image",
+          "alt": ""
+        },
+        {
+          "route": "/articles/playtech-h1-2026-profit-surge-americas-growth-cautious-h2-guidance",
+          "element": "img",
+          "alt": "Detroit skyline and casino buildings with restrained financial data overlays"
+        },
+        {
+          "route": "/articles/macau-visitor-recovery-gaming-tax-receipts-2026",
+          "element": "img",
+          "alt": "Detroit skyline and casino buildings with restrained financial data overlays"
+        },
+        {
+          "route": "/articles/detroit-commercial-casino-august-revenue",
+          "element": "img",
+          "alt": "Detroit skyline and casino buildings with restrained financial data overlays"
+        },
+        {
+          "route": "/articles/detroit-commercial-casino-august-revenue",
+          "element": "og:image",
+          "alt": ""
+        },
+        {
+          "route": "/articles/paradise-co-record-august-revenue",
+          "element": "img",
+          "alt": "Detroit skyline and casino buildings with restrained financial data overlays"
+        },
+        {
+          "route": "/articles/macau-revenue-expected-to-rebound-in-september",
+          "element": "img",
+          "alt": "Detroit skyline and casino buildings with restrained financial data overlays"
+        },
+        {
+          "route": "/archive/2026-09-11",
+          "element": "img",
+          "alt": "Detroit skyline and casino buildings with restrained financial data overlays"
+        },
+        {
+          "route": "/archive/2026-09-11",
+          "element": "og:image",
+          "alt": ""
+        }
+      ],
+      "embeddedText": "",
+      "description": "none",
+      "certainty": "high",
+      "action": "keep",
+      "rationale": "The image contains a city skyline and overlaid charts/graphs but no visible typography, text, or letters."
+    },
+    {
+      "id": 11,
+      "url": "https://casinoseo.vercel.app/manus-storage/pennsylvania-charitable-gaming-policy-editorial_119ef299.png",
+      "contexts": [
+        {
+          "route": "/",
+          "element": "img",
+          "alt": "Editorial view of an inactive charitable-gaming terminal beside legal scales and a Pennsylvania map motif"
+        },
+        {
+          "route": "/articles",
+          "element": "img",
+          "alt": "Editorial view of an inactive charitable-gaming terminal beside legal scales and a Pennsylvania map motif"
+        },
+        {
+          "route": "/category/regulation",
+          "element": "img",
+          "alt": "Editorial view of an inactive charitable-gaming terminal beside legal scales and a Pennsylvania map motif"
+        },
+        {
+          "route": "/articles/nz-community-gambling-funds-recovery-suspension",
+          "element": "img",
+          "alt": "Editorial view of an inactive charitable-gaming terminal beside legal scales and a Pennsylvania map motif"
+        },
+        {
+          "route": "/articles/fatf-updates-gambling-sector-risk-indicators",
+          "element": "img",
+          "alt": "Editorial view of an inactive charitable-gaming terminal beside legal scales and a Pennsylvania map motif"
+        },
+        {
+          "route": "/articles/malaysia-gaming-sub-code-consultation",
+          "element": "img",
+          "alt": "Editorial view of an inactive charitable-gaming terminal beside legal scales and a Pennsylvania map motif"
+        },
+        {
+          "route": "/articles/pennsylvania-charitable-gaming-proposal-skill-game-deadline",
+          "element": "img",
+          "alt": "Editorial view of an inactive charitable-gaming terminal beside legal scales and a Pennsylvania map motif"
+        },
+        {
+          "route": "/articles/pennsylvania-charitable-gaming-proposal-skill-game-deadline",
+          "element": "og:image",
+          "alt": ""
+        },
+        {
+          "route": "/archive/2026-09-06",
+          "element": "img",
+          "alt": "Editorial view of an inactive charitable-gaming terminal beside legal scales and a Pennsylvania map motif"
+        },
+        {
+          "route": "/archive/2026-09-06",
+          "element": "og:image",
+          "alt": ""
+        }
+      ],
+      "embeddedText": true,
+      "description": "Unreadable text-like scribbles on the open book pages",
+      "certainty": "high",
+      "action": "clean_or_replace",
+      "rationale": "The open book on the table contains lines that simulate text, though unreadable."
+    },
+    {
+      "id": 12,
+      "url": "https://casinoseo.vercel.app/manus-storage/cv-redesign-story-virginia-v3_a162da61.jpg",
+      "contexts": [
+        {
+          "route": "/",
+          "element": "img",
+          "alt": "Virginia public-health policy roundtable with treatment briefings, limit tools, and community planning"
+        },
+        {
+          "route": "/articles",
+          "element": "img",
+          "alt": "Virginia public-health policy roundtable with treatment briefings, limit tools, and community planning"
+        },
+        {
+          "route": "/guides",
+          "element": "img",
+          "alt": "Virginia public-health policy roundtable with treatment briefings, limit tools, and community planning"
+        },
+        {
+          "route": "/category/responsible-entertainment",
+          "element": "img",
+          "alt": "Virginia public-health policy roundtable with treatment briefings, limit tools, and community planning"
+        },
+        {
+          "route": "/articles/ontario-betguard-impersonation-warning",
+          "element": "img",
+          "alt": "Virginia public-health policy roundtable with treatment briefings, limit tools, and community planning"
+        },
+        {
+          "route": "/articles/set-limits-before-you-play",
+          "element": "img",
+          "alt": "Virginia public-health policy roundtable with treatment briefings, limit tools, and community planning"
+        }
+      ],
+      "embeddedText": true,
+      "description": "Unreadable text lines on documents on the table",
+      "certainty": "high",
+      "action": "clean_or_replace",
+      "rationale": "The image contains unreadable text on the documents on the table."
+    },
+    {
+      "id": 13,
+      "url": "https://casinoseo.vercel.app/manus-storage/cv-casino-editorial-blog-v2_e8bdb7f7.jpg",
+      "contexts": [
+        {
+          "route": "/articles",
+          "element": "img",
+          "alt": "Casino editorial desk where a blackjack layout meets reporter notes, a gaming license dossier, cards, chips, and roulette detail"
+        },
+        {
+          "route": "/articles",
+          "element": "og:image",
+          "alt": ""
+        }
+      ],
+      "embeddedText": true,
+      "description": "Illegible document text and writing in a notebook",
+      "certainty": "high",
+      "action": "clean_or_replace",
+      "rationale": "The image contains a document on the table with visible embedded text lines and writing in an open book."
+    },
+    {
+      "id": 14,
+      "url": "https://casinoseo.vercel.app/manus-storage/casinooverse-new-zealand-community-funds-2026-09-11_b172bfc3.jpg",
+      "contexts": [
+        {
+          "route": "/articles",
+          "element": "img",
+          "alt": "New Zealand community facilities connected to audited gambling-fund flows"
+        },
+        {
+          "route": "/category/regulation",
+          "element": "img",
+          "alt": "New Zealand community facilities connected to audited gambling-fund flows"
+        },
+        {
+          "route": "/articles/nz-community-gambling-funds-recovery-suspension",
+          "element": "img",
+          "alt": "New Zealand community facilities connected to audited gambling-fund flows"
+        },
+        {
+          "route": "/articles/nz-community-gambling-funds-recovery-suspension",
+          "element": "og:image",
+          "alt": ""
+        },
+        {
+          "route": "/articles/fatf-updates-gambling-sector-risk-indicators",
+          "element": "img",
+          "alt": "New Zealand community facilities connected to audited gambling-fund flows"
+        },
+        {
+          "route": "/articles/malaysia-gaming-sub-code-consultation",
+          "element": "img",
+          "alt": "New Zealand community facilities connected to audited gambling-fund flows"
+        },
+        {
+          "route": "/articles/pennsylvania-charitable-gaming-proposal-skill-game-deadline",
+          "element": "img",
+          "alt": "New Zealand community facilities connected to audited gambling-fund flows"
+        },
+        {
+          "route": "/articles/prediction-markets-state-authority-supreme-court",
+          "element": "img",
+          "alt": "New Zealand community facilities connected to audited gambling-fund flows"
+        },
+        {
+          "route": "/archive/2026-09-11",
+          "element": "img",
+          "alt": "New Zealand community facilities connected to audited gambling-fund flows"
+        }
+      ],
+      "embeddedText": true,
+      "description": "Simulated unreadable text on the notebook and a large badge with a crown and shield logo.",
+      "certainty": "high",
+      "action": "clean_or_replace",
+      "rationale": "The image contains a prominent badge logo and simulated text on a notebook."
+    },
+    {
+      "id": 15,
+      "url": "https://casinoseo.vercel.app/manus-storage/casinooverse-ontario-betguard-impersonation-2026-09-11_bcdf449d.jpg",
+      "contexts": [
+        {
+          "route": "/articles",
+          "element": "img",
+          "alt": "Consumer comparing verified and fraudulent self-exclusion portals in Ontario"
+        },
+        {
+          "route": "/guides",
+          "element": "img",
+          "alt": "Consumer comparing verified and fraudulent self-exclusion portals in Ontario"
+        },
+        {
+          "route": "/category/responsible-entertainment",
+          "element": "img",
+          "alt": "Consumer comparing verified and fraudulent self-exclusion portals in Ontario"
+        },
+        {
+          "route": "/category/responsible-entertainment",
+          "element": "og:image",
+          "alt": ""
+        },
+        {
+          "route": "/articles/ontario-betguard-impersonation-warning",
+          "element": "img",
+          "alt": "Consumer comparing verified and fraudulent self-exclusion portals in Ontario"
+        },
+        {
+          "route": "/articles/ontario-betguard-impersonation-warning",
+          "element": "og:image",
+          "alt": ""
+        },
+        {
+          "route": "/articles/set-limits-before-you-play",
+          "element": "img",
+          "alt": "Consumer comparing verified and fraudulent self-exclusion portals in Ontario"
+        },
+        {
+          "route": "/archive/2026-09-11",
+          "element": "img",
+          "alt": "Consumer comparing verified and fraudulent self-exclusion portals in Ontario"
+        }
+      ],
+      "embeddedText": "",
+      "description": "none",
+      "certainty": "high",
+      "action": "keep",
+      "rationale": "The image contains UI mockups on a laptop screen with icons and placeholder lines, but no readable text or letters are present."
+    },
+    {
+      "id": 16,
+      "url": "https://casinoseo.vercel.app/manus-storage/casinooverse-fatf-gambling-risk-indicators-2026-09-11_e56c4039.jpg",
+      "contexts": [
+        {
+          "route": "/articles",
+          "element": "img",
+          "alt": "Global anti-money-laundering risk map connecting casinos and digital payment methods"
+        },
+        {
+          "route": "/category/regulation",
+          "element": "img",
+          "alt": "Global anti-money-laundering risk map connecting casinos and digital payment methods"
+        },
+        {
+          "route": "/articles/nz-community-gambling-funds-recovery-suspension",
+          "element": "img",
+          "alt": "Global anti-money-laundering risk map connecting casinos and digital payment methods"
+        },
+        {
+          "route": "/articles/fatf-updates-gambling-sector-risk-indicators",
+          "element": "img",
+          "alt": "Global anti-money-laundering risk map connecting casinos and digital payment methods"
+        },
+        {
+          "route": "/articles/fatf-updates-gambling-sector-risk-indicators",
+          "element": "og:image",
+          "alt": ""
+        },
+        {
+          "route": "/articles/malaysia-gaming-sub-code-consultation",
+          "element": "img",
+          "alt": "Global anti-money-laundering risk map connecting casinos and digital payment methods"
+        },
+        {
+          "route": "/articles/pennsylvania-charitable-gaming-proposal-skill-game-deadline",
+          "element": "img",
+          "alt": "Global anti-money-laundering risk map connecting casinos and digital payment methods"
+        },
+        {
+          "route": "/articles/prediction-markets-state-authority-supreme-court",
+          "element": "img",
+          "alt": "Global anti-money-laundering risk map connecting casinos and digital payment methods"
+        },
+        {
+          "route": "/archive/2026-09-11",
+          "element": "img",
+          "alt": "Global anti-money-laundering risk map connecting casinos and digital payment methods"
+        }
+      ],
+      "embeddedText": true,
+      "description": "Uncertain typography on the smartphone screens, a 'B' on the gold coin, and small text on the laptop screen and papers.",
+      "certainty": "high",
+      "action": "clean_or_replace",
+      "rationale": "The image contains text-like symbols and letters on the smartphone screen in the middle and the letter B on the coin on the right."
+    },
+    {
+      "id": 17,
+      "url": "https://casinoseo.vercel.app/manus-storage/cv-redesign-story-macau-promo-v3_378a5e1c.jpg",
+      "contexts": [
+        {
+          "route": "/articles",
+          "element": "img",
+          "alt": "Macau marketing-expenditure study with campaign cards, venue plan, media allocation, and cost ledger"
+        },
+        {
+          "route": "/category/market-intelligence",
+          "element": "img",
+          "alt": "Macau marketing-expenditure study with campaign cards, venue plan, media allocation, and cost ledger"
+        },
+        {
+          "route": "/articles/playtech-h1-2026-profit-surge-americas-growth-cautious-h2-guidance",
+          "element": "img",
+          "alt": "Macau marketing-expenditure study with campaign cards, venue plan, media allocation, and cost ledger"
+        },
+        {
+          "route": "/articles/macau-visitor-recovery-gaming-tax-receipts-2026",
+          "element": "img",
+          "alt": "Macau marketing-expenditure study with campaign cards, venue plan, media allocation, and cost ledger"
+        },
+        {
+          "route": "/articles/detroit-commercial-casino-august-revenue",
+          "element": "img",
+          "alt": "Macau marketing-expenditure study with campaign cards, venue plan, media allocation, and cost ledger"
+        }
+      ],
+      "embeddedText": true,
+      "description": "Unreadable pseudo-text, chart labels, and blueprint markings.",
+      "certainty": "high",
+      "action": "clean_or_replace",
+      "rationale": "The image contains illegible pseudo-text and markings on the open books, charts, and blueprints."
+    },
+    {
+      "id": 18,
+      "url": "https://casinoseo.vercel.app/manus-storage/cv-redesign-story-newport-v3_6c4544d7.jpg",
+      "contexts": [
+        {
+          "route": "/articles",
+          "element": "img",
+          "alt": "Manila destination-program study with theatre, dining, hotel circulation, and cultural calendar"
+        },
+        {
+          "route": "/category/culture-travel",
+          "element": "img",
+          "alt": "Manila destination-program study with theatre, dining, hotel circulation, and cultural calendar"
+        },
+        {
+          "route": "/category/culture-travel",
+          "element": "og:image",
+          "alt": ""
+        },
+        {
+          "route": "/articles/philippines-considers-wider-visa-free-access",
+          "element": "img",
+          "alt": "Manila destination-program study with theatre, dining, hotel circulation, and cultural calendar"
+        }
+      ],
+      "embeddedText": true,
+      "description": "Handwritten text on the clipboard, illegible small text on the blueprint and sketch papers.",
+      "certainty": "high",
+      "action": "clean_or_replace",
+      "rationale": "The image contains several documents with visible handwriting and printed text on the desk."
+    },
+    {
+      "id": 19,
+      "url": "https://casinoseo.vercel.app/manus-storage/cv-redesign-story-uae-v3_7842f0be.jpg",
+      "contexts": [
+        {
+          "route": "/articles",
+          "element": "img",
+          "alt": "UAE regulatory study with technical equipment cabinet, compliance workflow, and modern civic architecture"
+        },
+        {
+          "route": "/category/regulation",
+          "element": "img",
+          "alt": "UAE regulatory study with technical equipment cabinet, compliance workflow, and modern civic architecture"
+        }
+      ],
+      "embeddedText": true,
+      "description": "Illegible handwritten or printed text on the clipboard document, lines on the black folder, and small labels on the box and server rack.",
+      "certainty": "high",
+      "action": "clean_or_replace",
+      "rationale": "The image contains documents on the table with visible lines and shapes representing text, as well as labels on the box and the server rack."
+    },
+    {
+      "id": 20,
+      "url": "https://casinoseo.vercel.app/manus-storage/cv-redesign-story-kangwon-v3_bf87c0c6.jpg",
+      "contexts": [
+        {
+          "route": "/articles",
+          "element": "img",
+          "alt": "Mountain tourism strategy study with regional map, rail routes, trails, and cultural landmarks"
+        },
+        {
+          "route": "/category/culture-travel",
+          "element": "img",
+          "alt": "Mountain tourism strategy study with regional map, rail routes, trails, and cultural landmarks"
+        },
+        {
+          "route": "/articles/philippines-considers-wider-visa-free-access",
+          "element": "img",
+          "alt": "Mountain tourism strategy study with regional map, rail routes, trails, and cultural landmarks"
+        }
+      ],
+      "embeddedText": true,
+      "description": "Unreadable pseudo-text and handwriting-like scribbles on notebooks and documents",
+      "certainty": "high",
+      "action": "clean_or_replace",
+      "rationale": "The image contains notebooks and documents filled with illegible generated pseudo-text and scribbles."
+    },
+    {
+      "id": 21,
+      "url": "https://casinoseo.vercel.app/manus-storage/cv-redesign-story-gkl-v4_fc1a8e20.jpg",
+      "contexts": [
+        {
+          "route": "/articles",
+          "element": "img",
+          "alt": "Financial analyst desk with a Seoul venue model, monthly comparison chart, source filings, calculator, and calendar."
+        },
+        {
+          "route": "/category/market-intelligence",
+          "element": "img",
+          "alt": "Financial analyst desk with a Seoul venue model, monthly comparison chart, source filings, calculator, and calendar."
+        }
+      ],
+      "embeddedText": true,
+      "description": "Unreadable text lines on documents, numbers/symbols on calculator buttons",
+      "certainty": "high",
+      "action": "clean_or_replace",
+      "rationale": "The image contains visible text lines on the documents and numbers/symbols on the calculator buttons."
+    },
+    {
+      "id": 22,
+      "url": "https://casinoseo.vercel.app/manus-storage/cv-redesign-story-hokkaido-v4_4377d0e6.jpg",
+      "contexts": [
+        {
+          "route": "/articles",
+          "element": "img",
+          "alt": "Hokkaido regional planning table with snowy relief map, transport study lines, neutral resort model, environmental overlays, and future calendar marker."
+        },
+        {
+          "route": "/category/regulation",
+          "element": "img",
+          "alt": "Hokkaido regional planning table with snowy relief map, transport study lines, neutral resort model, environmental overlays, and future calendar marker."
+        }
+      ],
+      "embeddedText": true,
+      "description": "Illegible handwritten-style text on the notebook pages",
+      "certainty": "high",
+      "action": "clean_or_replace",
+      "rationale": "The image contains a notebook with visible, albeit illegible, handwritten-style text on its pages."
+    },
+    {
+      "id": 23,
+      "url": "https://casinoseo.vercel.app/manus-storage/cv-casino-story-philippines-visa_00e3c52c.jpg",
+      "contexts": [
+        {
+          "route": "/articles",
+          "element": "img",
+          "alt": "Casino-resort arrivals study with airport route map, immigration proposal folder, and integrated-resort skyline"
+        },
+        {
+          "route": "/category/culture-travel",
+          "element": "img",
+          "alt": "Casino-resort arrivals study with airport route map, immigration proposal folder, and integrated-resort skyline"
+        },
+        {
+          "route": "/articles/philippines-considers-wider-visa-free-access",
+          "element": "img",
+          "alt": "Casino-resort arrivals study with airport route map, immigration proposal folder, and integrated-resort skyline"
+        },
+        {
+          "route": "/articles/philippines-considers-wider-visa-free-access",
+          "element": "og:image",
+          "alt": ""
+        },
+        {
+          "route": "/archive/2026-09-02",
+          "element": "img",
+          "alt": "Casino-resort arrivals study with airport route map, immigration proposal folder, and integrated-resort skyline"
+        }
+      ],
+      "embeddedText": true,
+      "description": "ARRIVALS, IMMIGRATION PROPOSAL",
+      "certainty": "high",
+      "action": "clean_or_replace",
+      "rationale": "The image contains visible text 'ARRIVALS' on a wall map and 'IMMIGRATION PROPOSAL' on a notebook."
+    },
+    {
+      "id": 24,
+      "url": "https://casinoseo.vercel.app/manus-storage/cv-casino-story-rgb-machines_4f50affa.jpg",
+      "contexts": [
+        {
+          "route": "/articles",
+          "element": "img",
+          "alt": "Casino gaming-machine service bench with opened cabinet, reel assembly, diagnostics, and replacement modules"
+        },
+        {
+          "route": "/category/casino-operations",
+          "element": "img",
+          "alt": "Casino gaming-machine service bench with opened cabinet, reel assembly, diagnostics, and replacement modules"
+        },
+        {
+          "route": "/category/casino-operations",
+          "element": "og:image",
+          "alt": ""
+        },
+        {
+          "route": "/articles/rgb-targets-machine-replacement-and-digital-services",
+          "element": "img",
+          "alt": "Casino gaming-machine service bench with opened cabinet, reel assembly, diagnostics, and replacement modules"
+        },
+        {
+          "route": "/articles/rgb-targets-machine-replacement-and-digital-services",
+          "element": "og:image",
+          "alt": ""
+        },
+        {
+          "route": "/archive/2026-09-02",
+          "element": "img",
+          "alt": "Casino gaming-machine service bench with opened cabinet, reel assembly, diagnostics, and replacement modules"
+        }
+      ],
+      "embeddedText": true,
+      "description": "Uncertain UI text on tablet screen",
+      "certainty": "high",
+      "action": "clean_or_replace",
+      "rationale": "The image contains a tablet screen displaying graphs and text-like UI elements."
+    },
+    {
+      "id": 25,
+      "url": "https://casinoseo.vercel.app/manus-storage/cv-casino-story-court-authority_1cbfe059.jpg",
+      "contexts": [
+        {
+          "route": "/articles",
+          "element": "img",
+          "alt": "Legal research table connecting courthouse authority, state regulation, casino evidence, and event-contract diagrams"
+        },
+        {
+          "route": "/category/regulation",
+          "element": "img",
+          "alt": "Legal research table connecting courthouse authority, state regulation, casino evidence, and event-contract diagrams"
+        },
+        {
+          "route": "/articles/prediction-markets-state-authority-supreme-court",
+          "element": "img",
+          "alt": "Legal research table connecting courthouse authority, state regulation, casino evidence, and event-contract diagrams"
+        },
+        {
+          "route": "/articles/prediction-markets-state-authority-supreme-court",
+          "element": "og:image",
+          "alt": ""
+        },
+        {
+          "route": "/archive/2026-09-02",
+          "element": "img",
+          "alt": "Legal research table connecting courthouse authority, state regulation, casino evidence, and event-contract diagrams"
+        }
+      ],
+      "embeddedText": true,
+      "description": "Numbers on the roulette wheel (e.g., 20, 28, 28) and unreadable flowchart labels and playing card symbols on the document.",
+      "certainty": "high",
+      "action": "clean_or_replace",
+      "rationale": "The image contains visible numbers on the roulette wheel and small text/symbols in the flowchart document on the desk."
+    },
+    {
+      "id": 26,
+      "url": "https://casinoseo.vercel.app/manus-storage/cv-casino-story-paradise-revenue_5da7f8d5.jpg",
+      "contexts": [
+        {
+          "route": "/articles",
+          "element": "img",
+          "alt": "Empty South Korean casino floor viewed from an audit desk with revenue ledger and chip inventory tray"
+        },
+        {
+          "route": "/category/market-intelligence",
+          "element": "img",
+          "alt": "Empty South Korean casino floor viewed from an audit desk with revenue ledger and chip inventory tray"
+        },
+        {
+          "route": "/articles/paradise-co-record-august-revenue",
+          "element": "img",
+          "alt": "Empty South Korean casino floor viewed from an audit desk with revenue ledger and chip inventory tray"
+        },
+        {
+          "route": "/articles/paradise-co-record-august-revenue",
+          "element": "og:image",
+          "alt": ""
+        },
+        {
+          "route": "/archive/2026-09-02",
+          "element": "img",
+          "alt": "Empty South Korean casino floor viewed from an audit desk with revenue ledger and chip inventory tray"
+        }
+      ],
+      "embeddedText": true,
+      "description": "Illegible handwriting or numbers in the open notebook on the desk.",
+      "certainty": "high",
+      "action": "clean_or_replace",
+      "rationale": "The image shows an open notebook with visible writing on the pages."
+    },
+    {
+      "id": 27,
+      "url": "https://casinoseo.vercel.app/manus-storage/cv-casino-story-limits_22b2df11.jpg",
+      "contexts": [
+        {
+          "route": "/articles",
+          "element": "img",
+          "alt": "Quiet casino table with closed chip rack, timer, limit card, closed wallet, and clearly lit exit path"
+        },
+        {
+          "route": "/guides",
+          "element": "img",
+          "alt": "Quiet casino table with closed chip rack, timer, limit card, closed wallet, and clearly lit exit path"
+        },
+        {
+          "route": "/category/responsible-entertainment",
+          "element": "img",
+          "alt": "Quiet casino table with closed chip rack, timer, limit card, closed wallet, and clearly lit exit path"
+        },
+        {
+          "route": "/articles/ontario-betguard-impersonation-warning",
+          "element": "img",
+          "alt": "Quiet casino table with closed chip rack, timer, limit card, closed wallet, and clearly lit exit path"
+        },
+        {
+          "route": "/articles/set-limits-before-you-play",
+          "element": "img",
+          "alt": "Quiet casino table with closed chip rack, timer, limit card, closed wallet, and clearly lit exit path"
+        },
+        {
+          "route": "/articles/set-limits-before-you-play",
+          "element": "og:image",
+          "alt": ""
+        }
+      ],
+      "embeddedText": "",
+      "description": "none",
+      "certainty": "high",
+      "action": "keep",
+      "rationale": "The image contains a blank name card and a blank spiral notepad on a green table, with no visible typography, logos, or watermarks."
+    },
+    {
+      "id": 28,
+      "url": "https://casinoseo.vercel.app/manus-storage/cv-casino-story-roulette-guide_416909f1.jpg",
+      "contexts": [
+        {
+          "route": "/articles",
+          "element": "img",
+          "alt": "European roulette wheel at rest with calibration tools, felt layout edge, and probability notes"
+        },
+        {
+          "route": "/guides",
+          "element": "img",
+          "alt": "European roulette wheel at rest with calibration tools, felt layout edge, and probability notes"
+        },
+        {
+          "route": "/category/game-guides",
+          "element": "img",
+          "alt": "European roulette wheel at rest with calibration tools, felt layout edge, and probability notes"
+        },
+        {
+          "route": "/category/game-guides",
+          "element": "og:image",
+          "alt": ""
+        },
+        {
+          "route": "/articles/roulette-a-measured-introduction",
+          "element": "img",
+          "alt": "European roulette wheel at rest with calibration tools, felt layout edge, and probability notes"
+        },
+        {
+          "route": "/articles/roulette-a-measured-introduction",
+          "element": "og:image",
+          "alt": ""
+        }
+      ],
+      "embeddedText": true,
+      "description": "Numbers on the roulette wheel (e.g., 3, 22, 18, 19, 25, 2, 25, 22, 2, 25, 17, 34, 26, 0) and numbers on the green table (e.g., 2).",
+      "certainty": "high",
+      "action": "clean_or_replace",
+      "rationale": "The image clearly shows numbers on the roulette wheel track and on the green felt table."
+    },
+    {
+      "id": 29,
+      "url": "https://casinoseo.vercel.app/manus-storage/casinoverse-daily-research-archive-unique_189cac85.jpg",
+      "contexts": [
+        {
+          "route": "/archive",
+          "element": "img",
+          "alt": ""
+        },
+        {
+          "route": "/archive",
+          "element": "og:image",
+          "alt": ""
+        },
+        {
+          "route": "/sources",
+          "element": "og:image",
+          "alt": ""
+        }
+      ],
+      "embeddedText": true,
+      "description": "Visible numbers indicating years ('2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025') on the display board and files, and text on the pinned documents.",
+      "certainty": "high",
+      "action": "clean_or_replace",
+      "rationale": "The image contains visible numbers indicating years such as '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025' on the display board and files, as well as text on the documents."
+    },
+    {
+      "id": 30,
+      "url": "https://casinoseo.vercel.app/manus-storage/cv-casino-editorial-games-v2_112c40b6.jpg",
+      "contexts": [
+        {
+          "route": "/games",
+          "element": "img",
+          "alt": "Casino game laboratory with separate poker, blackjack, roulette, baccarat, and slot-mechanism study zones"
+        },
+        {
+          "route": "/games",
+          "element": "og:image",
+          "alt": ""
+        }
+      ],
+      "embeddedText": true,
+      "description": "Numbers on roulette betting layout, and unreadable text/writing on the notebook and framed document.",
+      "certainty": "high",
+      "action": "clean_or_replace",
+      "rationale": "The image contains numbers on the roulette layout and illegible writing on the documents."
+    },
+    {
+      "id": 31,
+      "url": "https://casinoseo.vercel.app/manus-storage/cv-casino-editorial-poker_d038178d.jpg",
+      "contexts": [
+        {
+          "route": "/games/poker",
+          "element": "img",
+          "alt": "Empty professional poker table showing seating positions, face-down cards, dealer button, and layout notes"
+        },
+        {
+          "route": "/games/poker",
+          "element": "og:image",
+          "alt": ""
+        }
+      ],
+      "embeddedText": "",
+      "description": "none",
+      "certainty": "high",
+      "action": "keep",
+      "rationale": "The image shows a poker table with cards and chips, but no visible typography, logos, labels, or watermarks are present."
+    },
+    {
+      "id": 32,
+      "url": "https://casinoseo.vercel.app/manus-storage/cv-casino-editorial-blackjack_309a005d.jpg",
+      "contexts": [
+        {
+          "route": "/games/blackjack",
+          "element": "img",
+          "alt": "Empty blackjack table with dealer shoe, discard tray, demonstration cards, and table-mechanics notes"
+        },
+        {
+          "route": "/games/blackjack",
+          "element": "og:image",
+          "alt": ""
+        }
+      ],
+      "embeddedText": "",
+      "description": "none",
+      "certainty": "high",
+      "action": "keep",
+      "rationale": "No visible typography, logos, or watermarks are present in the image."
+    },
+    {
+      "id": 33,
+      "url": "https://casinoseo.vercel.app/manus-storage/cv-casino-editorial-roulette_3fb03642.jpg",
+      "contexts": [
+        {
+          "route": "/games/roulette",
+          "element": "img",
+          "alt": "European roulette wheel at rest beside its felt layout, calibration tools, and probability diagram"
+        },
+        {
+          "route": "/games/roulette",
+          "element": "og:image",
+          "alt": ""
+        }
+      ],
+      "embeddedText": "",
+      "description": "none",
+      "certainty": "high",
+      "action": "keep",
+      "rationale": "The image contains a roulette wheel, compass, and a diagram, but no visible text or typography."
+    },
+    {
+      "id": 34,
+      "url": "https://casinoseo.vercel.app/manus-storage/cv-casino-editorial-baccarat_a49142ce.jpg",
+      "contexts": [
+        {
+          "route": "/games/baccarat",
+          "element": "img",
+          "alt": "Empty baccarat table with symmetrical Player and Banker zones, card shoe, and score-card grid"
+        },
+        {
+          "route": "/games/baccarat",
+          "element": "og:image",
+          "alt": ""
+        }
+      ],
+      "embeddedText": "",
+      "description": "none",
+      "certainty": "high",
+      "action": "keep",
+      "rationale": "The image shows a casino table with no visible text, letters, or numbers anywhere on the surface or background."
+    },
+    {
+      "id": 35,
+      "url": "https://casinoseo.vercel.app/manus-storage/cv-casino-editorial-slots_e4af86da.jpg",
+      "contexts": [
+        {
+          "route": "/games/slots",
+          "element": "img",
+          "alt": "Opened mechanical slot reel assembly beside a dark modern machine aisle and technical tools"
+        },
+        {
+          "route": "/games/slots",
+          "element": "og:image",
+          "alt": ""
+        }
+      ],
+      "embeddedText": "",
+      "description": "none",
+      "certainty": "high",
+      "action": "keep",
+      "rationale": "The image shows a slot machine mechanism and a paper with a graph, but no readable text, letters, words, or numbers are present."
+    },
+    {
+      "id": 36,
+      "url": "https://casinoseo.vercel.app/manus-storage/casinoverse-guides-knowledge-map_0130e519.svg",
+      "contexts": [
+        {
+          "route": "/guides",
+          "element": "img",
+          "alt": "Empty casino dealer-training station with card shoe, wheel tools, table-layout diagram, and rule cards"
+        },
+        {
+          "route": "/guides",
+          "element": "og:image",
+          "alt": ""
+        }
+      ],
+      "embeddedText": "",
+      "description": "none",
+      "certainty": "high",
+      "action": "keep",
+      "rationale": "The SVG image consists entirely of geometric vector shapes without any text elements or text-like paths."
+    },
+    {
+      "id": 37,
+      "url": "https://casinoseo.vercel.app/manus-storage/cv-casino-editorial-history_ccc4b2ef.jpg",
+      "contexts": [
+        {
+          "route": "/history",
+          "element": "img",
+          "alt": "Casino history conservation table with an early roulette wheel, antique cards, mechanical slot reel, dice, blueprint, and archival photographs"
+        },
+        {
+          "route": "/history",
+          "element": "og:image",
+          "alt": ""
+        }
+      ],
+      "embeddedText": true,
+      "description": "Numbers on roulette wheel (e.g., 22, 28, 21, 28, 21, 20), letters/numbers on playing cards (e.g., A, J, Q, K).",
+      "certainty": "high",
+      "action": "clean_or_replace",
+      "rationale": "The image contains visible numbers on the roulette wheel and letters/numbers on the playing cards."
+    },
+    {
+      "id": 38,
+      "url": "https://casinoseo.vercel.app/manus-storage/cv-casino-editorial-culture_5603c3fa.jpg",
+      "contexts": [
+        {
+          "route": "/culture",
+          "element": "img",
+          "alt": "Empty casino interior showing a roulette table, patterned carpet, chandelier, theatre entrance, lounge seating, and artwork"
+        },
+        {
+          "route": "/culture",
+          "element": "og:image",
+          "alt": ""
+        }
+      ],
+      "embeddedText": true,
+      "description": "Numbers on the roulette wheel and betting layout",
+      "certainty": "high",
+      "action": "clean_or_replace",
+      "rationale": "There are numbers visible on the roulette wheel and table layout."
+    },
+    {
+      "id": 39,
+      "url": "https://casinoseo.vercel.app/manus-storage/cv-casino-editorial-destinations_5218f6fb.jpg",
+      "contexts": [
+        {
+          "route": "/destinations",
+          "element": "img",
+          "alt": "Casino destination study with world map, integrated-resort models, roulette-wheel compass, architectural photographs, and skyline"
+        },
+        {
+          "route": "/destinations",
+          "element": "og:image",
+          "alt": ""
+        }
+      ],
+      "embeddedText": "",
+      "description": "none",
+      "certainty": "high",
+      "action": "keep",
+      "rationale": "The image contains a world map and various objects, but there is no visible text, logos, or typography."
+    },
+    {
+      "id": 40,
+      "url": "https://casinoseo.vercel.app/manus-storage/cv-casino-editorial-facts_992a1d46.jpg",
+      "contexts": [
+        {
+          "route": "/facts",
+          "element": "img",
+          "alt": "Casino mathematics bench with roulette wheel, cards, dice, slot reel, calipers, graph paper, and evidence tags"
+        },
+        {
+          "route": "/facts",
+          "element": "og:image",
+          "alt": ""
+        }
+      ],
+      "embeddedText": "",
+      "description": "none",
+      "certainty": "high",
+      "action": "keep",
+      "rationale": "The image contains various casino-related objects but no visible text or typography."
+    },
+    {
+      "id": 41,
+      "url": "https://casinoseo.vercel.app/manus-storage/cv-casino-editorial-gallery_1b96ffcc.jpg",
+      "contexts": [
+        {
+          "route": "/gallery",
+          "element": "img",
+          "alt": "Casino design gallery with framed studies of roulette, card shoes, slot reels, surveillance, carpet patterns, chip trays, and resort architecture"
+        },
+        {
+          "route": "/gallery",
+          "element": "og:image",
+          "alt": ""
+        }
+      ],
+      "embeddedText": true,
+      "description": "Unreadable blueprint annotations and diagram labels",
+      "certainty": "high",
+      "action": "clean_or_replace",
+      "rationale": "The image contains blueprint-style framed pictures with unreadable diagram labels and technical annotations."
+    },
+    {
+      "id": 42,
+      "url": "https://casinoseo.vercel.app/manus-storage/cv-redesign-gallery-architecture-v3_d585d9ab.jpg",
+      "contexts": [
+        {
+          "route": "/gallery",
+          "element": "img",
+          "alt": "Editorial illustration of an imagined Belle Époque casino façade and blueprint fragments"
+        }
+      ],
+      "embeddedText": "",
+      "description": "none",
+      "certainty": "high",
+      "action": "keep",
+      "rationale": "The image is an architectural drawing and model without any visible text, labels, or watermarks."
+    },
+    {
+      "id": 43,
+      "url": "https://casinoseo.vercel.app/manus-storage/cv-redesign-gallery-interiors-v3_b8fa492f.jpg",
+      "contexts": [
+        {
+          "route": "/gallery",
+          "element": "img",
+          "alt": "Editorial illustration of a contemporary resort interior with daylight, art, seating, and wide circulation"
+        }
+      ],
+      "embeddedText": "",
+      "description": "none",
+      "certainty": "high",
+      "action": "keep",
+      "rationale": "The image shows a large lobby area with white lines painted on the floor, but there is no text, typography, logos, or watermarks visible anywhere in the image."
+    },
+    {
+      "id": 44,
+      "url": "https://casinoseo.vercel.app/manus-storage/cv-redesign-gallery-cards-v3_9e905a09.jpg",
+      "contexts": [
+        {
+          "route": "/gallery",
+          "element": "img",
+          "alt": "Editorial illustration of a historical playing-card print workshop with blocks, pigments, and paper"
+        }
+      ],
+      "embeddedText": "",
+      "description": "none",
+      "certainty": "high",
+      "action": "keep",
+      "rationale": "No visible text, letters, words, numbers, labels, badges, or watermarks were found in the image."
+    },
+    {
+      "id": 45,
+      "url": "https://casinoseo.vercel.app/manus-storage/cv-redesign-gallery-roulette-v3_f7f76037.jpg",
+      "contexts": [
+        {
+          "route": "/gallery",
+          "element": "img",
+          "alt": "Editorial illustration showing roulette wheel geometry and ball-track construction"
+        }
+      ],
+      "embeddedText": "",
+      "description": "none",
+      "certainty": "high",
+      "action": "keep",
+      "rationale": "The image shows technical drawings of a roulette wheel with measuring tools, but contains no visible text, numbers, or labels."
+    },
+    {
+      "id": 46,
+      "url": "https://casinoseo.vercel.app/manus-storage/cv-redesign-gallery-entertainment-v3_21e0c2e2.jpg",
+      "contexts": [
+        {
+          "route": "/gallery",
+          "element": "img",
+          "alt": "Editorial illustration of an empty theatre stage with curtains, work lights, and seating"
+        }
+      ],
+      "embeddedText": "",
+      "description": "none",
+      "certainty": "high",
+      "action": "keep",
+      "rationale": "The image shows a theater and a schematic diagram with lines and nodes, but no visible typography."
+    },
+    {
+      "id": 47,
+      "url": "https://casinoseo.vercel.app/manus-storage/cv-redesign-gallery-destination-v3_578403a6.jpg",
+      "contexts": [
+        {
+          "route": "/gallery",
+          "element": "img",
+          "alt": "Editorial illustration of a coastal entertainment city with boardwalk, heritage façades, and modern towers"
+        }
+      ],
+      "embeddedText": "",
+      "description": "none",
+      "certainty": "high",
+      "action": "keep",
+      "rationale": "The image is an aerial cityscape with no visible text, logos, or watermarks."
+    },
+    {
+      "id": 48,
+      "url": "https://casinoseo.vercel.app/manus-storage/cv-redesign-gallery-accessibility-v3_468a3511.jpg",
+      "contexts": [
+        {
+          "route": "/gallery",
+          "element": "img",
+          "alt": "Editorial isometric illustration of accessible routes, tactile paths, seating clearances, and a low service counter"
+        }
+      ],
+      "embeddedText": "",
+      "description": "none",
+      "certainty": "high",
+      "action": "keep",
+      "rationale": "The image contains floor plans, 3D models, icons, and textures, but no visible typography, letters, words, or numbers."
+    },
+    {
+      "id": 49,
+      "url": "https://casinoseo.vercel.app/manus-storage/cv-redesign-gallery-archive-v3_6f28d974.jpg",
+      "contexts": [
+        {
+          "route": "/gallery",
+          "element": "img",
+          "alt": "Editorial illustration of conserved dossiers, mechanical diagrams, film negatives, and archival tools"
+        }
+      ],
+      "embeddedText": true,
+      "description": "Numbers on the ruler",
+      "certainty": "high",
+      "action": "clean_or_replace",
+      "rationale": "The image contains visible numbers printed along the edge of the wooden ruler."
+    },
+    {
+      "id": 50,
+      "url": "https://casinoseo.vercel.app/manus-storage/cv-casino-editorial-responsible-v2_56db7e17.jpg",
+      "contexts": [
+        {
+          "route": "/support",
+          "element": "og:image",
+          "alt": ""
+        },
+        {
+          "route": "/responsible-entertainment",
+          "element": "img",
+          "alt": "Quiet closed casino table with returned chips, stopped clock, limit card, support brochure, water, and a lit exit"
+        },
+        {
+          "route": "/responsible-entertainment",
+          "element": "og:image",
+          "alt": ""
+        }
+      ],
+      "embeddedText": true,
+      "description": "Numbers 1 through 12 on the clock face",
+      "certainty": "high",
+      "action": "clean_or_replace",
+      "rationale": "The clock face contains visible numbers from 1 to 12."
+    },
+    {
+      "id": 51,
+      "url": "https://casinoseo.vercel.app/manus-storage/cv-casino-editorial-about-v2_da3ac0f6.jpg",
+      "contexts": [
+        {
+          "route": "/about",
+          "element": "img",
+          "alt": "Independent publication studio overlooking an empty casino floor with notebook, recorder, floor plan, chip catalogue, and camera"
+        },
+        {
+          "route": "/about",
+          "element": "og:image",
+          "alt": ""
+        }
+      ],
+      "embeddedText": true,
+      "description": "Unreadable text or numbers on the black device and text-like squiggles on the floor plan document.",
+      "certainty": "high",
+      "action": "clean_or_replace",
+      "rationale": "The image contains unreadable typography on the black device and document."
+    }
+  ]
+}

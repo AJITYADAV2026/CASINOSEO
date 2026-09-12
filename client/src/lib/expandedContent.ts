@@ -1,10 +1,10 @@
 export const EXPANDED_IMAGES = {
-  articles: "/manus-storage/cv-casino-editorial-blog-v2_e8bdb7f7.jpg",
-  history: "/manus-storage/cv-casino-editorial-history_ccc4b2ef.jpg",
-  culture: "/manus-storage/cv-casino-editorial-culture_5603c3fa.jpg",
+  articles: "/manus-storage/casinooverse-textfree-013_2e007f4d.jpg",
+  history: "/manus-storage/casinooverse-textfree-037_aa3e003b.jpg",
+  culture: "/manus-storage/casinooverse-textfree-038-v2_19733cfb.jpg",
   destinations: "/manus-storage/cv-casino-editorial-destinations_5218f6fb.jpg",
   facts: "/manus-storage/cv-casino-editorial-facts_992a1d46.jpg",
-  gallery: "/manus-storage/cv-casino-editorial-gallery_1b96ffcc.jpg",
+  gallery: "/manus-storage/casinooverse-textfree-041-v2_99d242e8.jpg",
   poker: "/manus-storage/cv-casino-editorial-poker_d038178d.jpg",
   blackjack: "/manus-storage/cv-casino-editorial-blackjack_309a005d.jpg",
   roulette: "/manus-storage/cv-casino-editorial-roulette_3fb03642.jpg",
@@ -17,5 +17,5 @@ export const EXPANDED_IMAGES = {
   galleryEntertainment: "/manus-storage/cv-redesign-gallery-entertainment-v3_21e0c2e2.jpg",
   galleryDestination: "/manus-storage/cv-redesign-gallery-destination-v3_578403a6.jpg",
   galleryAccessibility: "/manus-storage/cv-redesign-gallery-accessibility-v3_468a3511.jpg",
-  galleryArchive: "/manus-storage/cv-redesign-gallery-archive-v3_6f28d974.jpg",
+  galleryArchive: "/manus-storage/casinooverse-textfree-049_9a38a7ee.jpg",
 } as const;

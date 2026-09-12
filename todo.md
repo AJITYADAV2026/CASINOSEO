@@ -271,3 +271,10 @@
 - [x] Add or update regression coverage for the image wait, unique images, required schema, sitemap inclusion, indexing-ready URL output, GitHub-first ordering, and exact-SHA Vercel verification.
 - [x] Run tests, TypeScript, Vercel build, route/schema/image/sitemap checks, and production runtime-log validation.
 - [x] Save a checkpoint, push GitHub first, verify Vercel automatically deploys the exact commit, and return the new canonical URLs for manual indexing.
+- [x] Inventory every distinct live editorial image URL across the sitemap, database-backed stories, homepage, page heroes, guides, galleries, and publication cards, preserving each image’s page context and alt text.
+- [x] Inspect every distinct image for embedded text, labels, captions, logos, badges, watermarks, or other visible typography, and record evidence without guessing unreadable details.
+- [x] Clean or replace every offending image without cropping, changing aspect ratio, adding text, or repeating another public image assignment.
+- [x] Update all affected database and static image assignments while preserving one unique public image URL per editorial role and accurate alt text.
+- [x] Add or update automated safeguards that prevent future public images with known text overlays, failure placeholders, repeated URLs, or watermarks from being published.
+- [x] Visually verify every corrected image and affected page at desktop and mobile sizes, then run tests, TypeScript, build, sitemap/image crawl, and runtime-log checks.
+- [ ] Save a checkpoint, push all image corrections to `AJITYADAV2026/CASINOSEO` first, and verify Vercel automatically deploys the exact matching commit with clean production images.
