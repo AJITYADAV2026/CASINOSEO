@@ -36,3 +36,9 @@ The delivery-monitor, content-analysis, and page-creation heartbeat jobs were de
 The unified callback enforces the immediately preceding IST digest date, published status, strict research → analysis → page-creation order, completed durable Site Find and URL manifest records, unique featured images, and an explicit `failedStage` response. The complete suite passed **150 tests across 27 files**, TypeScript validation, and the Vercel production build. GitHub commit `7fa3b0e6ea2cba3a351de191421adfae51267a63` deployed successfully to Vercel before the live schedules were migrated.
 
 No manual automation run was started, so this migration does not claim a new research edition, Site Find report, URL manifest, GitHub artifact commit, or Vercel publication produced by the schedule itself. The next real run must provide that evidence.
+
+## Final deployment verification
+
+The completed migration and authentication-noise repair were saved as checkpoint and GitHub commit `011a8e05f00ece522930671dfb4b403956a000fe`. GitHub `main` matched that SHA before Vercel reported a successful deployment for the same commit.
+
+The final production audit passed across **38 routes**, **49 assets**, and **44 publication images**, including dynamic database evidence and private-source boundaries. The unified callback returned HTTP 403 with `{"error":"cron-only"}` when probed without scheduled credentials. The obsolete monitor, content-analysis, and page-creation endpoints each returned HTTP 404. The fresh Vercel error-log query returned no entries, confirming that unauthenticated probes no longer initialize the OAuth SDK or emit missing-configuration errors.

@@ -260,4 +260,4 @@
 - [x] Remove or disable every obsolete separate automation after the unified automation is active, leaving exactly one enabled recurring automation and no Agent 4/indexing action.
 - [x] Add regression coverage proving strict stage order, idempotency, no stale artifact use, no duplicate images, no agent concurrency, no indexing, GitHub-first publication, and exact-SHA Vercel verification.
 - [x] Verify the unified automation schedule and configuration without creating fabricated output or claiming a successful run unless all durable stages actually complete.
-- [ ] Save a checkpoint, push the unified automation update to `AJITYADAV2026/CASINOSEO` first, and verify Vercel automatically deploys the exact matching commit.
+- [x] Save a checkpoint, push the unified automation update to `AJITYADAV2026/CASINOSEO` first, and verify Vercel automatically deploys the exact matching commit.
