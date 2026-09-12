@@ -270,4 +270,4 @@
 - [x] Update the single 12:01 AM IST automation playbook so every future run performs the same verified research, 58-second image-wait, page/schema/sitemap, GitHub-first, Vercel, and manual-indexing-manifest workflow sequentially.
 - [x] Add or update regression coverage for the image wait, unique images, required schema, sitemap inclusion, indexing-ready URL output, GitHub-first ordering, and exact-SHA Vercel verification.
 - [x] Run tests, TypeScript, Vercel build, route/schema/image/sitemap checks, and production runtime-log validation.
-- [ ] Save a checkpoint, push GitHub first, verify Vercel automatically deploys the exact commit, and return the new canonical URLs for manual indexing.
+- [x] Save a checkpoint, push GitHub first, verify Vercel automatically deploys the exact commit, and return the new canonical URLs for manual indexing.

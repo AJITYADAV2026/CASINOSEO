@@ -3,7 +3,7 @@
 **Execution date:** 12 September 2026 IST  
 **Research window:** 11 September 2026, 5:37 PM IST through 12 September 2026, 5:37 PM IST  
 **Edition date:** 11 September 2026  
-**Status:** Database publication completed; GitHub/Vercel release pending
+**Status:** Published to the live website through GitHub and Vercel
 
 ## Published article set
 
@@ -26,6 +26,12 @@ The unified fail-closed pipeline saved the research edition, completed the Site 
 Each article returns server-rendered HTML, contains `Article` or `NewsArticle` JSON-LD, and appears in the dynamic sitemap. A dated manual-indexing list was created at `publication-artifacts/indexing/INDEXING-URLS-2026-09-12.md`. No Search Console, IndexNow, sitemap-submission, Agent 4, or SSH action was performed.
 
 The sole recurring automation is active for **12:01 AM IST** and uses the GitHub connector. Its playbook now requires an exact rolling 24-hour window, one unique image per article, an exact 58-second post-generation wait, article schema checks, sitemap inclusion, a manual-indexing manifest, GitHub-first publication, and exact-SHA Vercel verification.
+
+## Live deployment verification
+
+The complete edition was pushed to `AJITYADAV2026/CASINOSEO` `main` before Vercel deployment. The closing GitHub commit is `203f144d1eba631ce51ae27fe83f4b9e011c85f5`; Vercel reported successful deployment for that exact SHA.
+
+All seven canonical article URLs returned HTTP 200 with server-rendered `Article` or `NewsArticle` JSON-LD and appeared in the live sitemap. The complete parity crawl passed across **46 routes**, **56 assets**, and **51 publication images**, with no route, asset, dynamic-data, or private-source exposure failures. The final Vercel error-log query returned no entries.
 
 ## References
 
