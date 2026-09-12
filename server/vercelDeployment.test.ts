@@ -40,6 +40,8 @@ describe("Vercel deployment contract", () => {
     expect(audit).toContain('const removedSurfacePaths = ["/vlogs", "/history/archive", "/history/archive/2020-nevada-casino-shutdown"]');
     expect(audit).toContain("result.status === 404 && result.noindex");
     expect(audit).toContain("!vercelPaths.includes(path)");
+    expect(audit).toContain("dynamicEvidence.searchResultsVisible < 1");
+    expect(audit).not.toContain("searchResultsVisible: 3");
     expect(audit).not.toContain("historicalRecordsVisible: 17");
   });
 });

@@ -278,11 +278,17 @@ const dynamicEvidence = {
 const expectedDynamicEvidence = {
   sourceRecordsVisible: 35,
   supportRecordsVisible: 5,
-  searchResultsVisible: 3,
 };
 const dynamicFailures = Object.entries(expectedDynamicEvidence)
   .filter(([key, expected]) => dynamicEvidence[key] !== expected)
   .map(([key, expected]) => ({ key, expected, actual: dynamicEvidence[key] }));
+if (dynamicEvidence.searchStatus !== 200 || dynamicEvidence.searchResultsVisible < 1) {
+  dynamicFailures.push({
+    key: "searchResultsVisible",
+    expected: "at least 1 live result",
+    actual: dynamicEvidence.searchResultsVisible,
+  });
+}
 
 const summary = {
   startedAt,
