@@ -1,0 +1,114 @@
+{
+  "results": [
+    {
+      "input": "Global official casino and gaming regulators",
+      "output": {
+        "candidates_json": "[{\"title\":\"Detroit casinos report $109.72M in August revenue\",\"url\":\"https://www.michigan.gov/mgcb/news/2026/09/11/august-2026-casino-revenue\"}]",
+        "confidence": "high",
+        "item_count": 1,
+        "lane": "Global official casino and gaming regulators",
+        "report_file": "https://private-us-east-1.manuscdn.com/sessionFile/46s3FM2GggS7Sfb0HFM7sS/sandbox/WFZRAlnAkTecYumWraEulN_1789215010266_na1fn_L2hvbWUvdWJ1bnR1L3JlcG9ydA.md?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvNDZzM0ZNMkdnZ1M3U2ZiMEhGTTdzUy9zYW5kYm94L1dGWlJBbG5Ba1RlY1l1bVdyYUV1bE5fMTc4OTIxNTAxMDI2Nl9uYTFmbl9MMmh2YldVdmRXSjFiblIxTDNKbGNHOXlkQS5tZCIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5MDgxMjgwMH19fV19\u0026Key-Pair-Id=K2QY5QTL8JSY6C\u0026Signature=MEUCIQDoBUbZDh-Dxww1dE8NDZNyKmHsHpz0aLAyUIojdzrW5gIgEFN6Eep3pT8pkEzozm99SRy22xPbWrZUqCVhzc30DxU_"
+      },
+      "error": ""
+    },
+    {
+      "input": "India gambling regulation tax enforcement scams and consumer protection",
+      "output": {
+        "candidates_json": "[{\"title\": \"CCI Closes WinZO Antitrust Probe Against Google Following Online Gaming Ban\", \"url\": \"https://desikaanoon.in/cci-closes-winzo-antitrust-probe-against-google-after-gaming-ban/\"}, {\"title\": \"Haryana declares 'Rummy', 'Poker' as games of skill under Gambling Act 2025\", \"url\": \"https://www.tribuneindia.com/news/haryana/haryana-declares-rummy-poker-as-games-of-skill-under-gambling-act-2025/\"}, {\"title\": \"ऑनलाइन गेमिंग संवर्द्धन और विनियमन नियम, 2026 आज से लागू\", \"url\": \"https://newsonair.gov.in/hi/online-gaming-promotion-and-regulation-rules-2026-come-into-force-today/\"}]",
+        "confidence": "high",
+        "item_count": 3,
+        "lane": "India gambling regulation tax enforcement scams and consumer protection",
+        "report_file": "https://private-us-east-1.manuscdn.com/sessionFile/Ft4YPkfLKSTWjFnetlQ5q3/sandbox/pdDueWxZyYw44vHcwuZNES_1789215143969_na1fn_L2hvbWUvdWJ1bnR1L3JlcG9ydA.md?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvRnQ0WVBrZkxLU1RXakZuZXRsUTVxMy9zYW5kYm94L3BkRHVlV3haeVl3NDR2SGN3dVpORVNfMTc4OTIxNTE0Mzk2OV9uYTFmbl9MMmh2YldVdmRXSjFiblIxTDNKbGNHOXlkQS5tZCIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5MDgxMjgwMH19fV19\u0026Key-Pair-Id=K2QY5QTL8JSY6C\u0026Signature=MEUCIEvV5M7aYx~IlsDNg-ur6i3UXtXu2GUjMQs7-5YKZDIkAiEA9nq0nuyPtHTap-KymEaoiCvb3cxKj882aVtcDpM1SYY_"
+      },
+      "error": ""
+    },
+    {
+      "input": "United States and Canada casino regulation legislation and enforcement",
+      "output": {
+        "candidates_json": "[]",
+        "confidence": "high",
+        "item_count": "",
+        "lane": "United States and Canada casino regulation legislation and enforcement",
+        "report_file": "https://private-us-east-1.manuscdn.com/sessionFile/WwPZXcCIGR7TXBpZwX6RBu/sandbox/1YSD88FzYJE8MZdSQ6UDeq_1789214998200_na1fn_L2hvbWUvdWJ1bnR1L2Nhc2lub19yZWd1bGF0aW9uX3JlcG9ydA.md?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvV3dQWlhjQ0lHUjdUWEJwWndYNlJCdS9zYW5kYm94LzFZU0Q4OEZ6WUpFOE1aZFNRNlVEZXFfMTc4OTIxNDk5ODIwMF9uYTFmbl9MMmh2YldVdmRXSjFiblIxTDJOaGMybHViMTl5WldkMWJHRjBhVzl1WDNKbGNHOXlkQS5tZCIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5MDgxMjgwMH19fV19\u0026Key-Pair-Id=K2QY5QTL8JSY6C\u0026Signature=MEYCIQCEZlTSYdyMgIy2iTSMsrs8WAKU0G7B-6r9eXWy~TF5ZwIhAP0YM15U~akAsPucSBCD5ow5iodgtGiZBN7-Hvwqkwre"
+      },
+      "error": ""
+    },
+    {
+      "input": "United Kingdom and Europe casino regulation and safer gambling",
+      "output": {
+        "candidates_json": "[]",
+        "confidence": "high",
+        "item_count": "",
+        "lane": "United Kingdom and Europe casino regulation and safer gambling",
+        "report_file": "https://private-us-east-1.manuscdn.com/sessionFile/2QW3CfSSeXTPezivBBbniA/sandbox/A9UIIpZWRwqoTgJ2Qvj6lU_1789214956877_na1fn_L2hvbWUvdWJ1bnR1L3JlcG9ydA.md?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvMlFXM0NmU1NlWFRQZXppdkJCYm5pQS9zYW5kYm94L0E5VUlJcFpXUndxb1RnSjJRdmo2bFVfMTc4OTIxNDk1Njg3N19uYTFmbl9MMmh2YldVdmRXSjFiblIxTDNKbGNHOXlkQS5tZCIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5MDgxMjgwMH19fV19\u0026Key-Pair-Id=K2QY5QTL8JSY6C\u0026Signature=MEQCIC4XzAY45LHVyRz2Gx3i6QfwE0Zwdy3mAIJbe0jL0Ab2AiBk5gAW5PJicvMl-AU7XCGUJXus-Oq3UeebMVVPBi55HQ__"
+      },
+      "error": ""
+    },
+    {
+      "input": "Macau Hong Kong Singapore Philippines and wider Asia casino industry",
+      "output": {
+        "candidates_json": "[{\"title\":\"Macau visitor arrivals top 30M, 22 days earlier than 2025\",\"url\":\"https://agbrief.com/news/macau/11/09/2026/macau-visitor-arrivals-top-30m-22-days-earlier-than-2025/\"},{\"title\":\"Macau gaming tax revenue hits $8.24B in first eight months\",\"url\":\"https://agbrief.com/news/macau/11/09/2026/macau-gaming-tax-revenue-hits-8-24b-in-first-eight-months/\"},{\"title\":\"Malaysia consults on Gaming Sub-Code targeting loot boxes, in-game spending and child safety\",\"url\":\"https://agbrief.com/news/malaysia/11/09/2026/malaysia-consults-on-gaming-sub-code-targeting-loot-boxes-in-game-spending-and-child-safety/\"}]",
+        "confidence": "high",
+        "item_count": 3,
+        "lane": "Macau Hong Kong Singapore Philippines and wider Asia casino industry",
+        "report_file": "https://private-us-east-1.manuscdn.com/sessionFile/HPEGKfcAKM1Zr9IDfU343S/sandbox/7tjDT6j88YdxskAZJGhJzC_1789215003382_na1fn_L2hvbWUvdWJ1bnR1L3JlcG9ydA.md?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvSFBFR0tmY0FLTTFacjlJRGZVMzQzUy9zYW5kYm94Lzd0akRUNmo4OFlkeHNrQVpKR2hKekNfMTc4OTIxNTAwMzM4Ml9uYTFmbl9MMmh2YldVdmRXSjFiblIxTDNKbGNHOXlkQS5tZCIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5MDgxMjgwMH19fV19\u0026Key-Pair-Id=K2QY5QTL8JSY6C\u0026Signature=MEUCIQDgceKP8IWpt1HigTj2yLKJD3Ym613l2mzTrEHSDzrwJwIgRVL0Jvv0hen-5c45AOaBFtV3Gxcr~AsdWBQDRVaIIss_"
+      },
+      "error": ""
+    },
+    {
+      "input": "Australia and New Zealand casino regulation operations and responsible gambling",
+      "output": {
+        "candidates_json": "[{\"title\":\"New Zealand's Department of Internal Affairs confirms ascending clock auction with sealed bids for online casino licenses\",\"url\":\"https://www.threads.com/@regwatch.wiki/post/DdI_Gjcla0-/new-zealands-department-of-internal-affairs-confirms-ascending-clock-auction/\"}]",
+        "confidence": "high",
+        "item_count": 1,
+        "lane": "Australia and New Zealand casino regulation operations and responsible gambling",
+        "report_file": "https://private-us-east-1.manuscdn.com/sessionFile/zGQSIy1fez37dqIGMCwVoc/sandbox/60u5zuAyYfx2WItx7c8jEh_1789215232141_na1fn_L2hvbWUvdWJ1bnR1L3JlcG9ydA.md?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvekdRU0l5MWZlejM3ZHFJR01Dd1ZvYy9zYW5kYm94LzYwdTV6dUF5WWZ4MldJdHg3YzhqRWhfMTc4OTIxNTIzMjE0MV9uYTFmbl9MMmh2YldVdmRXSjFiblIxTDNKbGNHOXlkQS5tZCIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5MDgxMjgwMH19fV19\u0026Key-Pair-Id=K2QY5QTL8JSY6C\u0026Signature=MEYCIQClncqTga5YeG12oq5zp6lmAcW8sD1rq0wjNoNUA-OGEwIhAJxE-E7JOQ0tbmYR5sp3UkXUUSGV50NToaS-JICPg17B"
+      },
+      "error": ""
+    },
+    {
+      "input": "Public casino company filings earnings operational disclosures and material announcements",
+      "output": {
+        "candidates_json": "[{\"title\":\"Playtech Profit Surges as Americas Drive H1 Growth\",\"url\":\"https://www.casinonewsdaily.com/blog/2026/09/11/playtech-profit-surges-as-americas-drive-h1-growth/\"},{\"title\":\"Detroit casinos report $109.72M in August revenue\",\"url\":\"https://www.michigan.gov/mgcb/news/2026/09/11/august-2026-casino-revenue\"}]",
+        "confidence": "high",
+        "item_count": 2,
+        "lane": "Public casino company filings earnings operational disclosures and material announcements",
+        "report_file": "https://private-us-east-1.manuscdn.com/sessionFile/4kB80tJlaB1WqdfrKbkzn4/sandbox/mEt24uWcweTkTzwdlMC7OW_1789215110656_na1fn_L2hvbWUvdWJ1bnR1L2Nhc2lub19yZXBvcnQ.md?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvNGtCODB0SmxhQjFXcWRmcktia3puNC9zYW5kYm94L21FdDI0dVdjd2VUa1R6d2RsTUM3T1dfMTc4OTIxNTExMDY1Nl9uYTFmbl9MMmh2YldVdmRXSjFiblIxTDJOaGMybHViMTl5WlhCdmNuUS5tZCIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5MDgxMjgwMH19fV19\u0026Key-Pair-Id=K2QY5QTL8JSY6C\u0026Signature=MEQCID4SMVi4wfO6UXQn7oq9aP81nRdPf2yAHWVo9-O~TnhvAiBHwH~yXecQFcdxJb15LYDDwzgzlEqQ6A0wvnmRPrAlSg__"
+      },
+      "error": ""
+    },
+    {
+      "input": "Casino resort operations travel tourism culture architecture and labor",
+      "output": {
+        "candidates_json": "[{\"title\": \"Massachusetts: 1,300 workers in casino strike over wages, benefits\", \"url\": \"https://themilitant.com/2026/09/11/massachusetts-1300-workers-in-casino-strike-over-wages-benefits/\"}]",
+        "confidence": "medium",
+        "item_count": 1,
+        "lane": "Casino resort operations travel tourism culture architecture and labor",
+        "report_file": "https://private-us-east-1.manuscdn.com/sessionFile/l4YezQQoHhpUyxtesE4Xkv/sandbox/8GvgUfxvJ1KG52ivEBxeem_1789214968831_na1fn_L2hvbWUvdWJ1bnR1L2Nhc2lub19yZXBvcnQ.md?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvbDRZZXpRUW9IaHBVeXh0ZXNFNFhrdi9zYW5kYm94LzhHdmdVZnh2SjFLRzUyaXZFQnhlZW1fMTc4OTIxNDk2ODgzMV9uYTFmbl9MMmh2YldVdmRXSjFiblIxTDJOaGMybHViMTl5WlhCdmNuUS5tZCIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5MDgxMjgwMH19fV19\u0026Key-Pair-Id=K2QY5QTL8JSY6C\u0026Signature=MEYCIQDJFhHTcVJDP9LWJkuiuqwmIqxRh9oFbwi36wlECT7icQIhAJGCAQ7fx1YfRNogoDoqBIZwaG5A3JFILw5pMZyNZ4el"
+      },
+      "error": ""
+    },
+    {
+      "input": "Responsible entertainment gambling harm security fraud and casino scams",
+      "output": {
+        "candidates_json": "[{\"title\":\"FATF publishes new risk indicators for gaming and gambling sectors\",\"url\":\"https://igamingbusiness.com/legal-compliance/fatf-new-risk-indicators-gaming-gambling/\"},{\"title\":\"iGaming Ontario Warns Third Parties Are Impersonating Its Self-Exclusion Tool\",\"url\":\"https://www.casinos.com/ca/news/betguard-impersonation-warning-ontario\"},{\"title\":\"NZ Regulator Recovers $11.5m for Pokies Communities, Suspends Operator\",\"url\":\"https://www.casinos.com/nz/news/nz-regulator-recovers-11-5m-for-pokies-communities-suspends-operator\"}]",
+        "confidence": "high",
+        "item_count": 3,
+        "lane": "Responsible entertainment, gambling harm, security fraud, and casino scams",
+        "report_file": "https://private-us-east-1.manuscdn.com/sessionFile/ZyME1ib1RNTIcp6kMRN8s9/sandbox/6QVzOcIfut0fzHyg6DAyrc_1789215114145_na1fn_L2hvbWUvdWJ1bnR1L3JlcG9ydA.md?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvWnlNRTFpYjFSTlRJY3A2a01STjhzOS9zYW5kYm94LzZRVnpPY0lmdXQwZnpIeWc2REF5cmNfMTc4OTIxNTExNDE0NV9uYTFmbl9MMmh2YldVdmRXSjFiblIxTDNKbGNHOXlkQS5tZCIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5MDgxMjgwMH19fV19\u0026Key-Pair-Id=K2QY5QTL8JSY6C\u0026Signature=MEUCIQDpttxUSr45ppamGNVwKZK7p6g5ZUpHYpWOCR84ZRs62gIgUW9~Zfxrw-zsOUx2TbckBTRcu9VDIygcLADOxMmajIg_"
+      },
+      "error": ""
+    },
+    {
+      "input": "Casino game mechanics technology surveillance payments and educational developments",
+      "output": {
+        "candidates_json": "[]",
+        "confidence": "high",
+        "item_count": "",
+        "lane": "Casino game mechanics technology surveillance payments and educational developments",
+        "report_file": "https://private-us-east-1.manuscdn.com/sessionFile/Lb6ZFbntT63BNKFh2nUbIG/sandbox/ShSTn8s5kkFSn2CDErDaAP_1789215102757_na1fn_L2hvbWUvdWJ1bnR1L3JlcG9ydA.md?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvTGI2WkZibnRUNjNCTktGaDJuVWJJRy9zYW5kYm94L1NoU1RuOHM1a2tGU24yQ0RFckRhQVBfMTc4OTIxNTEwMjc1N19uYTFmbl9MMmh2YldVdmRXSjFiblIxTDNKbGNHOXlkQS5tZCIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5MDgxMjgwMH19fV19\u0026Key-Pair-Id=K2QY5QTL8JSY6C\u0026Signature=MEUCIQDIjpstyeWtZug2L0KsBt-8sMazdH9XAzL8qGjaCWArcQIgUkYtemDBVPTt5AkOirrVWE1WESQPTyRj55wdR3636s4_"
+      },
+      "error": ""
+    }
+  ]
+}

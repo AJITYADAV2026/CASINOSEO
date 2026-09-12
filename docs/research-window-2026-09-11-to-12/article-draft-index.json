@@ -1,0 +1,109 @@
+{
+  "results": [
+    {
+      "input": "Section 1 | Detroit commercial-casino August revenue",
+      "output": {
+        "article_body": "https://private-us-east-1.manuscdn.com/sessionFile/dQ7d1eOELf2ixr8KZ868o6/sandbox/vcJgzekEWbLJ00L2AKArZZ_1789216207586_na1fn_L2hvbWUvdWJ1bnR1L2Nhc2lub3ZlcnNlL2RldHJvaXQtY29tbWVyY2lhbC1jYXNpbm8tYXVndXN0LXJldmVudWU.md?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvZFE3ZDFlT0VMZjJpeHI4S1o4NjhvNi9zYW5kYm94L3ZjSmd6ZWtFV2JMSjAwTDJBS0FyWlpfMTc4OTIxNjIwNzU4Nl9uYTFmbl9MMmh2YldVdmRXSjFiblIxTDJOaGMybHViM1psY25ObEwyUmxkSEp2YVhRdFkyOXRiV1Z5WTJsaGJDMWpZWE5wYm04dFlYVm5kWE4wTFhKbGRtVnVkV1UubWQiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3OTA4MTI4MDB9fX1dfQ__\u0026Key-Pair-Id=K2QY5QTL8JSY6C\u0026Signature=MEYCIQCQGwvf3QdnghUF3to4lwX6b3I1D8yRP7PiXM9MUB4TEAIhAMlmvz-lJBQ7v63DJ2PLdpsboNy-tih8T1rQ93-i5S86",
+        "category_slug": "market-intelligence",
+        "content_type": "news",
+        "dek": "Detroit’s three commercial casinos reported $109.72 million in aggregate August revenue, with table games and slots up 3.0% year on year.",
+        "reading_minutes": 4,
+        "slug": "detroit-commercial-casino-august-revenue",
+        "source_json": "[{\"publisher\":\"Michigan Gaming Control Board\",\"sourceTitle\":\"Detroit casinos report $109.72M in August revenue\",\"sourceUrl\":\"https://www.michigan.gov/mgcb/news/2026/09/11/august-2026-casino-revenue\",\"sourcePublishedAt\":\"2026-09-11T18:30:00.000Z\",\"sourceType\":\"regulator\"}]",
+        "title": "Detroit Commercial Casinos Generate $109.72 Million in August Revenue",
+        "word_count": 900
+      },
+      "error": ""
+    },
+    {
+      "input": "Sections 2+3 | Macau visitor recovery and gaming-tax receipts",
+      "output": {
+        "article_body": "https://private-us-east-1.manuscdn.com/sessionFile/7M9kWD2AWaqp01I1Q8FySr/sandbox/yTMilq53BJ6aJOdHbNu2Bz_1789216202445_na1fn_L2hvbWUvdWJ1bnR1L2Nhc2lub3ZlcnNlL2FydGljbGU.md?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvN005a1dEMkFXYXFwMDFJMVE4RnlTci9zYW5kYm94L3lUTWlscTUzQko2YUpPZEhiTnUyQnpfMTc4OTIxNjIwMjQ0NV9uYTFmbl9MMmh2YldVdmRXSjFiblIxTDJOaGMybHViM1psY25ObEwyRnlkR2xqYkdVLm1kIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzkwODEyODAwfX19XX0_\u0026Key-Pair-Id=K2QY5QTL8JSY6C\u0026Signature=MEQCIAVh98qloTC9j1c6ajWura5xV0lcgJdVDRQv8Xp8vjGJAiBx4hiZ-YYaIPU0DIffsInER6e-RJtjeDBufRv1g7i1vw__",
+        "category_slug": "market-intelligence",
+        "content_type": "analysis",
+        "dek": "Macau surpasses 30 million visitor arrivals for 2026 and collects MOP66.17 billion in gaming taxes, demonstrating ongoing recovery.",
+        "reading_minutes": 4,
+        "slug": "macau-visitor-recovery-gaming-tax-receipts-2026",
+        "source_json": "[{\"publisher\":\"Asia Gaming Brief\",\"sourceTitle\":\"Macau visitor arrivals top 30M, 22 days earlier than 2025\",\"sourceUrl\":\"https://agbrief.com/news/macau/11/09/2026/macau-visitor-arrivals-top-30m-22-days-earlier-than-2025/\",\"sourcePublishedAt\":\"2026-09-11T13:01:00.000Z\",\"sourceType\":\"trade report citing Macau Public Security Police Force\"},{\"publisher\":\"Asia Gaming Brief\",\"sourceTitle\":\"Macau gaming tax revenue hits $8.24B in first eight months\",\"sourceUrl\":\"https://agbrief.com/news/macau/11/09/2026/macau-gaming-tax-revenue-hits-8-24b-in-first-eight-months/\",\"sourcePublishedAt\":\"2026-09-11T13:30:00.000Z\",\"sourceType\":\"trade report citing Macau Financial Services Bureau budget-execution data\"}]",
+        "title": "Macau Surpasses 30 Million Visitors and Collects MOP66.17 Billion in Gaming Taxes Through August 2026",
+        "word_count": 900
+      },
+      "error": ""
+    },
+    {
+      "input": "Section 4 | Malaysia Gaming Sub-Code consultation",
+      "output": {
+        "article_body": "/home/ubuntu/casinoverse/article-malaysia.md",
+        "category_slug": "regulation",
+        "content_type": "news",
+        "dek": "Malaysia's CMCF launches a 45-day consultation on a draft Gaming Sub-Code to address child safety, loot boxes, and virtual currencies.",
+        "reading_minutes": 4,
+        "slug": "malaysia-gaming-sub-code-consultation",
+        "source_json": "[{\"publisher\":\"Asia Gaming Brief\",\"sourceTitle\":\"Malaysia consults on Gaming Sub-Code targeting loot boxes, in-game spending and child safety\",\"sourceUrl\":\"https://agbrief.com/news/malaysia/11/09/2026/malaysia-consults-on-gaming-sub-code-targeting-loot-boxes-in-game-spending-and-child-safety/\",\"sourcePublishedAt\":\"2026-09-11T09:23:00.000Z\",\"sourceType\":\"trade report\"}]",
+        "title": "Malaysia Opens Consultation on Gaming Sub-Code Targeting Child Safety and In-Game Spending",
+        "word_count": 900
+      },
+      "error": ""
+    },
+    {
+      "input": "Section 5 | Playtech first-half results and cautious H2 guidance",
+      "output": {
+        "article_body": "https://private-us-east-1.manuscdn.com/sessionFile/72LSVMseQL52jMvvvNg6hB/sandbox/OolYlcfbxVQ9sZf96XJodM_1789216232205_na1fn_L2hvbWUvdWJ1bnR1L2Nhc2lub3ZlcnNlL2RvY3MvcmVzZWFyY2gtd2luZG93LTIwMjYtMDktMTEtdG8tMTIvcGxheXRlY2gtZmlyc3QtaGFsZi1yZXN1bHRz.md?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvNzJMU1ZNc2VRTDUyak12dnZOZzZoQi9zYW5kYm94L09vbFlsY2ZieFZROXNaZjk2WEpvZE1fMTc4OTIxNjIzMjIwNV9uYTFmbl9MMmh2YldVdmRXSjFiblIxTDJOaGMybHViM1psY25ObEwyUnZZM012Y21WelpXRnlZMmd0ZDJsdVpHOTNMVEl3TWpZdE1Ea3RNVEV0ZEc4dE1USXZjR3hoZVhSbFkyZ3RabWx5YzNRdGFHRnNaaTF5WlhOMWJIUnoubWQiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3OTA4MTI4MDB9fX1dfQ__\u0026Key-Pair-Id=K2QY5QTL8JSY6C\u0026Signature=MEQCIEPjqzyL1Gnr18focjfUPQSY7-~mLn76Lzm2iedwuhqiAiAuizLN8Tr8ma6~DxNVAhvN8pKNHCuYXz-YlrYjvhjqzQ__",
+        "category_slug": "market-intelligence",
+        "content_type": "analysis",
+        "dek": "Playtech reports a 472% surge in H1 adjusted post-tax profit, driven by 161% revenue growth in the Americas, but warns of lower H2 earnings due to regulatory and market factors.",
+        "reading_minutes": 5,
+        "slug": "playtech-h1-2026-profit-surge-americas-growth-cautious-h2-guidance",
+        "source_json": "[{\"publisher\": \"Casino News Daily\", \"sourceTitle\": \"Playtech Profit Surges as Americas Drive H1 Growth\", \"sourceUrl\": \"https://www.casinonewsdaily.com/blog/2026/09/11/playtech-profit-surges-as-americas-drive-h1-growth/\", \"sourcePublishedAt\": \"2026-09-11T08:33:00.000Z\", \"sourceType\": \"trade report\"}]",
+        "title": "Playtech Profit Surges as Americas Drive H1 Growth, Cautious H2 Guidance",
+        "word_count": 1209
+      },
+      "error": ""
+    },
+    {
+      "input": "Section 6 | FATF gambling-sector risk indicators",
+      "output": {
+        "article_body": "https://private-us-east-1.manuscdn.com/sessionFile/uEsV88QtXGTM0MvW9n6mNh/sandbox/UzlptxGs68EAjnxP6o4VGK_1789216236841_na1fn_L2hvbWUvdWJ1bnR1L2Nhc2lub3ZlcnNlX2FydGljbGU.md?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvdUVzVjg4UXRYR1RNME12VzluNm1OaC9zYW5kYm94L1V6bHB0eEdzNjhFQWpueFA2bzRWR0tfMTc4OTIxNjIzNjg0MV9uYTFmbl9MMmh2YldVdmRXSjFiblIxTDJOaGMybHViM1psY25ObFgyRnlkR2xqYkdVLm1kIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzkwODEyODAwfX19XX0_\u0026Key-Pair-Id=K2QY5QTL8JSY6C\u0026Signature=MEUCIHvaxCVWIWo-LRnPrL0DEnElj8kPpMZw3YDoGGdVxV4lAiEArjOJ1f-XKdTrPAawSRcYiMiHAd~53gUp1ChkuhOZDdk_",
+        "category_slug": "regulation",
+        "content_type": "news",
+        "dek": "The FATF updates its 2009 guidance, identifying casinos and sports betting as high-risk subsectors and highlighting vulnerabilities in modern digital payment methods.",
+        "reading_minutes": 5,
+        "slug": "fatf-updates-gambling-sector-risk-indicators",
+        "source_json": "[{\"publisher\": \"iGaming Business\", \"sourceTitle\": \"FATF publishes new risk indicators for gaming and gambling sectors\", \"sourceUrl\": \"https://igamingbusiness.com/legal-compliance/fatf-new-risk-indicators-gaming-gambling/\", \"sourcePublishedAt\": \"2026-09-11T18:30:00.000Z\", \"sourceType\": \"trade report\"}, {\"publisher\": \"Financial Action Task Force\", \"sourceTitle\": \"Risks of gaming and gambling\", \"sourceUrl\": \"https://www.fatf-gafi.org/en/news/risks-of-gaming-and-gambling-2026.html\", \"sourcePublishedAt\": \"2026-09-11T18:30:00.000Z\", \"sourceType\": \"official\"}]",
+        "title": "FATF Updates Global Gambling Risk Indicators Targeting Casinos and Sports Betting",
+        "word_count": 1131
+      },
+      "error": ""
+    },
+    {
+      "input": "Section 7 | Ontario BetGuard impersonation warning",
+      "output": {
+        "article_body": "https://private-us-east-1.manuscdn.com/sessionFile/ckBBxLNj1IBsZNyel7LGVz/sandbox/YpoKRfuwv5UdvVCZSImGzT_1789216204914_na1fn_L2hvbWUvdWJ1bnR1L2Nhc2lub3ZlcnNlL2FydGljbGU.md?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvY2tCQnhMTmoxSUJzWk55ZWw3TEdWei9zYW5kYm94L1lwb0tSZnV3djVVZHZWQ1pTSW1HelRfMTc4OTIxNjIwNDkxNF9uYTFmbl9MMmh2YldVdmRXSjFiblIxTDJOaGMybHViM1psY25ObEwyRnlkR2xqYkdVLm1kIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzkwODEyODAwfX19XX0_\u0026Key-Pair-Id=K2QY5QTL8JSY6C\u0026Signature=MEQCIBjOPiYhBXsqH~dfSh41tWUPMQwr~U6Z9louj9XaewbyAiBgE~pUBa2e0MQrXyA4FAlGYDlUubWwElJNEjw72brElw__",
+        "category_slug": "responsible-entertainment",
+        "content_type": "news",
+        "dek": "iGaming Ontario warns that unauthorised third parties are impersonating its BetGuard self-exclusion tool and spreading misleading advice to consumers.",
+        "reading_minutes": 4,
+        "slug": "ontario-betguard-impersonation-warning",
+        "source_json": "[{\"publisher\": \"Casinos.com Canada\", \"sourceTitle\": \"iGaming Ontario Warns Third Parties Are Impersonating Its Self-Exclusion Tool\", \"sourceUrl\": \"https://www.casinos.com/ca/news/betguard-impersonation-warning-ontario\", \"sourcePublishedAt\": \"2026-09-11T18:30:00.000Z\", \"sourceType\": \"news report\"}]",
+        "title": "iGaming Ontario Issues Warning Over BetGuard Self-Exclusion Tool Impersonation",
+        "word_count": 900
+      },
+      "error": ""
+    },
+    {
+      "input": "Section 8 | New Zealand community-gambling funds recovery and suspension",
+      "output": {
+        "article_body": "https://private-us-east-1.manuscdn.com/sessionFile/AsbYmGsUXI5ae4Rzjmxe32/sandbox/FpaFBhjPTscscZP03XlrEn_1789216214066_na1fn_L2hvbWUvdWJ1bnR1L2Nhc2lub3ZlcnNlL256LWNvbW11bml0eS1nYW1ibGluZy1mdW5kcw.md?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvQXNiWW1Hc1VYSTVhZTRSempteGUzMi9zYW5kYm94L0ZwYUZCaGpQVHNjc2NaUDAzWGxyRW5fMTc4OTIxNjIxNDA2Nl9uYTFmbl9MMmh2YldVdmRXSjFiblIxTDJOaGMybHViM1psY25ObEwyNTZMV052YlcxMWJtbDBlUzFuWVcxaWJHbHVaeTFtZFc1a2N3Lm1kIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzkwODEyODAwfX19XX0_\u0026Key-Pair-Id=K2QY5QTL8JSY6C\u0026Signature=MEUCIGUsxJ0oa8EDYQPdbI5dFQiwkjsrRdw2U2uAqRbHkavqAiEAii6kd9pP6NXnFxILVAWX6SbdxgaEQLh-agyJTVpC1k4_",
+        "category_slug": "regulation",
+        "content_type": "news",
+        "dek": "The New Zealand Department of Internal Affairs has secured commitments to return NZ$11.5 million to community organisations and suspended One Foundation's licence.",
+        "reading_minutes": 4,
+        "slug": "nz-community-gambling-funds-recovery-suspension",
+        "source_json": "[{\"publisher\":\"Casinos.com New Zealand\",\"sourceTitle\":\"NZ Regulator Recovers $11.5m for Pokies Communities, Suspends Operator\",\"sourceUrl\":\"https://www.casinos.com/nz/news/nz-regulator-recovers-11-5m-for-pokies-communities-suspends-operator\",\"sourcePublishedAt\":\"2026-09-11T14:13:00.000Z\",\"sourceType\":\"news report citing New Zealand Department of Internal Affairs\"},{\"publisher\":\"New Zealand Department of Internal Affairs\",\"sourceTitle\":\"Official DIA Press Release\",\"sourceUrl\":\"https://www.dia.govt.nz/press.nsf/0/6fc172d8152f1628cc258e6e00761bb8?OpenDocument\",\"sourcePublishedAt\":\"2026-09-11T18:30:00.000Z\",\"sourceType\":\"official government release\"}]",
+        "title": "New Zealand Regulator Recovers NZ$11.5 Million for Communities and Suspends One Foundation",
+        "word_count": 907
+      },
+      "error": ""
+    }
+  ]
+}

@@ -1,9 +1,10 @@
 {
-  "publicationDateIst": "2026-09-07",
-  "digestDateIst": "2026-09-06",
-  "sourceOrigin": "https://casinonews-flgw988r.manus.space",
-  "agent1Artifact": "publication-artifacts/research/2026-09-06.md",
-  "agent2Artifact": "publication-artifacts/site-find/SITE FIND 2026-09-07.md",
-  "agent3Artifact": "publication-artifacts/url-manifests/URL+2026-09-07.md",
+  "publicationDateIst": "2026-09-12",
+  "digestDateIst": "2026-09-11",
+  "sourceOrigin": "https://casinoseo.vercel.app",
+  "researchArtifact": "publication-artifacts/research/2026-09-11.md",
+  "siteFindArtifact": "publication-artifacts/site-find/SITE FIND 2026-09-12.md",
+  "urlManifestArtifact": "publication-artifacts/url-manifests/URL+2026-09-12.md",
+  "indexingArtifact": "publication-artifacts/indexing/INDEXING-URLS-2026-09-12.md",
   "sitemapSnapshot": "publication-artifacts/sitemap.xml"
 }

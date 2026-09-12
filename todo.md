@@ -261,3 +261,13 @@
 - [x] Add regression coverage proving strict stage order, idempotency, no stale artifact use, no duplicate images, no agent concurrency, no indexing, GitHub-first publication, and exact-SHA Vercel verification.
 - [x] Verify the unified automation schedule and configuration without creating fabricated output or claiming a successful run unless all durable stages actually complete.
 - [x] Save a checkpoint, push the unified automation update to `AJITYADAV2026/CASINOSEO` first, and verify Vercel automatically deploys the exact matching commit.
+- [x] Determine the exact current IST timestamp and latest 24-hour research window, then audit whether that edition already exists in durable research, Site Find, URL-manifest, article, and sitemap records.
+- [x] Research all material casino-industry developments in the exact 24-hour window using opened and verified official, regulatory, filing, trade, research, and reputable news sources, excluding promotions, betting advice, and unsupported claims.
+- [x] Build a complete source-attributed dated Markdown research edition and select only materially useful stories for publication with unique slugs, categories, timestamps, citations, and responsible-entertainment framing.
+- [x] Generate one distinct editorial image for each selected article, wait exactly 58 seconds after each image creation before continuing, upload each image to permanent project storage, and verify no public image URL is reused.
+- [x] Persist the research edition, run the fail-closed content-analysis and page-creation stages, publish complete article pages with NewsArticle/Article schema, and refresh the dynamic sitemap.
+- [x] Produce a dated manual-indexing URL list containing every newly created or materially updated canonical article URL plus the sitemap URL, without submitting any URL to Search Console or activating Agent 4.
+- [x] Update the single 12:01 AM IST automation playbook so every future run performs the same verified research, 58-second image-wait, page/schema/sitemap, GitHub-first, Vercel, and manual-indexing-manifest workflow sequentially.
+- [x] Add or update regression coverage for the image wait, unique images, required schema, sitemap inclusion, indexing-ready URL output, GitHub-first ordering, and exact-SHA Vercel verification.
+- [x] Run tests, TypeScript, Vercel build, route/schema/image/sitemap checks, and production runtime-log validation.
+- [ ] Save a checkpoint, push GitHub first, verify Vercel automatically deploys the exact commit, and return the new canonical URLs for manual indexing.
