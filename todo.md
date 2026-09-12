@@ -277,4 +277,4 @@
 - [x] Update all affected database and static image assignments while preserving one unique public image URL per editorial role and accurate alt text.
 - [x] Add or update automated safeguards that prevent future public images with known text overlays, failure placeholders, repeated URLs, or watermarks from being published.
 - [x] Visually verify every corrected image and affected page at desktop and mobile sizes, then run tests, TypeScript, build, sitemap/image crawl, and runtime-log checks.
-- [ ] Save a checkpoint, push all image corrections to `AJITYADAV2026/CASINOSEO` first, and verify Vercel automatically deploys the exact matching commit with clean production images.
+- [x] Save a checkpoint, push all image corrections to `AJITYADAV2026/CASINOSEO` first, and verify Vercel automatically deploys the exact matching commit with clean production images.

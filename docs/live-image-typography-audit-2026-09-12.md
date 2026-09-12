@@ -40,3 +40,9 @@ The final replacement set passed a second visual inspection. Twenty-eight replac
 The complete local sitemap crawl covered **46 routes** and **51 distinct image URLs**. All **30 final replacement URLs** were rendered, all **30 retired typography-bearing URLs** were absent, and all replacement values were unique. Representative desktop and mobile screenshots covered the homepage, article index, games, history, culture, gallery, responsible-entertainment, About, and affected article pages.
 
 The final automated validation passed **154 tests across 28 files**, TypeScript checks, and the Vercel production build. Browser-console, network, and server logs contained no errors after the final validation timestamp.
+
+## Production verification
+
+Checkpoint and GitHub commit `58fc39acaaacc2b6fada2f4637fd264acb313473` was pushed to `AJITYADAV2026/CASINOSEO` before Vercel deployment. Vercel reported a successful deployment for that exact SHA.
+
+The production parity crawl passed across **46 routes**, **56 assets**, and **51 distinct publication images**, with no route, asset, dynamic-data, or private-source exposure failures. A new production image inventory confirmed that all **30 final text-free replacements** are rendered, all **30 retired typography-bearing URLs** are absent, and all replacement URLs remain unique. The fresh Vercel error-log query returned no entries.
