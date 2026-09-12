@@ -1,6 +1,8 @@
 # CasinoVerse Daily Three-Agent GitHub Pipeline
 
-**Status:** Active and verified on 7 September 2026 IST  
+> **Superseded on 12 September 2026.** This multi-schedule architecture is retained only as historical documentation. The active design is the single sequential automation in `docs/casinooverse-unified-daily-automation-playbook.md` and `docs/unified-automation-migration-2026-09-12.md`.
+
+**Status:** Historical; previously verified on 7 September 2026 IST  
 **Author:** Manus AI
 
 ## Architecture decision

@@ -43,5 +43,8 @@ describe("lazy authentication initialization", () => {
     );
     expect(publicationRoutes).not.toContain('import { sdk } from "./_core/sdk"');
     expect(publicationRoutes.match(/await import\("\.\/_core\/sdk"\)/g)).toHaveLength(1);
+    expect(publicationRoutes.indexOf("if (!hasAuthenticationMaterial(req))")).toBeLessThan(
+      publicationRoutes.indexOf('await import("./_core/sdk")'),
+    );
   });
 });

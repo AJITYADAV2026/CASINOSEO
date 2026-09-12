@@ -257,7 +257,7 @@
 - [x] Audit every active CasinooVerse automation: isolated Agent 1 schedule, delivery monitor, Agent 2 heartbeat, Agent 3 heartbeat, GitHub Actions publisher, callback endpoints, durable artifacts, and any Agent 4/indexing job.
 - [x] Define one daily CasinooVerse automation that executes research, content analysis, page creation, sitemap refresh, GitHub publication, and exact-commit Vercel verification sequentially with no concurrent stages.
 - [x] Implement a single fail-closed orchestration contract that records actual IST start time, preserves source and payload requirements, requires each durable upstream artifact before continuing, enforces unique images, and reports the exact failed stage.
-- [ ] Remove or disable every obsolete separate automation after the unified automation is active, leaving exactly one enabled recurring automation and no Agent 4/indexing action.
+- [x] Remove or disable every obsolete separate automation after the unified automation is active, leaving exactly one enabled recurring automation and no Agent 4/indexing action.
 - [x] Add regression coverage proving strict stage order, idempotency, no stale artifact use, no duplicate images, no agent concurrency, no indexing, GitHub-first publication, and exact-SHA Vercel verification.
-- [ ] Verify the unified automation schedule and configuration without creating fabricated output or claiming a successful run unless all durable stages actually complete.
+- [x] Verify the unified automation schedule and configuration without creating fabricated output or claiming a successful run unless all durable stages actually complete.
 - [ ] Save a checkpoint, push the unified automation update to `AJITYADAV2026/CASINOSEO` first, and verify Vercel automatically deploys the exact matching commit.

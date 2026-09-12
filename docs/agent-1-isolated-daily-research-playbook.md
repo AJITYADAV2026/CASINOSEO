@@ -1,5 +1,7 @@
 # CasinooVerse Agent 1 — Isolated Daily Research Playbook
 
+> **Superseded on 12 September 2026.** This research-only schedule is retained for historical audit purposes. The active recurring task uses `docs/casinooverse-unified-daily-automation-playbook.md`.
+
 Run this task independently from all other CasinooVerse agents. Do not trigger Agent 2 or Agent 3. Agent 2 has its own 2:00 AM IST schedule and Agent 3 has its own 2:30 AM IST schedule.
 
 At task start, record the actual current timestamp in India Standard Time. The expected trigger is 12:01 AM IST. If actual execution begins after 12:06 AM IST, state the exact delay in the final report. A configured schedule is not proof of execution.

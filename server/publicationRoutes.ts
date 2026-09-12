@@ -17,6 +17,7 @@ import {
   getSiteFindReportByDate,
   getUrlManifestByDate,
 } from "./db";
+import { hasAuthenticationMaterial } from "./_core/context";
 import { previousIsoCalendarDate, runContentAnalysis } from "./contentAnalysis";
 import { runPageCreation } from "./pageCreation";
 
@@ -303,6 +304,9 @@ export async function runUnifiedDailyPipeline(options: {
 async function scheduledDailyDigest(req: Request, res: Response) {
   let taskUid: string | undefined;
   try {
+    if (!hasAuthenticationMaterial(req)) {
+      return res.status(403).json({ error: "cron-only" });
+    }
     let user;
     try {
       const { sdk } = await import("./_core/sdk");

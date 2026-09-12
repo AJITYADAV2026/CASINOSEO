@@ -1151,6 +1151,34 @@ init_db();
 import { and as and4, eq as eq4 } from "drizzle-orm";
 import { z as z5 } from "zod";
 
+// server/_core/context.ts
+init_const();
+function hasAuthenticationMaterial(req) {
+  const authorization = req.headers.authorization;
+  if (typeof authorization === "string" && authorization.startsWith("Bearer ")) {
+    return true;
+  }
+  const cookieHeader = req.headers.cookie;
+  if (typeof cookieHeader !== "string") return false;
+  return cookieHeader.split(";").some((cookie) => cookie.trim().startsWith(`${COOKIE_NAME}=`));
+}
+async function createContext(opts) {
+  let user = null;
+  if (hasAuthenticationMaterial(opts.req)) {
+    try {
+      const { sdk: sdk2 } = await Promise.resolve().then(() => (init_sdk(), sdk_exports));
+      user = await sdk2.authenticateRequest(opts.req);
+    } catch (error) {
+      user = null;
+    }
+  }
+  return {
+    req: opts.req,
+    res: opts.res,
+    user
+  };
+}
+
 // server/contentAnalysis.ts
 init_schema();
 init_db();
@@ -2140,6 +2168,9 @@ async function runUnifiedDailyPipeline(options) {
 async function scheduledDailyDigest(req, res) {
   let taskUid;
   try {
+    if (!hasAuthenticationMaterial(req)) {
+      return res.status(403).json({ error: "cron-only" });
+    }
     let user;
     try {
       const { sdk: sdk2 } = await Promise.resolve().then(() => (init_sdk(), sdk_exports));
@@ -2235,34 +2266,6 @@ Disallow: /search${sitemap}
     return res.set("Cache-Control", manifest.status === "completed" ? "public, max-age=900" : "no-cache").set("Content-Disposition", `inline; filename="URL+${date2.data}.md"`).type("text/markdown; charset=utf-8").send(manifest.markdownArtifact);
   });
   app2.post("/api/scheduled/daily-digest", scheduledDailyDigest);
-}
-
-// server/_core/context.ts
-init_const();
-function hasAuthenticationMaterial(req) {
-  const authorization = req.headers.authorization;
-  if (typeof authorization === "string" && authorization.startsWith("Bearer ")) {
-    return true;
-  }
-  const cookieHeader = req.headers.cookie;
-  if (typeof cookieHeader !== "string") return false;
-  return cookieHeader.split(";").some((cookie) => cookie.trim().startsWith(`${COOKIE_NAME}=`));
-}
-async function createContext(opts) {
-  let user = null;
-  if (hasAuthenticationMaterial(opts.req)) {
-    try {
-      const { sdk: sdk2 } = await Promise.resolve().then(() => (init_sdk(), sdk_exports));
-      user = await sdk2.authenticateRequest(opts.req);
-    } catch (error) {
-      user = null;
-    }
-  }
-  return {
-    req: opts.req,
-    res: opts.res,
-    user
-  };
 }
 
 // server/_core/oauth.ts
