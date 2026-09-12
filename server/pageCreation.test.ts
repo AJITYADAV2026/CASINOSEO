@@ -246,11 +246,12 @@ describe("Agent 3 page creation", () => {
     })).rejects.toBe(rollback);
   }, 30_000);
 
-  it("registers only the Agent 3 scheduler endpoint and no indexing-submission route", () => {
+  it("keeps page creation inside the unified scheduler and exposes no indexing-submission route", () => {
     const app = express();
     registerPublicationRoutes(app);
     const paths = (app as unknown as { _router?: { stack?: Array<{ route?: { path?: string } }> } })._router?.stack?.map(layer => layer.route?.path).filter(Boolean) ?? [];
-    expect(paths).toContain("/api/scheduled/page-creation");
+    expect(paths).toContain("/api/scheduled/daily-digest");
+    expect(paths).not.toContain("/api/scheduled/page-creation");
     expect(paths.some(path => /indexnow|search-console|indexing-submit/i.test(String(path)))).toBe(false);
   });
 });

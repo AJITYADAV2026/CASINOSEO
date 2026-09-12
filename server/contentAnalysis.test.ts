@@ -126,7 +126,8 @@ describe("Agent 2 content analysis", () => {
     const paths = (app as unknown as { _router?: { stack?: Array<{ route?: { path?: string } }> } })._router?.stack?.map(layer => layer.route?.path).filter(Boolean) ?? [];
     expect(paths).toContain("/site-find/:date.md");
     expect(paths).not.toContain("/site-find/:date");
-    expect(paths).toContain("/api/scheduled/content-analysis");
+    expect(paths).toContain("/api/scheduled/daily-digest");
+    expect(paths).not.toContain("/api/scheduled/content-analysis");
   });
 
   it("keeps Site Find artifacts out of robots and both sitemap feeds", async () => {

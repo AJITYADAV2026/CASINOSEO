@@ -23,11 +23,11 @@ describe("Agent 1 delivery monitor", () => {
     }).delivered).toBe(false);
   });
 
-  it("registers a monitor endpoint without exposing a public trigger", () => {
+  it("removes the standalone monitor endpoint after unifying the daily automation", () => {
     const app = express();
     registerPublicationRoutes(app);
     const paths = (app as unknown as { _router?: { stack?: Array<{ route?: { path?: string } }> } })._router?.stack?.map(layer => layer.route?.path).filter(Boolean) ?? [];
-    expect(paths).toContain("/api/scheduled/agent-1-delivery-monitor");
-    expect(paths.filter(path => path === "/api/scheduled/agent-1-delivery-monitor")).toHaveLength(1);
+    expect(paths).toContain("/api/scheduled/daily-digest");
+    expect(paths).not.toContain("/api/scheduled/agent-1-delivery-monitor");
   });
 });

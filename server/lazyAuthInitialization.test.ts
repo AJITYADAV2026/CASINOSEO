@@ -42,6 +42,6 @@ describe("lazy authentication initialization", () => {
       "utf8",
     );
     expect(publicationRoutes).not.toContain('import { sdk } from "./_core/sdk"');
-    expect(publicationRoutes.match(/await import\("\.\/_core\/sdk"\)/g)).toHaveLength(4);
+    expect(publicationRoutes.match(/await import\("\.\/_core\/sdk"\)/g)).toHaveLength(1);
   });
 });

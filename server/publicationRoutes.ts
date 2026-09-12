@@ -17,7 +17,6 @@ import {
   getSiteFindReportByDate,
   getUrlManifestByDate,
 } from "./db";
-import { notifyOwner } from "./_core/notification";
 import { previousIsoCalendarDate, runContentAnalysis } from "./contentAnalysis";
 import { runPageCreation } from "./pageCreation";
 
@@ -208,6 +207,99 @@ export async function persistScheduledDigest(db: EditorialDb, job: PublicationJo
   });
 }
 
+export type UnifiedPipelineStage = "research" | "content-analysis" | "page-creation";
+
+export class UnifiedPipelineStageError extends Error {
+  constructor(public readonly stage: UnifiedPipelineStage, message: string) {
+    super(message);
+    this.name = "UnifiedPipelineStageError";
+  }
+}
+
+type UnifiedPipelineDependencies = {
+  persistDigest: typeof persistScheduledDigest;
+  analyze: typeof runContentAnalysis;
+  publishPages: typeof runPageCreation;
+};
+
+const unifiedPipelineDependencies: UnifiedPipelineDependencies = {
+  persistDigest: persistScheduledDigest,
+  analyze: runContentAnalysis,
+  publishPages: runPageCreation,
+};
+
+export async function runUnifiedDailyPipeline(options: {
+  db: EditorialDb;
+  job: PublicationJob;
+  taskUid: string;
+  payload: DigestPayload;
+  currentIstDate?: string;
+  dependencies?: UnifiedPipelineDependencies;
+}) {
+  const currentIstDate = options.currentIstDate ?? formatIstDate();
+  const expectedDigestDate = previousIsoCalendarDate(currentIstDate);
+  const dependencies = options.dependencies ?? unifiedPipelineDependencies;
+
+  if (options.payload.status !== "published") {
+    throw new UnifiedPipelineStageError("research", "unified-pipeline-requires-published-digest");
+  }
+  if (options.payload.digestDate !== expectedDigestDate) {
+    throw new UnifiedPipelineStageError(
+      "research",
+      `required-digest-date-${expectedDigestDate}-received-${options.payload.digestDate}`,
+    );
+  }
+
+  try {
+    await dependencies.persistDigest(options.db, options.job, options.taskUid, options.payload);
+  } catch (error) {
+    throw new UnifiedPipelineStageError(
+      "research",
+      error instanceof Error ? error.message : "digest-persistence-failed",
+    );
+  }
+
+  const analysis = await dependencies.analyze({
+    taskUid: options.taskUid,
+    db: options.db,
+    reportDate: currentIstDate,
+    enforceSequence: true,
+  });
+  if (!("report" in analysis) || !analysis.report || analysis.report.status !== "completed") {
+    throw new UnifiedPipelineStageError(
+      "content-analysis",
+      ("skipped" in analysis ? analysis.skipped : undefined) ?? "completed-site-find-not-persisted",
+    );
+  }
+
+  const publication = await dependencies.publishPages({
+    taskUid: options.taskUid,
+    db: options.db,
+    manifestDate: currentIstDate,
+    enforceSequence: true,
+  });
+  if (!("manifest" in publication) || !publication.manifest || publication.manifest.status !== "completed") {
+    throw new UnifiedPipelineStageError(
+      "page-creation",
+      ("skipped" in publication ? publication.skipped : undefined) ?? "completed-url-manifest-not-persisted",
+    );
+  }
+
+  return {
+    pipelineStatus: "completed" as const,
+    currentIstDate,
+    digestDate: options.payload.digestDate,
+    storiesSaved: options.payload.stories.length,
+    reportDate: analysis.report.reportDate,
+    manifestDate: publication.manifest.manifestDate,
+    stages: {
+      research: "completed" as const,
+      contentAnalysis: "completed" as const,
+      pageCreation: "completed" as const,
+    },
+  };
+}
+
 async function scheduledDailyDigest(req: Request, res: Response) {
   let taskUid: string | undefined;
   try {
@@ -225,199 +317,29 @@ async function scheduledDailyDigest(req: Request, res: Response) {
     const db = await getDb();
     if (!db) return res.status(503).json({ error: "database-unavailable" });
     const [job] = await db.select().from(publicationJobs).where(eq(publicationJobs.scheduleCronTaskUid, cronTaskUid)).limit(1);
-    if (!job) return res.json({ ok: true, skipped: "orphan" });
+    if (!job || job.jobKey !== "casinoverse-daily-research") return res.json({ ok: true, skipped: "orphan" });
 
     const payload = digestPayloadSchema.parse(req.body);
-    await persistScheduledDigest(db, job, cronTaskUid, payload);
+    const result = await runUnifiedDailyPipeline({ db, job, taskUid: cronTaskUid, payload });
 
-    return res.json({ ok: true, digestDate: payload.digestDate, status: payload.status, storiesSaved: payload.stories.length });
-  } catch (error) {
-    const message = error instanceof Error ? error.message : "Unknown scheduled digest error";
-    const status = error instanceof z.ZodError ? 400 : 500;
-    return res.status(status).json({
-      error: message,
-      details: error instanceof z.ZodError ? error.issues : undefined,
-      stack: error instanceof Error ? error.stack : undefined,
-      context: { url: req.originalUrl, taskUid },
-      timestamp: new Date().toISOString(),
-    });
-  }
-}
-
-async function scheduledContentAnalysis(req: Request, res: Response) {
-  let taskUid: string | undefined;
-  try {
-    let user;
-    try {
-      const { sdk } = await import("./_core/sdk");
-      user = await sdk.authenticateRequest(req);
-    } catch {
-      return res.status(403).json({ error: "cron-only" });
-    }
-    taskUid = user.taskUid;
-    if (!user.isCron || !taskUid) return res.status(403).json({ error: "cron-only" });
-
-    const db = await getDb();
-    if (!db) return res.status(503).json({ error: "database-unavailable" });
-    const [job] = await db.select().from(publicationJobs).where(eq(publicationJobs.scheduleCronTaskUid, taskUid)).limit(1);
-    if (!job || job.jobKey !== "casinoverse-content-analysis") return res.json({ ok: true, skipped: "orphan" });
-
-    const verificationInput = z.object({
-      includeDeveloping: z.boolean().optional().default(false),
-      force: z.boolean().optional().default(false),
-    }).parse(req.body ?? {});
-    const result = await runContentAnalysis({
-      taskUid,
-      db,
-      includeDeveloping: verificationInput.includeDeveloping,
-      force: verificationInput.force,
-    });
-    if ("report" in result && result.report) {
-      await db.update(publicationJobs).set({
-        status: "active",
-        lastCompletedDigestDate: result.report.sourceDigestDate,
-        lastRunAt: new Date(),
-      }).where(eq(publicationJobs.id, job.id));
-      return res.json({
-        ok: true,
-        reportDate: result.report.reportDate,
-        sourceDigestDate: result.report.sourceDigestDate,
-        status: result.report.status,
-        decisionCounts: {
-          add: result.report.addCount,
-          update: result.report.updateCount,
-          retain: result.report.retainCount,
-          archive: result.report.archiveCount,
-          remove: result.report.removeCount,
-        },
-      });
-    }
-    return res.json({ ok: true, skipped: result.skipped });
-  } catch (error) {
-    const message = error instanceof Error ? error.message : "Unknown Agent 2 content-analysis error";
-    return res.status(500).json({
-      error: message,
-      stack: error instanceof Error ? error.stack : undefined,
-      context: { url: req.originalUrl, taskUid },
-      timestamp: new Date().toISOString(),
-    });
-  }
-}
-
-async function scheduledPageCreation(req: Request, res: Response) {
-  let taskUid: string | undefined;
-  try {
-    let user;
-    try {
-      const { sdk } = await import("./_core/sdk");
-      user = await sdk.authenticateRequest(req);
-    } catch {
-      return res.status(403).json({ error: "cron-only" });
-    }
-    taskUid = user.taskUid;
-    if (!user.isCron || !taskUid) return res.status(403).json({ error: "cron-only" });
-
-    const db = await getDb();
-    if (!db) return res.status(503).json({ error: "database-unavailable" });
-    const [job] = await db.select().from(publicationJobs).where(eq(publicationJobs.scheduleCronTaskUid, taskUid)).limit(1);
-    if (!job || job.jobKey !== "casinoverse-page-creation") return res.json({ ok: true, skipped: "orphan" });
-
-    const verificationInput = z.object({
-      includeDraft: z.boolean().optional().default(false),
-      force: z.boolean().optional().default(false),
-    }).parse(req.body ?? {});
-    const result = await runPageCreation({
-      taskUid,
-      db,
-      includeDraft: verificationInput.includeDraft,
-      force: verificationInput.force,
-    });
-    if ("manifest" in result && result.manifest) {
-      await db.update(publicationJobs).set({
-        status: "active",
-        lastCompletedDigestDate: result.manifest.sourceReportDate,
-        lastRunAt: new Date(),
-      }).where(eq(publicationJobs.id, job.id));
-      return res.json({
-        ok: true,
-        manifestDate: result.manifest.manifestDate,
-        sourceReportDate: result.manifest.sourceReportDate,
-        status: result.manifest.status,
-        counts: {
-          created: result.manifest.createdCount,
-          updated: result.manifest.updatedCount,
-          retained: result.manifest.retainedCount,
-          archived: result.manifest.archivedCount,
-          reviewRequired: result.manifest.reviewCount,
-        },
-      });
-    }
-    return res.json({ ok: true, skipped: result.skipped });
-  } catch (error) {
-    const message = error instanceof Error ? error.message : "Unknown Agent 3 page-creation error";
-    return res.status(error instanceof z.ZodError ? 400 : 500).json({
-      error: message,
-      details: error instanceof z.ZodError ? error.issues : undefined,
-      stack: error instanceof Error ? error.stack : undefined,
-      context: { url: req.originalUrl, taskUid },
-      timestamp: new Date().toISOString(),
-    });
-  }
-}
-
-async function scheduledAgent1Monitor(req: Request, res: Response) {
-  let taskUid: string | undefined;
-  try {
-    let user;
-    try {
-      const { sdk } = await import("./_core/sdk");
-      user = await sdk.authenticateRequest(req);
-    } catch {
-      return res.status(403).json({ error: "cron-only" });
-    }
-    taskUid = user.taskUid;
-    if (!user.isCron || !taskUid) return res.status(403).json({ error: "cron-only" });
-
-    const db = await getDb();
-    if (!db) return res.status(503).json({ error: "database-unavailable" });
-    const [job] = await db.select().from(publicationJobs).where(eq(publicationJobs.scheduleCronTaskUid, taskUid)).limit(1);
-    if (!job || job.jobKey !== "casinoverse-agent-1-delivery-monitor") return res.json({ ok: true, skipped: "orphan" });
-
-    const currentIstDate = formatIstDate();
-    const expectedDigestDate = previousIsoCalendarDate(currentIstDate);
-    const [digest] = await db.select().from(dailyDigests).where(eq(dailyDigests.digestDate, expectedDigestDate)).limit(1);
-    const assessment = assessAgent1Delivery(currentIstDate, digest);
-
-    await db.update(publicationJobs).set({
-      status: "active",
-      lastRunAt: new Date(),
-      lastCompletedDigestDate: assessment.delivered ? assessment.expectedDigestDate : job.lastCompletedDigestDate,
-    }).where(eq(publicationJobs.id, job.id));
-
-    if (assessment.delivered) {
-      return res.json({ ok: true, status: "delivered", digestDate: assessment.expectedDigestDate });
-    }
-
-    const notificationSent = await notifyOwner({
-      title: `CasinooVerse Agent 1 missed ${assessment.expectedDigestDate}`,
-      content: `The required published research edition for ${assessment.expectedDigestDate} was not present by the 12:15 AM IST delivery check. Agent 2 must stop rather than analyze stale data. Inspect Agent 1 before resuming the sequence.`,
-    });
-    if (!notificationSent) {
-      return res.status(503).json({
-        error: "agent-1-digest-missing-and-owner-notification-failed",
-        expectedDigestDate: assessment.expectedDigestDate,
-      });
-    }
     return res.json({
       ok: true,
-      status: assessment.reason,
-      expectedDigestDate: assessment.expectedDigestDate,
-      ownerNotified: true,
+      ...result,
+      artifacts: {
+        research: `/research/${result.digestDate}.md`,
+        siteFind: `/site-find/${result.reportDate}.md`,
+        urlManifest: `/url-manifests/${result.manifestDate}.md`,
+        sitemap: "/sitemap.xml",
+      },
     });
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Unknown Agent 1 delivery monitor error";
-    return res.status(500).json({
+    const message = error instanceof Error ? error.message : "Unknown unified daily pipeline error";
+    const status = error instanceof z.ZodError ? 400 : error instanceof UnifiedPipelineStageError ? 409 : 500;
+    return res.status(status).json({
       error: message,
+      pipelineStatus: "failed",
+      failedStage: error instanceof UnifiedPipelineStageError ? error.stage : "unknown",
+      details: error instanceof z.ZodError ? error.issues : undefined,
       stack: error instanceof Error ? error.stack : undefined,
       context: { url: req.originalUrl, taskUid },
       timestamp: new Date().toISOString(),
@@ -494,7 +416,4 @@ export function registerPublicationRoutes(app: Express) {
   });
 
   app.post("/api/scheduled/daily-digest", scheduledDailyDigest);
-  app.post("/api/scheduled/agent-1-delivery-monitor", scheduledAgent1Monitor);
-  app.post("/api/scheduled/content-analysis", scheduledContentAnalysis);
-  app.post("/api/scheduled/page-creation", scheduledPageCreation);
 }
